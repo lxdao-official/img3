@@ -1,5 +1,5 @@
 {
-  "name": "img3",
+  "name": "image-uploader3",
   "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
@@ -10,15 +10,19 @@
     "@testing-library/react": "13.3.0",
     "@types/jest": "^27.0.3",
     "@types/react": "^17.0.14",
-    "jest": "^27.4.3",
+    "jest": "^29.3.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-images-uploading": "^3.1.7",
     "rollup": "^2.60.2",
     "rollup-plugin-typescript2": "^0.31.1",
     "ts-jest": "^27.1.1",
     "tslib": "^2.3.1",
     "typescript": "^4.5.2",
-    "ping.js": "^0.3.0"
+    "buffer": "^6.0.3",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "connector": "*"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
