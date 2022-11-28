@@ -32,7 +32,7 @@ npx lerna run dev
 Install Deps:
 
 ```
-npm instal img3 image-uploader3 image-uploader3-connector
+npm install img3 image-uploader3 image-uploader3-connector
 ```
 
 Import Deps:

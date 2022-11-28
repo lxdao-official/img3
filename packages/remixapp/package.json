@@ -16,7 +16,7 @@
     "react-dom": "18.1.0",
     "image-uploader3": "*",
     "img3": "*",
-    "connector": "*"
+    "image-uploader3-connector": "*"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.5.1",

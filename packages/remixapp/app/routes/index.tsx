@@ -1,5 +1,5 @@
 import { ImageUploader3 } from "image-uploader3";
-import { connector } from "connector";
+import { connector } from "image-uploader3-connector";
 import { Img3 } from "img3";
 
 export default function Index() {
