@@ -1,6 +1,13 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
-    transpilePackages: ["ui"],
+    transpilePackages: ['img3'],
+  },
+  compiler: {
+    styledComponents: {
+      ssr: true,
+      displayName: true,
+      minify: true,
+    },
   },
 };

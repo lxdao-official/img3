@@ -4,8 +4,7 @@
 
 # dependencies
 node_modules
-.pnp
-.pnp.js
+.pnp.*
 
 # testing
 coverage
@@ -36,3 +35,12 @@ yarn-error.log*
 lib/
 esm/
 .idea/
+
+
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
