@@ -1,10 +1,13 @@
-export const fetchIpfsUrl = (
+export const convertIpfsToUrl = (
   options: { hash: string; gateway: string; timeout?: number },
   callback: (err?: Error, url?: string) => void
 ) => {
-  const { hash, gateway, timeout = 2000 } = options;
+  let { hash, gateway, timeout = 2000 } = options;
   const xhr = new XMLHttpRequest();
-  const url = `${gateway}${hash}`;
+  if (gateway.endsWith('/')) {
+    gateway = gateway.slice(0, -1);
+  }
+  const url = `${gateway}/${hash}`;
   xhr.open('GET', url, true);
 
   // timeout after 2 seconds aborting the request
@@ -38,13 +41,14 @@ const defaultGatewayList = [
   'https://4everland.io/ipfs/',
 ];
 
+// cache in runtime
 let fasterGatewayCache = '';
 
-export const getFasterIpfsUrl = (options: { hash: string; timeout?: number }) => {
-  const { hash, timeout } = options;
+export const getFasterIpfsUrl = (options: { hash: string; timeout?: number; gateways?: string[] }) => {
+  const { hash, timeout, gateways = defaultGatewayList } = options;
   const isFasterFetch = fasterGatewayCache !== '';
   return new Promise<string>((resolve, reject) => {
-    let tasks: Array<ReturnType<typeof fetchIpfsUrl>> = [];
+    let tasks: Array<ReturnType<typeof convertIpfsToUrl>> = [];
     function fetchCallback(opts: { index: number; gateway: string }, err?: Error, url?: string) {
       const { index, gateway } = opts;
       if (err) {
@@ -52,7 +56,7 @@ export const getFasterIpfsUrl = (options: { hash: string; timeout?: number }) =>
         if (tasks.length === 0) {
           if (isFasterFetch) {
             fasterGatewayCache = '';
-            // if faster fetch failed, try again with default gateway list
+            // If faster ipfs fetch failed, try again with default gateway list
             getFasterIpfsUrl(options).then(resolve, reject);
           } else {
             reject(err);
@@ -69,10 +73,10 @@ export const getFasterIpfsUrl = (options: { hash: string; timeout?: number }) =>
       }
     }
 
-    const taskGatewayList = fasterGatewayCache ? [fasterGatewayCache] : defaultGatewayList;
+    const taskGatewayList = fasterGatewayCache ? [fasterGatewayCache] : gateways;
 
     tasks = taskGatewayList.map((gateway, index) => {
-      return fetchIpfsUrl({ hash, gateway, timeout }, (err, url) => {
+      return convertIpfsToUrl({ hash, gateway, timeout }, (err, url) => {
         fetchCallback({ index, gateway }, err, url);
       });
     });

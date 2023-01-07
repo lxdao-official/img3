@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Error } from './Error';
-import { fetchIpfsUrl, getFasterIpfsUrl } from './ipfs';
+import { convertIpfsToUrl, getFasterIpfsUrl } from './ipfs';
 import { Loading } from './Loading';
 
 const Placeholder = styled.div`
@@ -32,7 +32,7 @@ export const Img3 = (props: Props) => {
       const hash = src.slice(7);
       // If specified, use the gateway
       if (gateway) {
-        fetchIpfsUrl({ gateway, hash, timeout }, (err, url) => {
+        convertIpfsToUrl({ gateway, hash, timeout }, (err, url) => {
           if (err) {
             setImgState('error');
           } else {
