@@ -12,7 +12,6 @@ export const fetchIpfsUrl = (
     xhr.abort();
     callback(new Error('fetch ipfs ' + url + 'is timeout of 2s'));
   }, timeout);
-
   xhr.onload = () => {
     if (xhr.status === 200) {
       clearTimeout(timer);
