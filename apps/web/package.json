@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "img3": "*",
+    "img3": "workspace:*",
     "next": "13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -21,8 +21,8 @@
     "@types/react-dom": "^18.0.7",
     "babel-plugin-styled-components": "^2.0.7",
     "eslint": "7.32.0",
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
     "typescript": "^4.5.3"
   }
 }

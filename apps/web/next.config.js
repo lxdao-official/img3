@@ -6,7 +6,7 @@ module.exports = {
   compiler: {
     styledComponents: {
       ssr: true,
-      displayName: true,
+      displayName: false,
       minify: true,
     },
   },
