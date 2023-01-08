@@ -1,7 +1,7 @@
 {
   "name": "img3",
   "version": "0.0.0",
-  "main": "./src/index.tsx",
+  "main": "src/index.ts",
   "types": "./src/index.tsx",
   "license": "MIT",
   "scripts": {

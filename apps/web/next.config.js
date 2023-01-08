@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   experimental: {
-    transpilePackages: ['img3'],
+    transpilePackages: ['img3', 'uploader3'],
   },
   compiler: {
     styledComponents: {
