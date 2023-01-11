@@ -36,6 +36,9 @@ lib/
 esm/
 .idea/
 
+apps/web/public/*
+!apps/web/public/.gitkeep
+
 
 # yarn
 .yarn/*

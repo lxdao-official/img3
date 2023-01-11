@@ -48,12 +48,12 @@ export const getFasterIpfsUrl = (options: { hash: string; timeout?: number; gate
   const { hash, timeout, gateways = defaultGatewayList } = options;
   const isFasterFetch = fasterGatewayCache !== '';
   return new Promise<string>((resolve, reject) => {
-    let tasks: Array<ReturnType<typeof convertIpfsToUrl>> = [];
+    let tasks: Array<ReturnType<typeof convertIpfsToUrl> | null> = [];
     function fetchCallback(opts: { index: number; gateway: string }, err?: Error, url?: string) {
       const { index, gateway } = opts;
       if (err) {
-        tasks.splice(index, 1);
-        if (tasks.length === 0) {
+        tasks.splice(index, 1, null);
+        if (tasks.every((task) => task === null)) {
           if (isFasterFetch) {
             fasterGatewayCache = '';
             // If faster ipfs fetch failed, try again with default gateway list
@@ -65,7 +65,7 @@ export const getFasterIpfsUrl = (options: { hash: string; timeout?: number; gate
       } else {
         tasks.forEach((task, i) => {
           if (i !== index) {
-            task.abort();
+            task && task.abort();
           }
         });
         fasterGatewayCache = gateway;

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Error } from './Error';
+import { Icon } from '@iconify/react';
 import { convertIpfsToUrl, getFasterIpfsUrl } from './ipfs';
-import { Loading } from './Loading';
 
 const Placeholder = styled.div`
   position: relative;
@@ -16,16 +15,22 @@ type Props = {
   gateway?: string;
   className?: string;
   src: string;
-  size?: number;
-  color?: string;
+  icon?: {
+    size?: number;
+    color?: string;
+    errorColor?: string;
+    errorSize?: number;
+  };
   timeout?: number;
 };
 
 export const Img3 = (props: Props) => {
-  const { style, src, gateway, alt, className, size, color, timeout } = props;
+  const { style, src = '', gateway, alt, className, timeout } = props;
 
-  const [imgState, setImgState] = useState('loading');
-  const [imgSrc, setImgSrc] = useState('');
+  const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);
+
+  const [loadState, setLoadState] = useState('loading');
+  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
   useEffect(() => {
     if (src.startsWith('ipfs://')) {
@@ -34,42 +39,62 @@ export const Img3 = (props: Props) => {
       if (gateway) {
         convertIpfsToUrl({ gateway, hash, timeout }, (err, url) => {
           if (err) {
-            setImgState('error');
+            setLoadState('error');
           } else {
-            setImgState('loaded');
-            setImgSrc(url!);
+            setLoadState('loaded');
+            setImagePreviewUrl(url!);
           }
         });
       } else {
         getFasterIpfsUrl({ hash, timeout })
           .then((url) => {
-            setImgState('loaded');
-            setImgSrc(url);
+            setLoadState('loaded');
+            setImagePreviewUrl(url);
           })
-          .catch((err) => {
-            setImgState('error');
+          .catch(() => {
+            setLoadState('error');
           });
       }
     } else {
-      setImgState('not-ipfs');
-      setImgSrc(src);
+      setLoadState('not-ipfs');
+      setImagePreviewUrl(src);
     }
-  }, []);
+  }, [props.src]);
 
-  if (imgState === 'loading') {
+  if (loadState === 'loading') {
     return (
       <Placeholder style={style} className={className}>
-        <Loading size={size} color={color} />
+        <Icon
+          icon={'line-md:loading-twotone-loop'}
+          color={icon.color}
+          style={{
+            fontSize: icon.size,
+            top: '50%',
+            left: '50%',
+            position: 'absolute',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
       </Placeholder>
     );
-  } else if (imgState === 'error') {
+  } else if (loadState === 'error') {
     return (
       <Placeholder style={style} className={className}>
-        <Error size={size} color={color} />
+        <Icon
+          icon={'ic:round-broken-image'}
+          color={icon.errorColor || icon.color}
+          style={{
+            fontSize: icon.errorSize || icon.size,
+            top: '50%',
+            left: '50%',
+            position: 'absolute',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
       </Placeholder>
     );
   }
-  return <img className={className} style={{ display: 'inline-block', ...style }} src={imgSrc} alt={alt} />;
+  return <img className={className} style={{ display: 'inline-block', ...style }} src={imagePreviewUrl} alt={alt} />;
 };
 
 Img3.defaultProps = {
