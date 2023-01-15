@@ -1,56 +1,11 @@
-import * as React from 'react';
-import { SelectedFile, UploadedResult, Uploader3, UploadingFile } from 'uploader3';
-import styled from 'styled-components';
-// @ts-ignore
-import { Img3 } from 'img3';
+import React from 'react';
+import { SelectedFile, Uploader3, UploadFile, UploadResult } from 'uploader3';
+
+import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
 
-const Status = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-`;
-
-const PreviewFile = (props: { file: SelectedFile | UploadingFile | UploadedResult }) => {
-  const { file } = props;
-
-  let src: string = '';
-  if (file.status === 'uploading') {
-    src = file.thumbnailData || file.imageData;
-  } else if (file.status === 'done') {
-    src = file.url;
-  }
-
-  if (!src) {
-    src = file.previewUrl;
-  }
-
-  return (
-    <>
-      <Img3 style={{ maxHeight: '100%', maxWidth: '100%' }} src={src} alt={file.name} />
-      {file.status === 'uploading' && (
-        <Status>
-          <Icon icon={'line-md:uploading-loop'} color={'#65a2fa'} fontSize={40} />
-        </Status>
-      )}
-      {file.status === 'error' && (
-        <Status>
-          <Icon icon={'iconoir:cloud-error'} color={'#ffb7b7'} fontSize={40} />
-        </Status>
-      )}
-    </>
-  );
-};
-
 export default function Demo() {
-  const [file, setFile] = React.useState<SelectedFile | UploadingFile | UploadedResult>();
+  const [file, setFile] = useState<SelectedFile | UploadFile | UploadResult>();
 
   return (
     <div style={{ padding: 20 }}>
@@ -60,13 +15,16 @@ export default function Demo() {
         <Uploader3
           api={'/api/upload/file'}
           multiple={false}
-          onSelected={(file: SelectedFile) => {
+          onChange={(file: SelectedFile) => {
+            console.log('onChange', file);
             setFile(file);
           }}
-          onUploading={(file: UploadingFile) => {
+          onUpload={(file) => {
+            console.log('onUpload', file);
             setFile(file);
           }}
-          onCompleted={(file: UploadedResult) => {
+          onComplete={(file) => {
+            console.log('onComplete', file);
             setFile(file);
           }}
         >

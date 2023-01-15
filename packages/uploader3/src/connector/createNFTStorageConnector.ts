@@ -1,7 +1,7 @@
 import { NFTStorage } from 'nft.storage';
 
 export type Connector = {
-  postImage: (file: { name: string; type: string; imageData: string }) => Promise<string>;
+  postImage: (file: { name: string; type: string; imageData: string }) => Promise<{ cid: string; url: string }>;
 };
 
 export const createNFTStorageConnector = (options: { token: string }) => {
@@ -14,7 +14,10 @@ export const createNFTStorageConnector = (options: { token: string }) => {
       const imageBuffer = Buffer.from(base64, 'base64');
       const blob = new Blob([imageBuffer], { type });
 
-      return await client.storeBlob(blob);
+      const cid = await client.storeBlob(blob);
+      await client.check(cid);
+
+      return { cid, url: `https://${cid}.ipfs.nftstorage.link/` };
     },
   };
 };

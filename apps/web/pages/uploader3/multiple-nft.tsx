@@ -1,69 +1,24 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  Connector,
+  createNFTStorageConnector,
   CroppedFile,
   SelectedFile,
   SelectedFiles,
-  UploadedResult,
-  UploadedResults,
+  type,
   Uploader3,
-  UploadingFile,
-  UploadingFiles,
-  createNFTStorageConnector,
-  Connector,
+  UploadFile,
+  UploadResult,
 } from 'uploader3';
-import styled from 'styled-components';
-// @ts-ignore
-import { Img3 } from 'img3';
+
+import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
-import { useEffect } from 'react';
-
-const Status = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-`;
-
-const PreviewFile = (props: { file: SelectedFile | UploadingFile | UploadedResult | CroppedFile }) => {
-  const { file } = props;
-
-  let src = '';
-  if (file.status === 'uploading' || file.status === 'cropped') {
-    src = file.thumbnailData || file.imageData;
-  } else if (file.status === 'done') {
-    src = file.imageData || file.url;
-  } else {
-    src = file.previewUrl;
-  }
-
-  return (
-    <>
-      <Img3 style={{ maxHeight: '100%', maxWidth: '100%' }} src={src} alt={file.name} />
-      {file.status === 'uploading' && (
-        <Status>
-          <Icon icon={'line-md:uploading-loop'} color={'#65a2fa'} fontSize={40} />
-        </Status>
-      )}
-      {file.status === 'error' && (
-        <Status>
-          <Icon icon={'iconoir:cloud-error'} color={'#ffb7b7'} fontSize={40} />
-        </Status>
-      )}
-    </>
-  );
-};
 
 export default function Demo() {
-  const [files, setFiles] = React.useState<Array<SelectedFile | UploadingFile | UploadedResult | CroppedFile>>([]);
+  const [files, setFiles] = useState<Array<SelectedFile | UploadFile | UploadResult | CroppedFile>>([]);
 
-  const [localToken, setLocalToken] = React.useState<string>('');
-  const connector = React.useRef<null | Connector>(null);
+  const [localToken, setLocalToken] = useState<string>('');
+  const connector = useRef<null | Connector>(null);
 
   useEffect(() => {
     let token = localStorage.getItem('nft-storage-token');
@@ -83,25 +38,20 @@ export default function Demo() {
     <div style={{ padding: 20 }}>
       <div>NFT.storage multiple upload mode</div>
       <div>If upload file size &gt; 2MB throw error</div>
-      <div>Your NFT.storage Token: {localToken.substring(0, 20)}...</div>
+      <div>Your NFT.storage Token: {localToken?.substring(0, 80)}...</div>
       <div style={{ padding: '20px 0' }}>
         <Uploader3
           connector={connector.current!}
           multiple={true}
-          crop={true}
-          onSelected={(files: SelectedFiles) => {
+          crop={{
+            aspectRatio: 4 / 3,
+          }}
+          onChange={(files: SelectedFiles) => {
+            console.log('onChange', files);
             setFiles(files);
           }}
-          onUploading={(files: UploadingFiles) => {
-            console.log('onUploading', files);
-            setFiles(files);
-          }}
-          onCompleted={(files: UploadedResults) => {
-            console.log('onCompleted', files);
-            setFiles(files);
-          }}
-          onCropEnd={(file: CroppedFile) => {
-            console.log('onCrop', file);
+          onUpload={(file: UploadFile) => {
+            console.log('onUpload', file);
             setFiles((files) => {
               return files.map((f) => {
                 if (f.name === file.name) {
@@ -109,6 +59,34 @@ export default function Demo() {
                 }
                 return f;
               });
+            });
+          }}
+          onComplete={(file: UploadResult) => {
+            console.log('onComplete', file);
+            setFiles((files) => {
+              return files.map((f) => {
+                if (f.name === file.name) {
+                  return file;
+                }
+                return f;
+              });
+            });
+          }}
+          onCropEnd={(file: CroppedFile) => {
+            console.log('onCropEnd', file);
+            setFiles((files) => {
+              return files.map((f) => {
+                if (f.name === file.name) {
+                  return file;
+                }
+                return f;
+              });
+            });
+          }}
+          onCropCancel={(file) => {
+            console.log('onCropCancel', file);
+            setFiles((files) => {
+              return files.filter((f) => f.name !== file.name);
             });
           }}
         >
@@ -134,8 +112,8 @@ export default function Demo() {
                   key={file.name + file.status}
                   data-status={file.status}
                   style={{
-                    width: 150,
-                    height: 150,
+                    width: 160,
+                    height: 120,
                     backgroundColor: '#dcdcdc',
                     color: '#333',
                     display: 'flex',

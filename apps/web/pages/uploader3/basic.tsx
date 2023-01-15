@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { SelectedFile, UploadedResult, Uploader3, UploadingFile } from 'uploader3';
+import React from 'react';
+import { SelectedFile, Uploader3, UploadFile, UploadResult } from 'uploader3';
 
 export default function Demo() {
   return (
@@ -8,14 +8,14 @@ export default function Demo() {
       <div>
         <Uploader3
           api={'/api/upload/file'}
-          onSelected={(file: SelectedFile) => {
-            console.log('onSelected', file);
+          onChange={(file: SelectedFile) => {
+            console.log('onChange', file);
           }}
-          onUploading={(file: UploadingFile) => {
-            console.log('onUploading', file);
+          onUpload={(file: UploadFile) => {
+            console.log('onUpload', file);
           }}
-          onCompleted={(result: UploadedResult) => {
-            console.log('onCompleted', result);
+          onComplete={(result: UploadResult) => {
+            console.log('onComplete', result);
           }}
         >
           <div

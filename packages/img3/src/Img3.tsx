@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Icon } from '@iconify/react';
+
 import { convertIpfsToUrl, getFasterIpfsUrl } from './ipfs';
 
 const Placeholder = styled.div`

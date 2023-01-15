@@ -1,66 +1,21 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Connector,
   createNFTStorageConnector,
+  CroppedFile,
   SelectedFile,
-  UploadedResult,
   Uploader3,
-  UploadingFile,
+  UploadFile,
+  UploadResult,
 } from 'uploader3';
-import styled from 'styled-components';
-// @ts-ignore
-import { Img3 } from 'img3';
+
+import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
 
-const Status = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-`;
-
-const PreviewFile = (props: { file: SelectedFile | UploadingFile | UploadedResult }) => {
-  const { file } = props;
-
-  let src: string;
-  if (file.status === 'uploading') {
-    src = file.thumbnailData || file.imageData;
-  } else if (file.status === 'done') {
-    // use connector upload, An immediate request is likely to fail
-    // display using image data
-    src = file.imageData || file.url;
-  } else {
-    src = file.previewUrl;
-  }
-
-  return (
-    <>
-      <Img3 style={{ maxHeight: '100%', maxWidth: '100%' }} src={src} alt={file.name} />
-      {file.status === 'uploading' && (
-        <Status>
-          <Icon icon={'line-md:uploading-loop'} color={'#65a2fa'} fontSize={40} />
-        </Status>
-      )}
-      {file.status === 'error' && (
-        <Status>
-          <Icon icon={'iconoir:cloud-error'} color={'#ffb7b7'} fontSize={40} />
-        </Status>
-      )}
-    </>
-  );
-};
-
 export default function Demo() {
-  const [file, setFile] = React.useState<SelectedFile | UploadingFile | UploadedResult>();
-  const [localToken, setLocalToken] = React.useState<string>('');
-  const connector = React.useRef<null | Connector>(null);
+  const [file, setFile] = useState<SelectedFile | UploadFile | UploadResult | CroppedFile | null>();
+  const [localToken, setLocalToken] = useState<string>('');
+  const connector = useRef<null | Connector>(null);
 
   useEffect(() => {
     let token = localStorage.getItem('nft-storage-token');
@@ -89,13 +44,24 @@ export default function Demo() {
             aspectRatio: 1,
             size: { width: 400, height: 300 },
           }}
-          onSelected={(file: SelectedFile) => {
+          onChange={(file: SelectedFile) => {
+            console.log('onChange', file);
             setFile(file);
           }}
-          onUploading={(file: UploadingFile) => {
+          onUpload={(file) => {
+            console.log('onUpload', file);
             setFile(file);
           }}
-          onCompleted={(file: UploadedResult) => {
+          onComplete={(file) => {
+            console.log('onComplete', file);
+            setFile(file);
+          }}
+          onCropCancel={(file) => {
+            console.log('onCropCancel', file);
+            setFile(null);
+          }}
+          onCropEnd={(file) => {
+            console.log('onCropEnd', file);
             setFile(file);
           }}
         >

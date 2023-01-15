@@ -1,12 +1,11 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import React, { useMemo, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import styled from 'styled-components';
 
-import cloneDeep from 'lodash.clonedeep';
-
-import { UploaderCropp, CroppInstance } from './UploaderCropp';
-import { CroppedFile, SelectedFile, Uploader3Props } from './types';
 import { file2base64 } from './file2base64';
+import { CroppedFile, SelectedFile, Uploader3Props } from './types';
+import { CroppInstance, UploaderCropp, UploaderCroppProps } from './UploaderCropp';
+import { useFiles } from './useEditFile';
 
 const Wrapper = styled.div`
   position: relative;
@@ -16,7 +15,7 @@ const Wrapper = styled.div`
 
 const createCroppedFile = (
   file: SelectedFile,
-  croppAttributes: Pick<CroppedFile, 'imageData' | 'thumbnailData' | 'crop'>
+  croppAttributes: Pick<CroppedFile, 'imageData' | 'thumbData' | 'crop'>
 ): CroppedFile => {
   return { ...file, ...croppAttributes, status: 'cropped' };
 };
@@ -27,21 +26,122 @@ const defaultCropOptions = {
 };
 
 export const Uploader3 = (props: Uploader3Props) => {
-  const { children, className, style, multiple, api, connector } = props;
+  const {
+    children,
+    className,
+    style,
+    multiple = false,
+    accept = ['.jpg', '.jpeg', '.png', '.gif'],
+    api,
+    connector,
+    onComplete,
+    onUpload,
+    onCropEnd,
+    onCropCancel,
+    onChange,
+  } = props;
 
-  const isMultiple = React.useMemo(() => multiple || false, [multiple]);
-  const selectedFiles = React.useRef<any>(null);
-  const cropRef = React.useRef<CroppInstance>(null);
-  let crop: any;
+  const isMultiple = useMemo(() => multiple || false, [multiple]);
+  const {
+    currentFile,
+    currentIndex,
+    setCurrentFile,
+    setCurrentIndex,
+    setFiles,
+    files: selectedFiles,
+  } = useFiles<any[]>([]);
+  const cropRef = useRef<CroppInstance>(null);
 
-  if (props.crop === true) {
+  let crop: any = props.crop;
+  if (crop === true) {
     crop = defaultCropOptions;
-  } else {
-    crop = props.crop;
   }
 
+  const hasCrop = useMemo(() => !!props.crop || false, [props.crop]);
+  const [showCrop, setShowCrop] = useState(false);
+
+  const triggerComplete = (file: any) => {
+    onComplete?.(file);
+  };
+
+  const doUpload = (files: any) => {
+    if (!api && !connector) {
+      throw new Error('Either api or connector must be provided');
+    }
+
+    Promise.all(
+      files.map(async (curFile: any) => {
+        curFile = { ...curFile };
+        curFile.status = 'uploading';
+        if (!curFile.imageData) {
+          curFile.imageData = await file2base64(curFile.file);
+        }
+        onUpload?.(curFile);
+        if (api) {
+          const formData = new FormData();
+          formData.append('imageBase64', curFile.imageData);
+          formData.append('type', curFile.type);
+          formData.append('name', curFile.name);
+
+          return fetch(api, { method: 'POST', body: formData })
+            .then(async (res) => {
+              if (res.ok) {
+                const { url } = await res.json();
+                curFile = { ...curFile, status: 'done', url };
+              } else {
+                const { message } = await res.json();
+                curFile = { ...curFile, status: 'error', message };
+              }
+              triggerComplete(curFile);
+            })
+            .catch(() => {
+              curFile = { ...curFile, status: 'error' };
+              triggerComplete(curFile);
+            });
+        } else if (connector) {
+          return connector
+            .postImage({
+              imageData: curFile.imageData,
+              type: curFile.type,
+              name: curFile.name,
+            })
+            .then((result) => {
+              const { url, cid } = result;
+              curFile = {
+                ...curFile,
+                status: 'done',
+                url: url,
+                ipfs: 'ipfs://' + cid,
+              };
+              triggerComplete(curFile);
+            })
+            .catch(() => {
+              curFile = { ...curFile, status: 'error' };
+              triggerComplete(curFile);
+            });
+        }
+      })
+    ).then(() => {
+      // all done
+    });
+  };
+
+  const afterCroppAction = (file?: CroppedFile) => {
+    if (currentIndex === selectedFiles.length - 1) {
+      setShowCrop(false);
+    } else {
+      let nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      const currentFile = selectedFiles[nextIndex];
+      cropRef.current?.replaceUrl(currentFile.previewUrl);
+    }
+    if (file) {
+      doUpload([file]);
+    }
+  };
+
   const { getRootProps, getInputProps } = useDropzone({
-    accept: { 'image/*': props.accept! },
+    accept: { 'image/*': accept! },
     multiple,
     onDrop: async (acceptedFiles) => {
       const files = acceptedFiles.map((file) => {
@@ -54,109 +154,34 @@ export const Uploader3 = (props: Uploader3Props) => {
         };
       });
 
-      selectedFiles.current = isMultiple ? files : files[0];
+      const changedFiles = isMultiple ? files : files[0];
+      setFiles(files);
+      onChange?.(changedFiles as any);
 
-      props.onSelected?.(selectedFiles.current);
-      setEditIndex(0);
       if (hasCrop) {
         setShowCrop(true);
       } else {
-        await doUpload(selectedFiles.current);
+        doUpload(files);
       }
     },
   });
 
-  const hasCrop = React.useMemo(() => !!props.crop || false, [props.crop]);
-  const [showCrop, setShowCrop] = React.useState(false);
-  const [editIndex, setEditIndex] = React.useState<number>(-1);
-
-  function doUpload(files: any) {
-    if (!api && !connector) {
-      throw new Error('Either api or connector must be provided');
-    }
-
-    let uploadingFile = cloneDeep(files);
-    async function uploading() {
-      let uploadingFiles: any[] = isMultiple ? uploadingFile : [uploadingFile];
-
-      for (let i = 0; i < uploadingFiles.length; i++) {
-        const file = uploadingFiles[i];
-        file.status = 'uploading';
-        if (!file.imageData) {
-          file.imageData = await file2base64(file.file);
-        }
-        if (api) {
-          const formData = new FormData();
-          formData.append('imageBase64', file.imageData);
-          formData.append('type', file.type);
-          formData.append('name', file.name);
-
-          (function (index) {
-            const currentFile = uploadingFiles[index];
-            fetch(api, { method: 'POST', body: formData })
-              .then(async (res) => {
-                if (res.ok) {
-                  const { url } = await res.json();
-                  uploadingFiles[index] = { ...currentFile, status: 'done', url };
-                } else {
-                  const { message } = await res.json();
-                  uploadingFiles[index] = { ...currentFile, status: 'error', message };
-                }
-                props.onCompleted?.(isMultiple ? [...uploadingFiles] : uploadingFiles[0]);
-              })
-              .catch(() => {
-                console.log('error', index);
-                uploadingFiles[index] = { ...currentFile, status: 'error' };
-                props.onCompleted?.(isMultiple ? [...uploadingFiles] : uploadingFiles[0]);
-              });
-          })(i);
-        } else if (connector) {
-          file.status = 'uploading';
-          (function (index) {
-            const currentFile = uploadingFiles[index];
-            connector
-              .postImage({
-                imageData: file.imageData,
-                type: file.type,
-                name: file.name,
-              })
-              .then((cid) => {
-                // sleep 1s
-                // new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
-                uploadingFiles[index] = {
-                  ...currentFile,
-                  status: 'done',
-                  url: 'ipfs://' + cid,
-                };
-                props.onCompleted?.(isMultiple ? [...uploadingFiles] : uploadingFiles[0]);
-                // });
-              })
-              .catch(() => {
-                uploadingFiles[index] = { ...currentFile, status: 'error' };
-                props.onCompleted?.(isMultiple ? [...uploadingFiles] : uploadingFiles[0]);
-              });
-          })(i);
-        }
-      }
-      props.onUploading?.(isMultiple ? [...uploadingFiles] : { ...uploadingFile });
-    }
-    uploading().catch(() => {
-      // ignore
+  const handleCancel: Required<UploaderCroppProps>['onCancel'] = () => {
+    currentFile.status = 'cancel';
+    onCropCancel?.({ ...currentFile });
+    afterCroppAction();
+  };
+  const handleConfirm: Required<UploaderCroppProps>['onConfirm'] = (params) => {
+    const { imageData, thumbData, cropData } = params;
+    const croppedFile = createCroppedFile(currentFile, {
+      imageData,
+      thumbData,
+      crop: cropData,
     });
-  }
-
-  function getEditFile() {
-    if (!selectedFiles.current) {
-      return;
-    }
-    if (isMultiple) {
-      return selectedFiles.current[editIndex];
-    } else {
-      return selectedFiles.current;
-    }
-  }
-
-  const editFile = getEditFile();
+    setCurrentFile(croppedFile);
+    onCropEnd?.(croppedFile);
+    afterCroppAction(croppedFile);
+  };
 
   return (
     <>
@@ -164,61 +189,18 @@ export const Uploader3 = (props: Uploader3Props) => {
         {children}
         <input {...getInputProps()} />
       </Wrapper>
-      {editFile && crop ? (
+      {currentFile && crop ? (
         <UploaderCropp
           ref={cropRef}
           size={crop.size!}
           aspectRatio={crop.aspectRatio!}
           show={showCrop}
-          fileType={editFile.type}
-          fileUrl={editFile.previewUrl!}
-          onCancel={() => {
-            let files = isMultiple ? selectedFiles.current : [selectedFiles.current];
-            editFile.status = 'cancel';
-            if (editIndex === files.length - 1) {
-              setShowCrop(false);
-              const croppedFiles = files.filter((f: { status: string }) => f.status === 'cropped');
-              if (croppedFiles.length > 0) {
-                doUpload(croppedFiles);
-              }
-            } else {
-              let nextIndex = editIndex + 1;
-              setEditIndex(nextIndex);
-              const currentFile = files[nextIndex];
-              cropRef.current?.replaceUrl(currentFile.previewUrl);
-            }
-            props.onCropCancel?.({ ...editFile });
-          }}
-          onConfirm={({ imageData, thumbnailData, cropData }) => {
-            let files = isMultiple ? selectedFiles.current : [selectedFiles.current];
-            const croppedFile = createCroppedFile(editFile, {
-              imageData,
-              thumbnailData,
-              crop: cropData,
-            });
-
-            props.onCropEnd?.(croppedFile);
-
-            files[editIndex!] = croppedFile;
-
-            if (editIndex === files.length - 1) {
-              setShowCrop(false);
-              const uploadingFiles = isMultiple ? files : files[0];
-              doUpload(uploadingFiles);
-            } else {
-              let nextIndex = editIndex + 1;
-              setEditIndex(nextIndex);
-              const currentFile = files[nextIndex];
-              cropRef.current?.replaceUrl(currentFile.previewUrl);
-            }
-          }}
+          fileType={currentFile.type}
+          fileUrl={currentFile.previewUrl!}
+          onCancel={handleCancel}
+          onConfirm={handleConfirm}
         ></UploaderCropp>
       ) : null}
     </>
   );
-};
-
-Uploader3.defaultProps = {
-  multiple: false,
-  accept: ['.png', '.jpeg', '.jpg', '.gif'],
 };

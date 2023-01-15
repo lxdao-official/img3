@@ -7,7 +7,7 @@
   - ....
 - `connector`: uploader-connector 实例
 - `api`:string 上传接口
-- `onSelector`: (files: Array<{ file: File, previewUrl }>) => void
-- `onCrop`: (files: Array<{ file: File, previewUrl: string, crop: Object }>) => void
-- `onUploading`: (files: Array<{ file: File, previewUrl: string, percent: number, status: 'wait' | 'ing' | 'end' }>) => void
+- `onChange`: (files: Array<{ file: File, previewUrl }>) => void
+- `onCropEnd`: (files: Array<{ file: File, previewUrl: string, crop: Object }>) => void
+- `onUpload`: (files: Array<{ file: File, previewUrl: string, percent: number, status: 'wait' | 'ing' | 'end' }>) => void
 - `onComplete`: (files: Array<{ file: File, url: string }>) => void

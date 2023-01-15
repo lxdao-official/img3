@@ -28,15 +28,20 @@ export default function Demo() {
         style={{ height: 200, width: 200, border: '1px solid #99a00a' }}
         src={'ipfs://bafkreidpunfemg2foalobiurfob4v6rdb4i3fmujvj5lpnzahfo3a4mxmy'}
         gateway={'https://ipfs.io/ipfs/'}
-        size={80}
-        color={'#a8cbff'}
+        icon={{
+          size: 80,
+          color: '#a8cbff',
+        }}
         timeout={3000}
       />
       {show && (
         <Img3
           style={{ height: 200, width: 200, border: '1px solid #99a00a' }}
           src={'ipfs://bafkreihbphdkrjs36sif752qz6quhwnvupxtgrhfxjswyg3q6tjdttpmo4'}
-          color={'#129af9'}
+          icon={{
+            size: 80,
+            color: '##129af9',
+          }}
         />
       )}
     </div>

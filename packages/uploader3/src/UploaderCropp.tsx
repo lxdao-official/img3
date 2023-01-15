@@ -1,67 +1,64 @@
-import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
 import Cropper from 'cropperjs';
-import { CropperGlobalStyle } from './cropperGlobalStyle';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
+
 import { Icon as ReactIcon, IconProps } from '@iconify/react';
 
-export type CroppProps = {
+import { CropperjsCSS } from './CropperjsCSS';
+
+export type UploaderCroppProps = {
   size?: { width: number | string; height: number | string };
   aspectRatio?: number;
   fileUrl: string;
   fileType: string;
   show?: boolean;
-  onConfirm?: (options: { imageData: string; thumbnailData: string; cropData: Cropper.Data }) => void;
+  onConfirm?: (options: { imageData: string; thumbData: string; cropData: Cropper.Data }) => void;
   onCancel?: () => void;
 };
 
 export type CroppInstance = { replaceUrl: (url: string) => void };
 
-export const UploaderCropp = React.forwardRef<CroppInstance, CroppProps>((props, ref) => {
-  const cropperRef = React.useRef<Cropper>();
-  const maskRef = React.useRef<HTMLDivElement>(null);
-  const imageRef = React.useRef<HTMLImageElement | null>(null);
-  const wrapperRef = React.useRef<HTMLDivElement>(null);
-  const scaleXRef = React.useRef(1);
-  const scaleYRef = React.useRef(1);
+export const UploaderCropp = forwardRef<CroppInstance, UploaderCroppProps>((props, ref) => {
+  const { size = { width: 400, height: 400 }, fileUrl, fileType, ...restProps } = props;
 
-  const [toast, setToast] = React.useState<string>('Loading...');
-  const [cropping, setCropping] = React.useState(false);
+  const cropperRef = useRef<Cropper>();
+  const maskRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const scaleXRef = useRef(1);
+  const scaleYRef = useRef(1);
 
-  const { size, fileUrl, fileType, ...restProps } = props;
-  const [aspectRatio, setAspectRatio] = useState<number>(restProps.aspectRatio!);
+  const [toast, setToast] = useState<string>('Initializing...');
+  const [cropping, setCropping] = useState(false);
+  const [aspectRatio, setAspectRatio] = useState<number>(restProps.aspectRatio || 1);
   const [show, setShow] = useState(restProps.show!);
   const [destroy, setDestroy] = useState(false);
 
-  const cropperOptions: Cropper.Options = {
-    viewMode: 2,
-    guides: false,
-    highlight: false,
-    aspectRatio: 1,
-    autoCrop: true,
-    autoCropArea: 0.8,
-    zoomable: true,
-    zoomOnTouch: true,
-    zoomOnWheel: true,
-    ready(event: Cropper.ReadyEvent<HTMLImageElement>) {
-      // @ts-ignore
-      cropperRef.current = this.cropper as Cropper;
-      setToast('');
-      setCropping(false);
-    },
-    cropend(event: Cropper.CropEndEvent<HTMLImageElement>) {
-      // @ts-ignore
-      const cropper = this.cropper as Cropper;
-      const data = cropper.getData(true);
-    },
-  };
+  const cropperOptions: Cropper.Options = useMemo(() => {
+    return {
+      viewMode: 2,
+      guides: false,
+      highlight: false,
+      aspectRatio: aspectRatio,
+      autoCrop: true,
+      autoCropArea: 1,
+      zoomable: true,
+      zoomOnTouch: true,
+      zoomOnWheel: true,
+      ready(this: { cropper: Cropper }) {
+        cropperRef.current = this.cropper;
+        setToast('');
+        setCropping(false);
+      },
+    };
+  }, [aspectRatio]);
 
   useEffect(() => {
     setShow(restProps.show!);
     if (restProps.show) {
       setDestroy(false);
     }
-    setToast(restProps.show ? 'Loading...' : '');
+    setToast(restProps.show ? 'Initializing...' : '');
   }, [props.show]);
 
   useEffect(() => {
@@ -85,13 +82,11 @@ export const UploaderCropp = React.forwardRef<CroppInstance, CroppProps>((props,
     new Cropper(imgElement!, cropperOptions);
   }, []);
 
-  if (destroy) {
-    return null;
-  }
+  if (destroy) return null;
 
   return (
     <>
-      <CropperGlobalStyle />
+      <CropperjsCSS />
       <AnimationCss />
       <Mask
         ref={maskRef}
@@ -242,9 +237,7 @@ export const UploaderCropp = React.forwardRef<CroppInstance, CroppProps>((props,
             </Action>
             <Action
               onClick={() => {
-                if (cropping) {
-                  return;
-                }
+                if (cropping) return;
                 props.onCancel?.();
               }}
             >
@@ -253,9 +246,7 @@ export const UploaderCropp = React.forwardRef<CroppInstance, CroppProps>((props,
             <Action
               active={cropping}
               onClick={() => {
-                if (cropping) {
-                  return;
-                }
+                if (cropping) return;
                 setCropping(true);
                 const cropper = cropperRef.current;
                 if (cropper) {
@@ -263,7 +254,7 @@ export const UploaderCropp = React.forwardRef<CroppInstance, CroppProps>((props,
                     const imageBase64 = cropper.getCroppedCanvas().toDataURL(fileType);
                     const thumbnailBase64 = cropper.getCroppedCanvas({ maxWidth: 600, maxHeight: 600 }).toDataURL();
                     const cropData = cropper.getData(true);
-                    props.onConfirm?.({ imageData: imageBase64, thumbnailData: thumbnailBase64, cropData });
+                    props.onConfirm?.({ imageData: imageBase64, thumbData: thumbnailBase64, cropData });
                   });
                 }
               }}
@@ -276,11 +267,6 @@ export const UploaderCropp = React.forwardRef<CroppInstance, CroppProps>((props,
     </>
   );
 });
-
-UploaderCropp.defaultProps = {
-  size: { width: '500px', height: '400px' },
-  aspectRatio: 1,
-};
 
 const AnimationCss = createGlobalStyle`
   @keyframes u3-fade-in {
@@ -358,7 +344,7 @@ const Mask = styled.div`
   z-index: 1000;
 `;
 
-const CroppModal = styled.div<Partial<CroppProps>>`
+const CroppModal = styled.div<Partial<UploaderCroppProps>>`
   --u3-wrapper-color: rgb(244, 244, 244);
   --u3-transparent-bg-color: rgb(236, 236, 236);
   --u3-transparent-bg-color2: rgb(200, 200, 200);
@@ -395,7 +381,7 @@ const CropperWrapper = styled.div`
   flex-direction: column;
 `;
 
-const CroppCanvas = styled.div<Pick<CroppProps, 'size'>>`
+const CroppCanvas = styled.div<Pick<UploaderCroppProps, 'size'>>`
   width: ${(props) => {
     if (typeof props.size?.width === 'number') {
       return props.size?.width + 'px';
@@ -467,6 +453,7 @@ const Action = styled.div<{ active?: boolean }>`
   line-height: 0;
   align-items: center;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+
   &:hover {
     background-color: var(--u3-action-bg-color-active);
   }
@@ -488,13 +475,16 @@ const Ratio = styled.div<{ active?: boolean }>`
 const ActionGroup = styled.div`
   display: flex;
   border-radius: var(--u3-border-radius);
+
   & + & {
     margin-left: 10px;
   }
+
   ${Action}:first-child {
     border-top-left-radius: var(--u3-border-radius);
     border-bottom-left-radius: var(--u3-border-radius);
   }
+
   ${Action}:last-child {
     border-top-right-radius: var(--u3-border-radius);
     border-bottom-right-radius: var(--u3-border-radius);
@@ -502,12 +492,6 @@ const ActionGroup = styled.div`
 `;
 
 const Icon = (props: IconProps) => {
-  let { icon, style, ...restProps } = props;
-  if (typeof icon === 'string') {
-    if (icon.indexOf(':') == -1) {
-      icon = 'charm:' + icon;
-    }
-  }
-
-  return <ReactIcon icon={icon} style={{ lineHeight: 0, fontSize: 20, height: 20, width: 20 }} {...restProps} />;
+  let { style, ...restProps } = props;
+  return <ReactIcon style={{ lineHeight: 0, fontSize: 20, height: 20, width: 20 }} {...restProps} />;
 };

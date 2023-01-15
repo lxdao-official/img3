@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import React from 'react';
 import { UploaderCropp } from 'uploader3';
 
 export default function Demo() {

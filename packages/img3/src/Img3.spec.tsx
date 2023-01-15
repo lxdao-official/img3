@@ -1,9 +1,12 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { render, act, screen } from '@testing-library/react';
-import { Img3 } from './Img3';
+
+import React from 'react';
+
+import { act, render, screen } from '@testing-library/react';
+
 import { mockFetch } from '../../../helper/jestMockXHR';
 import { sleep } from '../../../helper/sleep';
+import { Img3 } from './Img3';
 
 describe('render Img3', function () {
   it('should render img by faster gateway', async function () {

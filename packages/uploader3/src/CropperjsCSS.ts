@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const CropperGlobalStyle = createGlobalStyle`
+export const CropperjsCSS = createGlobalStyle`
   /*!
  * Cropper.js v1.5.13
  * https://fengyuanchen.github.io/cropperjs
