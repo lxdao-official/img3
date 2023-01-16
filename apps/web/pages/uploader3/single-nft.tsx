@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
-import {
-  Connector,
-  createNFTStorageConnector,
-  CroppedFile,
-  SelectedFile,
-  Uploader3,
-  UploadFile,
-  UploadResult,
-} from 'uploader3';
+import React, { useEffect, useRef, useState } from 'react';
+import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
+import { Uploader3 } from '@lxdao/uploader3';
+import type { Uploader3Connector } from '@lxdao/uploader3-connector';
+import { createConnector } from '@lxdao/uploader3-connector';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
@@ -15,7 +10,7 @@ import { Icon } from '@iconify/react';
 export default function Demo() {
   const [file, setFile] = useState<SelectedFile | UploadFile | UploadResult | CroppedFile | null>();
   const [localToken, setLocalToken] = useState<string>('');
-  const connector = useRef<null | Connector>(null);
+  const connector = useRef<null | Uploader3Connector.Connector>(null);
 
   useEffect(() => {
     let token = localStorage.getItem('nft-storage-token');
@@ -26,7 +21,7 @@ export default function Demo() {
       }
     }
     setLocalToken(token!);
-    connector.current = createNFTStorageConnector({
+    connector.current = createConnector('NFT.storage', {
       token: localStorage.getItem('nft-storage-token') || '',
     });
   }, []);
@@ -44,9 +39,9 @@ export default function Demo() {
             aspectRatio: 1,
             size: { width: 400, height: 300 },
           }}
-          onChange={(file: SelectedFile) => {
-            console.log('onChange', file);
-            setFile(file);
+          onChange={(files) => {
+            console.log('onChange', files);
+            setFile(files[0]);
           }}
           onUpload={(file) => {
             console.log('onUpload', file);

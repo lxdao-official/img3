@@ -1,5 +1,5 @@
 // @ts-ignore
-import { Img3 } from 'img3';
+import { Img3 } from '@lxdao/img3';
 import { useState } from 'react';
 
 export default function Demo() {

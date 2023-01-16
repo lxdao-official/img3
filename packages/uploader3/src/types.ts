@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Connector } from './connector';
+import type { Uploader3Connector } from '@lxdao/uploader3-connector';
+
+export type ModalStatus = 'init' | 'show' | 'afterShow' | 'hide' | 'afterHide';
 
 export type SelectedFile = {
   /** The File object */
@@ -41,7 +43,7 @@ export type Uploader3Props = {
   style?: React.CSSProperties;
   multiple?: boolean;
   api?: string;
-  connector?: Connector;
+  connector?: Uploader3Connector.Connector;
   crop?: { size?: { width: number; height: number }; aspectRatio?: number } | boolean;
   /**
    * image accept file type, default is ['.png', '.jpeg', '.jpg', '.gif']
@@ -52,7 +54,7 @@ export type Uploader3Props = {
    * after selected files trigger
    * @param acceptedFiles - selected files
    */
-  onChange?: ((files: SelectedFiles) => void) | ((file: SelectedFile) => void);
+  onChange?: (files: SelectedFiles) => void;
   /**
    * uploading image trigger
    * @param file

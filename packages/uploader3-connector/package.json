@@ -1,0 +1,18 @@
+{
+  "name": "@lxdao/uploader3-connector",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "lint": "TIMING=1 eslint \"**/*.ts*\"",
+    "test": "echo 0; exit 0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.12",
+    "tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "nft.storage": "^7.0.0"
+  }
+}

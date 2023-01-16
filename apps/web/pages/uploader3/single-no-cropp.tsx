@@ -1,5 +1,6 @@
-import React from 'react';
-import { SelectedFile, Uploader3, UploadFile, UploadResult } from 'uploader3';
+import React, { useState } from 'react';
+import type { SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
+import { Uploader3 } from '@lxdao/uploader3';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
@@ -15,9 +16,9 @@ export default function Demo() {
         <Uploader3
           api={'/api/upload/file'}
           multiple={false}
-          onChange={(file: SelectedFile) => {
-            console.log('onChange', file);
-            setFile(file);
+          onChange={(files) => {
+            console.log('onChange', files);
+            setFile(files[0]);
           }}
           onUpload={(file) => {
             console.log('onUpload', file);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectedFile, Uploader3, UploadFile, UploadResult } from 'uploader3';
+import { Uploader3 } from '@lxdao/uploader3';
 
 export default function Demo() {
   return (
@@ -8,13 +8,13 @@ export default function Demo() {
       <div>
         <Uploader3
           api={'/api/upload/file'}
-          onChange={(file: SelectedFile) => {
-            console.log('onChange', file);
+          onChange={(files) => {
+            console.log('onChange', files);
           }}
-          onUpload={(file: UploadFile) => {
+          onUpload={(file) => {
             console.log('onUpload', file);
           }}
-          onComplete={(result: UploadResult) => {
+          onComplete={(result) => {
             console.log('onComplete', result);
           }}
         >

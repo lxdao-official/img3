@@ -1,24 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  Connector,
-  createNFTStorageConnector,
-  CroppedFile,
-  SelectedFile,
-  SelectedFiles,
-  type,
-  Uploader3,
-  UploadFile,
-  UploadResult,
-} from 'uploader3';
+import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
+import { Uploader3 } from '@lxdao/uploader3';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
+import { createConnector, type Uploader3Connector } from '@lxdao/uploader3-connector';
 
 export default function Demo() {
   const [files, setFiles] = useState<Array<SelectedFile | UploadFile | UploadResult | CroppedFile>>([]);
 
   const [localToken, setLocalToken] = useState<string>('');
-  const connector = useRef<null | Connector>(null);
+  const connector = useRef<null | Uploader3Connector.Connector>(null);
 
   useEffect(() => {
     let token = localStorage.getItem('nft-storage-token');
@@ -30,7 +22,7 @@ export default function Demo() {
       }
     }
     setLocalToken(token!);
-    connector.current = createNFTStorageConnector({
+    connector.current = createConnector('NFT.storage', {
       token: localStorage.getItem('nft-storage-token') || '',
     });
   }, []);
@@ -46,11 +38,11 @@ export default function Demo() {
           crop={{
             aspectRatio: 4 / 3,
           }}
-          onChange={(files: SelectedFiles) => {
+          onChange={(files) => {
             console.log('onChange', files);
             setFiles(files);
           }}
-          onUpload={(file: UploadFile) => {
+          onUpload={(file) => {
             console.log('onUpload', file);
             setFiles((files) => {
               return files.map((f) => {
@@ -61,7 +53,7 @@ export default function Demo() {
               });
             });
           }}
-          onComplete={(file: UploadResult) => {
+          onComplete={(file) => {
             console.log('onComplete', file);
             setFiles((files) => {
               return files.map((f) => {
@@ -72,7 +64,7 @@ export default function Demo() {
               });
             });
           }}
-          onCropEnd={(file: CroppedFile) => {
+          onCropEnd={(file) => {
             console.log('onCropEnd', file);
             setFiles((files) => {
               return files.map((f) => {

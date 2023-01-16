@@ -1,72 +1,40 @@
-import crypto from 'crypto';
-import formidable from 'formidable';
-import fse from 'fs-extra';
 import { NextApiRequest, NextApiResponse } from 'next';
-import path from 'path';
+import { createConnector, Uploader3Connector } from '@lxdao/uploader3-connector';
 
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-const publicDir = path.join(process.cwd(), 'public');
+const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const data: {
-    err: string;
-    fields: {
-      imageBase64: string;
-      name: string;
-    };
-    files: formidable.Files;
-  } = await new Promise((resolve, reject) => {
-    const form = formidable();
+  const reqBody = req.body as Uploader3Connector.PostImageFile;
+  let { data: imageData = '', type } = reqBody;
 
-    form.parse(req, (err, fields, files) => {
-      if (err) reject({ err });
-      // @ts-ignore
-      resolve({ err, fields, files });
-    });
+  if (!imageData) {
+    res.status(400).json({ error: 'No image data' });
+    return;
+  }
+
+  if (!type) {
+    res.status(400).json({ error: 'No image type' });
+    return;
+  }
+
+  if (imageData.startsWith('data:image/')) {
+    imageData = imageData.replace(/^data:image\/\w+;base64,/, '');
+  }
+
+  const buffer = Buffer.from(imageData, 'base64');
+
+  // if buffer size > 2MB throw error
+  if (buffer.byteLength > 2 * 1024 * 1024) {
+    res.status(500).json({ error: 'file size > 2MB' });
+    return;
+  }
+
+  const result = await connector.postImage({ data: imageData, type }).catch((e) => {
+    res.status(500).json({ error: e.message });
+    return;
   });
 
-  if (data.err) {
-    res.status(500).json({ error: data.err });
-  } else {
-    let { imageBase64, name } = data.fields;
-
-    if (imageBase64.startsWith('data:image/')) {
-      imageBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
-    }
-
-    const buffer = Buffer.from(imageBase64, 'base64');
-
-    // if buffer size > 2MB throw error
-    if (buffer.byteLength > 2 * 1024 * 1024) {
-      res.status(500).json({ error: 'file size > 2MB' });
-      return;
-    }
-
-    const hash = crypto.createHash('md5').update(buffer).digest('hex');
-    const ext = path.extname(name);
-    const fileName = hash + ext;
-    const filePath = path.join(publicDir, fileName);
-
-    if (fse.existsSync(filePath)) {
-      // remove file
-      fse.unlinkSync(filePath);
-    }
-    fse.ensureFileSync(filePath);
-    await fse.writeFile(filePath, buffer);
-
-    const host = req.headers.host;
-
-    await sleep(1500);
-
-    res.status(200).json({ url: `//${host}/${fileName}` });
+  if (result) {
+    res.status(200).json({ url: result.url });
   }
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Icon } from '@iconify/react';
 
-import { convertIpfsToUrl, getFasterIpfsUrl } from './ipfs';
+import { convertIpfsToLink, getFasterIpfsLink } from './ipfsTools';
 
 const Placeholder = styled.div`
   position: relative;
@@ -35,10 +35,9 @@ export const Img3 = (props: Props) => {
 
   useEffect(() => {
     if (src.startsWith('ipfs://')) {
-      const hash = src.slice(7);
       // If specified, use the gateway
       if (gateway) {
-        convertIpfsToUrl({ gateway, hash, timeout }, (err, url) => {
+        convertIpfsToLink({ gateway, ipfs: src, timeout }, (err, url) => {
           if (err) {
             setLoadState('error');
           } else {
@@ -47,7 +46,7 @@ export const Img3 = (props: Props) => {
           }
         });
       } else {
-        getFasterIpfsUrl({ hash, timeout })
+        getFasterIpfsLink({ ipfs: src, timeout })
           .then((url) => {
             setLoadState('loaded');
             setImagePreviewUrl(url);

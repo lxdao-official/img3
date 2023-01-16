@@ -2,9 +2,11 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
+import { Uploader3Connector } from '@lxdao/uploader3-connector';
+
 import { file2base64 } from './file2base64';
-import { CroppedFile, SelectedFile, Uploader3Props } from './types';
-import { CroppInstance, UploaderCropp, UploaderCroppProps } from './UploaderCropp';
+import { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
+import { CroppInstance, UploaderCrop, UploaderCroppProps } from './UploaderCrop';
 import { useFiles } from './useEditFile';
 
 const Wrapper = styled.div`
@@ -41,7 +43,6 @@ export const Uploader3 = (props: Uploader3Props) => {
     onChange,
   } = props;
 
-  const isMultiple = useMemo(() => multiple || false, [multiple]);
   const {
     currentFile,
     currentIndex,
@@ -77,13 +78,13 @@ export const Uploader3 = (props: Uploader3Props) => {
           curFile.imageData = await file2base64(curFile.file);
         }
         onUpload?.(curFile);
+        const image: Uploader3Connector.PostImageFile = { data: curFile.imageData, type: curFile.type };
         if (api) {
-          const formData = new FormData();
-          formData.append('imageBase64', curFile.imageData);
-          formData.append('type', curFile.type);
-          formData.append('name', curFile.name);
-
-          return fetch(api, { method: 'POST', body: formData })
+          return fetch(api, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(image),
+          })
             .then(async (res) => {
               if (res.ok) {
                 const { url } = await res.json();
@@ -100,11 +101,7 @@ export const Uploader3 = (props: Uploader3Props) => {
             });
         } else if (connector) {
           return connector
-            .postImage({
-              imageData: curFile.imageData,
-              type: curFile.type,
-              name: curFile.name,
-            })
+            .postImage(image)
             .then((result) => {
               const { url, cid } = result;
               curFile = {
@@ -144,7 +141,7 @@ export const Uploader3 = (props: Uploader3Props) => {
     accept: { 'image/*': accept! },
     multiple,
     onDrop: async (acceptedFiles) => {
-      const files = acceptedFiles.map((file) => {
+      const files: SelectedFiles = acceptedFiles.map((file) => {
         return {
           name: file.name,
           type: file.type,
@@ -154,9 +151,8 @@ export const Uploader3 = (props: Uploader3Props) => {
         };
       });
 
-      const changedFiles = isMultiple ? files : files[0];
       setFiles(files);
-      onChange?.(changedFiles as any);
+      onChange?.(files);
 
       if (hasCrop) {
         setShowCrop(true);
@@ -190,7 +186,7 @@ export const Uploader3 = (props: Uploader3Props) => {
         <input {...getInputProps()} />
       </Wrapper>
       {currentFile && crop ? (
-        <UploaderCropp
+        <UploaderCrop
           ref={cropRef}
           size={crop.size!}
           aspectRatio={crop.aspectRatio!}
@@ -199,7 +195,7 @@ export const Uploader3 = (props: Uploader3Props) => {
           fileUrl={currentFile.previewUrl!}
           onCancel={handleCancel}
           onConfirm={handleConfirm}
-        ></UploaderCropp>
+        ></UploaderCrop>
       ) : null}
     </>
   );

@@ -1,13 +1,12 @@
-export const convertIpfsToUrl = (
-  options: { hash: string; gateway: string; timeout?: number },
+export const convertIpfsToLink = (
+  options: { ipfs: string; gateway: string; timeout?: number },
   callback: (err?: Error, url?: string) => void
 ) => {
-  let { hash, gateway, timeout = 2000 } = options;
+  let { ipfs, gateway, timeout = 2000 } = options;
   const xhr = new XMLHttpRequest();
-  if (gateway.endsWith('/')) {
-    gateway = gateway.slice(0, -1);
-  }
-  const url = `${gateway}/${hash}`;
+
+  // @see https://nft.storage/docs/concepts/gateways/#using-the-gateway
+  const url = ipfs.replace('ipfs://', gateway);
   xhr.open('GET', url, true);
 
   // timeout after 2 seconds aborting the request
@@ -44,11 +43,11 @@ const defaultGatewayList = [
 // cache in runtime
 let fasterGatewayCache = '';
 
-export const getFasterIpfsUrl = (options: { hash: string; timeout?: number; gateways?: string[] }) => {
-  const { hash, timeout, gateways = defaultGatewayList } = options;
+export const getFasterIpfsLink = (options: { ipfs: string; timeout?: number; gateways?: string[] }) => {
+  const { ipfs, timeout, gateways = defaultGatewayList } = options;
   const isFasterFetch = fasterGatewayCache !== '';
   return new Promise<string>((resolve, reject) => {
-    let tasks: Array<ReturnType<typeof convertIpfsToUrl> | null> = [];
+    let tasks: Array<ReturnType<typeof convertIpfsToLink> | null> = [];
     function fetchCallback(opts: { index: number; gateway: string }, err?: Error, url?: string) {
       const { index, gateway } = opts;
       if (err) {
@@ -57,7 +56,7 @@ export const getFasterIpfsUrl = (options: { hash: string; timeout?: number; gate
           if (isFasterFetch) {
             fasterGatewayCache = '';
             // If faster ipfs fetch failed, try again with default gateway list
-            getFasterIpfsUrl(options).then(resolve, reject);
+            getFasterIpfsLink(options).then(resolve, reject);
           } else {
             reject(err);
           }
@@ -76,7 +75,7 @@ export const getFasterIpfsUrl = (options: { hash: string; timeout?: number; gate
     const taskGatewayList = fasterGatewayCache ? [fasterGatewayCache] : gateways;
 
     tasks = taskGatewayList.map((gateway, index) => {
-      return convertIpfsToUrl({ hash, gateway, timeout }, (err, url) => {
+      return convertIpfsToLink({ ipfs, gateway, timeout }, (err, url) => {
         fetchCallback({ index, gateway }, err, url);
       });
     });

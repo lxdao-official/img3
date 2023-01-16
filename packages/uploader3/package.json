@@ -1,5 +1,5 @@
 {
-  "name": "uploader3",
+  "name": "@lxdao/uploader3",
   "version": "0.0.0",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -15,7 +15,9 @@
     "@types/styled-components": "^5.1.26",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-is": "^18.2.0"
+    "react-is": "^18.2.0",
+    "tsconfig": "workspace:*",
+    "@lxdao/uploader3-connector": "workspace:*"
   },
   "dependencies": {
     "@iconify/react": "^4.0.1",
@@ -23,7 +25,6 @@
     "lodash.clonedeep": "^4.5.0",
     "nft.storage": "^7.0.0",
     "react-dropzone": "^14.2.3",
-    "styled-components": "^5.3.6",
-    "tsconfig": "workspace:*"
+    "styled-components": "^5.3.6"
   }
 }

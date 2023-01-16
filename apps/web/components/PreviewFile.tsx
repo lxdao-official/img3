@@ -1,7 +1,7 @@
-import { CroppedFile, SelectedFile, UploadResult, UploadFile } from 'uploader3';
+import { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
 import { Icon } from '@iconify/react';
 import React from 'react';
-import { Img3 } from 'img3';
+import { Img3 } from '@lxdao/img3';
 import styled from 'styled-components';
 
 export const PreviewFile = (props: {
