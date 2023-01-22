@@ -4,6 +4,7 @@ import { Uploader3 } from '@lxdao/uploader3';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
+import { PreviewWraper } from '@/components/PreviewWraper';
 
 export default function Demo() {
   const [files, setFiles] = useState<Array<SelectedFile | UploadFile | UploadResult | CroppedFile>>([]);
@@ -57,28 +58,13 @@ export default function Demo() {
             <span style={{ paddingLeft: 10 }}>Drop files or Click to select files</span>
           </div>
         </Uploader3>
-        <div style={{ display: 'flex', padding: '20px 0' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', padding: '20px 0' }}>
           {files.map((file) => {
             if (file) {
               return (
-                <div
-                  key={file.name + file.status}
-                  data-status={file.status}
-                  style={{
-                    width: 150,
-                    height: 120,
-                    backgroundColor: '#dcdcdc',
-                    color: '#333',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    border: '2px solid #fff',
-                    position: 'relative',
-                    marginRight: 10,
-                  }}
-                >
+                <PreviewWraper key={file.name + file.status} data-status={file.status}>
                   <PreviewFile file={file} />
-                </div>
+                </PreviewWraper>
               );
             } else {
               return null;

@@ -6,6 +6,7 @@ import { createConnector } from '@lxdao/uploader3-connector';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
+import { PreviewWraper } from '@/components/PreviewWraper';
 
 export default function Demo() {
   const [file, setFile] = useState<SelectedFile | UploadFile | UploadResult | CroppedFile | null>();
@@ -60,19 +61,7 @@ export default function Demo() {
             setFile(file);
           }}
         >
-          <div
-            style={{
-              width: 200,
-              height: 200,
-              backgroundColor: '#dcdcdc',
-              color: '#333',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              border: '2px solid #fff',
-              position: 'relative',
-            }}
-          >
+          <PreviewWraper>
             {file ? (
               <PreviewFile file={file} />
             ) : (
@@ -80,7 +69,7 @@ export default function Demo() {
                 <Icon icon={'material-symbols:cloud-upload'} color={'#65a2fa'} fontSize={60} />
               </span>
             )}
-          </div>
+          </PreviewWraper>
         </Uploader3>
       </div>
     </div>
