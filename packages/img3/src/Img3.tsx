@@ -10,22 +10,29 @@ const Placeholder = styled.div`
   display: inline-block;
 `;
 
-type Props = {
+type Img3Props = {
   style?: React.CSSProperties;
-  alt?: string;
-  gateway?: string;
   className?: string;
   src: string;
+  alt?: string;
+  /** Specifies the gateway of ipfs. */
+  gateway?: string;
+  /** Interactive icon style. */
   icon?: {
+    /** icon size. */
     size?: number;
+    /** icon color. */
     color?: string;
-    errorColor?: string;
+    /** error icon size. */
     errorSize?: number;
+    /** error icon color. */
+    errorColor?: string;
   };
+  /** The timeout for the ipfs file request. default: 2000 */
   timeout?: number;
 };
 
-export const Img3 = (props: Props) => {
+export const Img3 = (props: Img3Props) => {
   const { style, src = '', gateway, alt, className, timeout } = props;
 
   const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);

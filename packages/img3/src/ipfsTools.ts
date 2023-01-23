@@ -33,7 +33,7 @@ export const convertIpfsToLink = (
   };
 };
 
-const defaultGatewayList = [
+const defaultGateways = [
   'https://nftstorage.link/ipfs/',
   'https://ipfs-gateway.cloud/ipfs/',
   'https://gateway.pinata.cloud/ipfs/',
@@ -44,7 +44,7 @@ const defaultGatewayList = [
 let fasterGatewayCache = '';
 
 export const getFasterIpfsLink = (options: { ipfs: string; timeout?: number; gateways?: string[] }) => {
-  const { ipfs, timeout, gateways = defaultGatewayList } = options;
+  const { ipfs, timeout, gateways = defaultGateways } = options;
   const isFasterFetch = fasterGatewayCache !== '';
   return new Promise<string>((resolve, reject) => {
     let tasks: Array<ReturnType<typeof convertIpfsToLink> | null> = [];

@@ -263,7 +263,7 @@ const CroppModal = styled.div<{ modalStatus: ModalStatus }>`
   --u3-border-radius: 5px;
 
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
-  position: absolute;
+  position: fixed;
   top: 10%;
   left: 50%;
   transform: translate3d(-50%, -0%, 0);
@@ -350,7 +350,6 @@ const Action = styled.div<{ active?: boolean }>`
   line-height: 0;
   align-items: center;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
-
   &:hover {
     background-color: var(--u3-action-bg-color-active);
   }
@@ -359,7 +358,8 @@ const Action = styled.div<{ active?: boolean }>`
 const Ratio = styled.div<{ active?: boolean }>`
   border: 1px solid var(--u3-action-text-color);
   display: block;
-  height: 16px;
+  height: 20px;
+  box-sizing: border-box;
   transform: scale(0.82);
   line-height: 16px;
   padding: 1px 2px;

@@ -42,8 +42,17 @@ export type Uploader3Props = {
   className?: string;
   style?: React.CSSProperties;
   multiple?: boolean;
+  /**
+   * API endpoint to upload service.
+   */
   api?: string;
+  /**
+   * The connector of uploader3
+   */
   connector?: Uploader3Connector.Connector;
+  /**
+   * crop options
+   */
   crop?: { size?: { width: number; height: number }; aspectRatio?: number } | boolean;
   /**
    * image accept file type, default is ['.png', '.jpeg', '.jpg', '.gif']
@@ -65,7 +74,14 @@ export type Uploader3Props = {
    * @param urls
    */
   onComplete?: (file: UploadResult) => void;
-
+  /**
+   * after crop file trigger
+   * @param file
+   */
   onCropEnd?: (file: CroppedFile) => void;
+  /**
+   * after cancel crop file trigger
+   * @param file
+   */
   onCropCancel?: (file: SelectedFile) => void;
 };
