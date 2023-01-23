@@ -4,7 +4,7 @@ import { Uploader3 } from '@lxdao/uploader3';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { Icon } from '@iconify/react';
-import { PreviewWraper } from '@/components/PreviewWraper';
+import { PreviewWrapper } from '@/components/PreviewWrapper';
 
 export default function Demo() {
   const [files, setFiles] = useState<Array<SelectedFile | UploadFile | UploadResult | CroppedFile>>([]);
@@ -62,9 +62,9 @@ export default function Demo() {
           {files.map((file) => {
             if (file) {
               return (
-                <PreviewWraper key={file.name + file.status} data-status={file.status}>
+                <PreviewWrapper key={file.name + file.status} data-status={file.status}>
                   <PreviewFile file={file} />
-                </PreviewWraper>
+                </PreviewWrapper>
               );
             } else {
               return null;

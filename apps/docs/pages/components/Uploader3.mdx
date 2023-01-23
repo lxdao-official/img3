@@ -1,0 +1,82 @@
+import { Callout } from 'nextra-theme-docs';
+
+# Uploader3
+
+An image upload React Component.
+
+**Features**
+
+- Supports cropping
+- Supports uploading to web3 service providers, such as NFT.storage
+
+## Import
+
+```js copy
+import { Uploader3 } from '@lxdao/uploader3';
+```
+
+## Props
+
+| Prop         | Type                 | Required | Description                                            | Default                          |
+| ------------ | -------------------- | -------- | ------------------------------------------------------ | -------------------------------- |
+| accept       | `string`             | ❌       | image accept file type                                 | `['.png','.jpeg','.jpg','.gif']` |
+| multiple     | `boolean`            | ❌       | multiple image upload                                  | `false`                          |
+| api          | `string`             | ❌       | endpoint upload api url                                | `''`                             |
+| connector    | `object`             | ❌       | create by [uploader3-connector](./uploader3-connector) | `null`                           |
+| crop         | `object` / `boolean` | ❌       | crop config, set `false` disabled crop                 | `true`                           |
+| onChange     | `function`           | ❌       | callback when files selected                           | `null`                           |
+| onUpload     | `function`           | ❌       | callback when file uploading                           | `null`                           |
+| onComplete   | `function`           | ❌       | callback when file uploaded                            | `null`                           |
+| onCropEnd    | `function`           | ❌       | callback when crop end                                 | `null`                           |
+| onCropCancel | `function`           | ❌       | callback when crop cancel                              | `null`                           |
+
+<Callout type="info" emoji="ℹ️">
+  `api` and `connector` are mutually exclusive, if both are provided, `api` will be used. must be provided one of them.
+</Callout>
+
+## Examples
+
+import { LiveCode } from '../../components/LiveCode';
+import { Embed } from '../../components/Embed';
+import { Uploader3 } from '@lxdao/uploader3';
+
+### Basic
+
+<LiveCode
+  scope={{ Uploader3 }}
+  code={`function Basic() {
+  return (
+    <Uploader3
+      api={'/api/upload/file'}
+      onChange={(files) => {
+        console.log('onChange', files);
+      }}
+      onUpload={(file) => {
+        console.log('onUpload', file);
+      }}
+      onComplete={(result) => {
+        console.log('onComplete', result);
+      }}
+    >
+      <div
+        style={{
+          borderRadius: 5,
+          padding: '20px',
+          display: 'inline-block',
+          boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.8) inset',
+          backgroundColor: '#0987ff',
+          color: '#fff',
+        }}
+      >
+        Drop files or Click to select files
+      </div>
+    </Uploader3>
+  );
+}`}
+/>
+
+### Single file upload
+
+Single file upload and preview image
+
+<Embed />

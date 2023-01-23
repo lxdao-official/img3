@@ -4,9 +4,7 @@ export declare namespace Uploader3Connector {
     type: 'image/png' | 'image/jpeg' | 'image/gif' | 'image/jpg';
   }
 
-  function postImage(image: PostImageFile): Promise<{ cid: string; url: string }>;
-
   type Connector = {
-    postImage: typeof postImage;
+    postImage: (image: PostImageFile) => Promise<{ cid: string; url: string }>;
   };
 }

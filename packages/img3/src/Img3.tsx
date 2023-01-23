@@ -33,7 +33,7 @@ type Img3Props = {
 };
 
 export const Img3 = (props: Img3Props) => {
-  const { style, src = '', gateway, alt, className, timeout } = props;
+  const { style, src = '', gateway, alt, className, timeout = 2000 } = props;
 
   const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);
 
@@ -102,8 +102,4 @@ export const Img3 = (props: Img3Props) => {
     );
   }
   return <img className={className} style={{ display: 'inline-block', ...style }} src={imagePreviewUrl} alt={alt} />;
-};
-
-Img3.defaultProps = {
-  timeout: 2000,
 };

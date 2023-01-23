@@ -1,0 +1,97 @@
+# Img3
+
+A React component for displaying images, like `<img />`, but supports the `ipfs://` protocol.
+
+**Features**
+
+- Supports the `ipfs://` protocol.
+- Automatically uses the gateway with the highest speed, And reuse it the next request.
+
+```jsx
+const defaultGateways = [
+  'https://nftstorage.link/ipfs/',
+  'https://ipfs-gateway.cloud/ipfs/',
+  'https://gateway.pinata.cloud/ipfs/',
+  'https://4everland.io/ipfs/',
+];
+```
+
+## Import
+
+```js copy
+import { Img3 } from '@lxdao/img3';
+```
+
+## Props
+
+| Prop    | Type          | Required | Description                              | Default                        |
+| ------- | ------------- | -------- | ---------------------------------------- | ------------------------------ |
+| src     | `string`      | ✅       | image source, support `ipfs://` protocol | -                              |
+| alt     | `string`      | ❌       | image alt text                           | -                              |
+| gateway | `string`      | ❌       | Specifies the gateway of `ipfs://`       | -                              |
+| timeout | `number`      | ❌       | Specifies the timeout of gateway request | `2000`                         |
+| icon    | [Icon](#icon) | ❌       | Specifies the icon of loading or error   | `{size: 30, color: '#c0c0c0'}` |
+
+### Type reference
+
+#### Icon
+
+```ts
+type Icon = {
+  /** icon size. */
+  size?: number;
+  /** icon color. */
+  color?: string;
+  /** error icon size. */
+  errorSize?: number;
+  /** error icon color. */
+  errorColor?: string;
+};
+```
+
+## Examples
+
+import { Img3 } from '@lxdao/img3';
+import { LiveCode } from '../../components/LiveCode';
+
+### Basic
+
+<LiveCode
+  scope={{ Img3 }}
+  code={`
+  <Img3
+    src="https://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy.ipfs.nftstorage.link/"
+    style={{ height: 100, width: 100, borderRadius: 5 }}
+  />
+ `}
+/>
+
+### IPFS file
+
+<LiveCode
+  scope={{ Img3 }}
+  code={`
+  <Img3
+    src="ipfs://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy"
+    style={{ height: 100, width: 100, borderRadius: 5 }}
+   />
+`}
+/>
+
+### IPFS file with custom gateway
+
+<LiveCode
+  code={`<Img3
+  src="ipfs://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy"
+  gateway="https://pinata.cloud/ipfs/"
+  style={{ height: 100, width: 100, borderRadius: 5, backgroundColor: '#f2f4f6' }}
+  icon={{
+    size: 50,
+    color: '#000',
+    errorColor: '#f00',
+    errorSize: 50
+  }}
+/>
+`}
+  scope={{ Img3 }}
+/>

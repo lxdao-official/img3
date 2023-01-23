@@ -1,0 +1,114 @@
+# uploader3-connector
+
+This is a connector for [Uploader3](./Uploader3)
+
+Supported service provider
+
+- [NFT.storage](https://nft.storage/)
+
+## Import
+
+```js copy
+import { createConnector } from '@lxdao/uploader3-connector';
+```
+
+## API
+
+### createConnector
+
+Create a connector for Uploader3
+
+```ts
+export const createConnector: (service: 'NFT.storage', options: { token: string }) => Connector;
+```
+
+## Types reference
+
+### Connector
+
+```ts
+interface PostImageFile {
+  /** base64 encoded image file */
+  data: string;
+  /** file type */
+  type: 'image/png' | 'image/jpeg' | 'image/gif' | 'image/jpg';
+}
+
+export type Connector = {
+  postImage: (image: PostImageFile) => Promise<{ cid: string; url: string }>;
+};
+```
+
+## Examples
+
+### Use with Uploader3
+
+```jsx filename="app.txs" copy
+import { createConnector } from '@lxdao/uploader3-connector';
+import { Uploader3 } from '@lxdao/uploader3';
+
+export default function App() {
+  const connector = createConnector('NFT.storage', {
+    token: 'YOUR_TOKEN
+  });
+
+  return (
+    <Uploader3 connector={connector}>
+      {'...'}
+    </Uploader3>
+  );
+}
+```
+
+### Use with Next.js api routes
+
+```tsx filename="src/api/upload.tx" copy
+import { NextApiRequest, NextApiResponse } from 'next';
+import { createConnector, Uploader3Connector } from '@lxdao/uploader3-connector';
+
+const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const reqBody = req.body as Uploader3Connector.PostImageFile;
+  let { data: imageData = '', type } = reqBody;
+
+  if (!imageData) {
+    res.status(400).json({ error: 'No image data' });
+    return;
+  }
+
+  if (!type) {
+    res.status(400).json({ error: 'No image type' });
+    return;
+  }
+
+  if (imageData.startsWith('data:image/')) {
+    imageData = imageData.replace(/^data:image\/\w+;base64,/, '');
+  }
+
+  const buffer = Buffer.from(imageData, 'base64');
+
+  // if buffer size > 2MB throw error
+  if (buffer.byteLength > 2 * 1024 * 1024) {
+    res.status(500).json({ error: 'file size > 2MB' });
+    return;
+  }
+
+  const result = await connector.postImage({ data: imageData, type }).catch((e) => {
+    res.status(500).json({ error: e.message });
+    return;
+  });
+
+  if (result) {
+    res.status(200).json({ url: result.url });
+  }
+};
+```
+
+```jsx filename="app.txs" copy
+import { Uploader3 } from '@lxdao/uploader3';
+
+export default function App() {
+  return <Uploader3 api={'/api/upload'}>{'...'}</Uploader3>;
+}
+```
