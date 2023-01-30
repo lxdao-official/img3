@@ -51,13 +51,9 @@ type Icon = {
 
 ## Examples
 
-import { Img3 } from '@lxdao/img3';
-import { LiveCode } from '../../components/LiveCode';
-
 ### Basic
 
-<LiveCode
-  scope={{ Img3 }}
+<Playground
   code={`
   <Img3
     src="https://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy.ipfs.nftstorage.link/"
@@ -68,8 +64,7 @@ import { LiveCode } from '../../components/LiveCode';
 
 ### IPFS file
 
-<LiveCode
-  scope={{ Img3 }}
+<Playground
   code={`
   <Img3
     src="ipfs://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy"
@@ -80,7 +75,7 @@ import { LiveCode } from '../../components/LiveCode';
 
 ### IPFS file with custom gateway
 
-<LiveCode
+<Playground
   code={`<Img3
   src="ipfs://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy"
   gateway="https://pinata.cloud/ipfs/"
@@ -93,5 +88,4 @@ import { LiveCode } from '../../components/LiveCode';
   }}
 />
 `}
-  scope={{ Img3 }}
 />
