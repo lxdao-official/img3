@@ -9,7 +9,7 @@
     "test": "echo 0; exit 0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.12",
+    "@types/node": "^17.0.45",
     "tsconfig": "workspace:*"
   },
   "dependencies": {
