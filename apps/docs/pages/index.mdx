@@ -1,7 +1,12 @@
-import { Button, Grid, Spacer } from '@nextui-org/react';
-import Link from 'next/link';
+---
+title: Img3
+---
 
-<Grid.Container gap={2} justify="center" alignItems={'center'} direction={'column'}>
+import { Button, Container, Spacer } from '@nextui-org/react';
+import Link from 'next/link';
+import { LXDAOIntroduction } from 'lxdao-ui';
+
+<Container display={'flex'} direction={'column'} justify={'center'} alignItems={'center'}>
   <h1 align="center" style={{ fontSize: 60, padding: '100px 0', fontWeight: 700 }}>
     LXDAO Img3
   </h1>
@@ -9,4 +14,5 @@ import Link from 'next/link';
     <Button size={'xl'}>Getting started</Button>
   </Link>
   <Spacer y={2} />
-</Grid.Container>
+  <LXDAOIntroduction />
+</Container>

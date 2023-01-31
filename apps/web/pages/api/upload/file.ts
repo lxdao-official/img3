@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { createConnector, Uploader3Connector } from '@lxdao/uploader3-connector';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { createConnector, type Uploader3Connector } from '@lxdao/uploader3-connector';
 
 const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const reqBody = req.body as Uploader3Connector.PostImageFile;
+  const reqBody = <Uploader3Connector.PostImageFile>req.body;
   let { data: imageData = '', type } = reqBody;
 
   if (!imageData) {
@@ -31,7 +31,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const result = await connector.postImage({ data: imageData, type }).catch((e) => {
     res.status(500).json({ error: e.message });
-    return;
   });
 
   if (result) {

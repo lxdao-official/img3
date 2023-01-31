@@ -1,12 +1,22 @@
+---
+title: uploader3-connector
+description: Uploader3 Connector is a connector for Uploader3. Currently, it only supports NFT.storage IPFS service provider.
+---
+
 # uploader3-connector
 
-This is a connector for [Uploader3](./Uploader3)
+Uploader3 Connector is a connector for [Uploader3](./Uploader3). Currently, it only supports [NFT.storage](http://NFT.storage) IPFS service provider.
 
 Supported service provider
 
 - [NFT.storage](https://nft.storage/)
 
-## Import
+<Callout>
+  Support Img3 and list here? Contact [@muxin](https://twitter.com/muxin_eth) or create a ticket in [LXDAO
+  DC](https://discord.lxdao.io).
+</Callout>
+
+## Usage
 
 ```js copy
 import { createConnector } from '@lxdao/uploader3-connector';
@@ -16,7 +26,7 @@ import { createConnector } from '@lxdao/uploader3-connector';
 
 ### createConnector
 
-Create a connector for Uploader3
+Create a connector for Uploader3 upload service.
 
 ```ts
 export const createConnector: (service: 'NFT.storage', options: { token: string }) => Connector;
@@ -43,33 +53,34 @@ export type Connector = {
 
 ### Use with Uploader3
 
-```jsx filename="app.txs" copy
+```jsx filename="App.txs" copy
 import { createConnector } from '@lxdao/uploader3-connector';
 import { Uploader3 } from '@lxdao/uploader3';
 
 export default function App() {
   const connector = createConnector('NFT.storage', {
-    token: 'YOUR_TOKEN
+    token: 'YOUR_TOKEN',
   });
 
-  return (
-    <Uploader3 connector={connector}>
-      {'...'}
-    </Uploader3>
-  );
+  return <Uploader3 connector={connector}>{'...'}</Uploader3>;
 }
 ```
 
 ### Use with Next.js api routes
 
-```tsx filename="src/api/upload.tx" copy
-import { NextApiRequest, NextApiResponse } from 'next';
-import { createConnector, Uploader3Connector } from '@lxdao/uploader3-connector';
+You can refer to the following code to install **uploader3-connector** on other servers.
+
+<Tabs items={['src/api/upload.ts', 'App.tsx']}>
+<Tab>
+
+```ts copy
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { createConnector, type Uploader3Connector } from '@lxdao/uploader3-connector';
 
 const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const reqBody = req.body as Uploader3Connector.PostImageFile;
+  const reqBody = <Uploader3Connector.PostImageFile>req.body;
   let { data: imageData = '', type } = reqBody;
 
   if (!imageData) {
@@ -96,7 +107,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const result = await connector.postImage({ data: imageData, type }).catch((e) => {
     res.status(500).json({ error: e.message });
-    return;
   });
 
   if (result) {
@@ -105,10 +115,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 };
 ```
 
-```jsx filename="app.txs" copy
+</Tab>
+
+<Tab>
+
+```jsx copy
 import { Uploader3 } from '@lxdao/uploader3';
 
 export default function App() {
   return <Uploader3 api={'/api/upload'}>{'...'}</Uploader3>;
 }
 ```
+
+</Tab>
+</Tabs>
