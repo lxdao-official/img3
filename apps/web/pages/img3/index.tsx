@@ -27,11 +27,8 @@ export default function Demo() {
       <Img3
         style={{ height: 200, width: 200, border: '1px solid #99a00a' }}
         src={'ipfs://bafkreidpunfemg2foalobiurfob4v6rdb4i3fmujvj5lpnzahfo3a4mxmy'}
-        gateway={'https://ipfs.io/ipfs/'}
-        icon={{
-          size: 80,
-          color: '#a8cbff',
-        }}
+        gateways={['https://ipfs.io/ipfs/']}
+        icon={{ size: 80, color: '#a8cbff' }}
         timeout={3000}
       />
       {show && (

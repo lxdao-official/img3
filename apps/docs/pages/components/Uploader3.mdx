@@ -39,42 +39,16 @@ import { Uploader3 } from '@lxdao/uploader3';
 
 ## Examples
 
+import uploader3Examples from '@/examples/uploader3/';
+
 ### Basic
 
-<Playground
-  code={`function Basic() {
-  return (
-    <Uploader3
-      api={'/api/upload/file'}
-      onChange={(files) => {
-        console.log('onChange', files);
-      }}
-      onUpload={(file) => {
-        console.log('onUpload', file);
-      }}
-      onComplete={(result) => {
-        console.log('onComplete', result);
-      }}
-    >
-      <div
-        style={{
-          borderRadius: 5,
-          padding: '20px',
-          display: 'inline-block',
-          boxShadow: '0 0 2px 0 rgba(0, 0, 0, 0.8) inset',
-          backgroundColor: '#0987ff',
-          color: '#fff',
-        }}
-      >
-        Drop files or Click to select files
-      </div>
-    </Uploader3>
-  );
-}`}
-/>
+Uploader3 children is a button, you can use any component as children.
+
+<Playground files={uploader3Examples.basic} />
 
 ### Single file upload
 
-Single file upload and preview image
+Upload a single image, crop it to a 1:1 ratio, and preview it.
 
-<Embed />
+<Playground files={uploader3Examples.single} />

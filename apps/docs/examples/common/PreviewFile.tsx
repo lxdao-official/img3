@@ -1,4 +1,5 @@
-import { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
+export const PreviewFile = `
+import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
 import { Icon } from '@iconify/react';
 import React from 'react';
 import { Img3 } from '@lxdao/img3';
@@ -38,7 +39,7 @@ export const PreviewFile = (props: {
   );
 };
 
-const Status = styled.div`
+const Status = styled.div\`
   position: absolute;
   top: 0;
   left: 0;
@@ -49,4 +50,5 @@ const Status = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
+\`;
 `;

@@ -1,24 +1,8 @@
 import { useRouter } from 'next/router';
-import { useConfig, Callout, Tabs, Tab } from 'nextra-theme-docs';
-
-import { Img3 } from '@lxdao/img3';
-import { Uploader3 } from '@lxdao/uploader3';
-
-import { LiveCode } from './components/LiveCode';
+import { useConfig } from 'nextra-theme-docs';
 import { Logo } from './components/Logo';
-import { Embed } from './components/Embed';
 
-const MDXComponents = {
-  Callout,
-  Tabs,
-  Tab,
-  Img3,
-  Uploader3,
-  Playground: function (props) {
-    return <LiveCode {...props} scope={{ Img3, Uploader3 }} />;
-  },
-  Embed,
-};
+import MDXComponents from './mdxComponents';
 
 export default {
   logo: Logo,

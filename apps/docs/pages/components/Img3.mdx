@@ -14,15 +14,6 @@ ar soon.
 - Supports the `ipfs://` protocol.
 - Automatically uses the gateway with the highest speed, And reuse it the next request.
 
-```jsx
-const defaultGateways = [
-  'https://nftstorage.link/ipfs/',
-  'https://ipfs-gateway.cloud/ipfs/',
-  'https://gateway.pinata.cloud/ipfs/',
-  'https://4everland.io/ipfs/',
-];
-```
-
 ## Usage
 
 ```js copy
@@ -31,13 +22,22 @@ import { Img3 } from '@lxdao/img3';
 
 ## Props
 
-| Prop    | Type            | Description                              | Default                        |
-| ------- | --------------- | ---------------------------------------- | ------------------------------ |
-| src     | `string`        | image source, support `ipfs://` protocol | -                              |
-| alt     | `string`        | image alt text                           | -                              |
-| gateway | `string`        | Specifies the gateway of `ipfs://`       | -                              |
-| timeout | `number`        | Specifies the timeout of gateway request | `2000`                         |
-| icon    | [`Icon`](#icon) | Specifies the icon of loading or error   | `{size: 30, color: '#c0c0c0'}` |
+| Prop     | Type            | Description                              | Default                        |
+| -------- | --------------- | ---------------------------------------- | ------------------------------ |
+| src      | `string`        | image source, support `ipfs://` protocol | -                              |
+| alt      | `string`        | image alt text                           | -                              |
+| gateways | `string[]`      | Overwrite gateways                       | **defaultGateways**            |
+| timeout  | `number`        | Specifies the timeout of gateway request | `2000`                         |
+| icon     | [`Icon`](#icon) | Specifies the icon of loading or error   | `{size: 30, color: '#c0c0c0'}` |
+
+```jsx
+const defaultGateways = [
+  'https://nftstorage.link/ipfs/',
+  'https://ipfs-gateway.cloud/ipfs/',
+  'https://gateway.pinata.cloud/ipfs/',
+  'https://4everland.io/ipfs/',
+];
+```
 
 ### Type reference
 
@@ -60,39 +60,20 @@ type Icon = {
 
 ### Basic
 
-<Playground
-  code={`
-  <Img3
-    src="https://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy.ipfs.nftstorage.link/"
-    style={{ height: 100, width: 100, borderRadius: 5 }}
-  />
- `}
-/>
+No difference from a normal `img` tag.
 
-### IPFS file
+import img3Examples from '@/examples/img3/';
 
-<Playground
-  code={`
-  <Img3
-    src="ipfs://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy"
-    style={{ height: 100, width: 100, borderRadius: 5 }}
-   />
-`}
-/>
+<Playground files={img3Examples.basic} />
 
-### IPFS file with custom gateway
+### IPFS protocol
 
-<Playground
-  code={`<Img3
-  src="ipfs://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy"
-  gateway="https://pinata.cloud/ipfs/"
-  style={{ height: 100, width: 100, borderRadius: 5, backgroundColor: '#f2f4f6' }}
-  icon={{
-    size: 50,
-    color: '#000',
-    errorColor: '#f00',
-    errorSize: 50
-  }}
-/>
-`}
-/>
+`ipfs://` protocol will be automatically replaced with the fastest gateway.
+
+<Playground files={img3Examples.ipfs} />
+
+### Overwrite gateways
+
+You can overwrite the default gateways.
+
+<Playground files={img3Examples.gateways} />
