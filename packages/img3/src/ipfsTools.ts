@@ -1,3 +1,5 @@
+import { defaultGateways } from './defaultGateways';
+
 export const convertIpfsToLink = (
   options: { ipfs: string; gateway: string; timeout?: number },
   callback: (err?: Error, url?: string) => void
@@ -33,19 +35,14 @@ export const convertIpfsToLink = (
   };
 };
 
-const defaultGateways = [
-  'https://nftstorage.link/ipfs/',
-  'https://ipfs-gateway.cloud/ipfs/',
-  'https://gateway.pinata.cloud/ipfs/',
-  'https://4everland.io/ipfs/',
-];
-
 // cache in runtime
 let fasterGatewayCache = '';
 
 export const getFasterIpfsLink = (options: { ipfs: string; timeout?: number; gateways?: string[] }) => {
   const { ipfs, timeout, gateways = defaultGateways } = options;
-  const isFasterFetch = fasterGatewayCache !== '';
+  const inGateways = gateways.indexOf(fasterGatewayCache) !== -1;
+  let isFasterFetch = fasterGatewayCache !== '';
+
   return new Promise<string>((resolve, reject) => {
     let tasks: Array<ReturnType<typeof convertIpfsToLink> | null> = [];
     function fetchCallback(opts: { index: number; gateway: string }, err?: Error, url?: string) {
@@ -72,7 +69,7 @@ export const getFasterIpfsLink = (options: { ipfs: string; timeout?: number; gat
       }
     }
 
-    const taskGatewayList = fasterGatewayCache ? [fasterGatewayCache] : gateways;
+    const taskGatewayList = fasterGatewayCache && inGateways ? [fasterGatewayCache] : gateways;
 
     tasks = taskGatewayList.map((gateway, index) => {
       return convertIpfsToLink({ ipfs, gateway, timeout }, (err, url) => {

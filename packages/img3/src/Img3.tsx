@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Icon } from '@iconify/react';
 
-import { convertIpfsToLink, getFasterIpfsLink } from './ipfsTools';
+import { getFasterIpfsLink } from './ipfsTools';
 
 const Placeholder = styled.div`
   position: relative;
@@ -15,8 +15,8 @@ type Img3Props = {
   className?: string;
   src: string;
   alt?: string;
-  /** Specifies the gateway of ipfs. */
-  gateway?: string;
+  /** Overwrite gateways . */
+  gateways?: string[];
   /** Interactive icon style. */
   icon?: {
     /** icon size. */
@@ -33,7 +33,7 @@ type Img3Props = {
 };
 
 export const Img3 = (props: Img3Props) => {
-  const { style, src = '', gateway, alt, className, timeout = 2000 } = props;
+  const { style, src = '', gateways, alt, className, timeout = 2000 } = props;
 
   const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);
 
@@ -43,25 +43,14 @@ export const Img3 = (props: Img3Props) => {
   useEffect(() => {
     if (src.startsWith('ipfs://')) {
       // If specified, use the gateway
-      if (gateway) {
-        convertIpfsToLink({ gateway, ipfs: src, timeout }, (err, url) => {
-          if (err) {
-            setLoadState('error');
-          } else {
-            setLoadState('loaded');
-            setImagePreviewUrl(url!);
-          }
+      getFasterIpfsLink({ ipfs: src, timeout, gateways })
+        .then((url) => {
+          setLoadState('loaded');
+          setImagePreviewUrl(url);
+        })
+        .catch(() => {
+          setLoadState('error');
         });
-      } else {
-        getFasterIpfsLink({ ipfs: src, timeout })
-          .then((url) => {
-            setLoadState('loaded');
-            setImagePreviewUrl(url);
-          })
-          .catch(() => {
-            setLoadState('error');
-          });
-      }
     } else {
       setLoadState('not-ipfs');
       setImagePreviewUrl(src);
