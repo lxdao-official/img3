@@ -27,13 +27,19 @@ const defaultCropOptions = {
   aspectRatio: 1,
 };
 
+const Uploader3DefaultProps = {
+  multiple: false,
+  accept: ['.jpg', '.jpeg', '.png', '.gif'],
+  crop: true,
+};
+
 export const Uploader3 = (props: Uploader3Props) => {
   const {
     children,
     className,
     style,
-    multiple = false,
-    accept = ['.jpg', '.jpeg', '.png', '.gif'],
+    multiple,
+    accept,
     api,
     connector,
     onComplete,
@@ -53,12 +59,13 @@ export const Uploader3 = (props: Uploader3Props) => {
   } = useFiles<any[]>([]);
   const cropRef = useRef<CroppInstance>(null);
 
-  let crop: any = props.crop;
-  if (crop === true) {
-    crop = defaultCropOptions;
+  let cropOptions: any = props.crop;
+
+  if (cropOptions === true) {
+    cropOptions = defaultCropOptions;
   }
 
-  const hasCrop = useMemo(() => !!props.crop || false, [props.crop]);
+  const enableCrop = useMemo(() => !!cropOptions || false, [cropOptions]);
   const [showCrop, setShowCrop] = useState(false);
 
   const triggerComplete = (file: any) => {
@@ -154,7 +161,7 @@ export const Uploader3 = (props: Uploader3Props) => {
       setFiles(files);
       onChange?.(files);
 
-      if (hasCrop) {
+      if (enableCrop) {
         setShowCrop(true);
       } else {
         doUpload(files);
@@ -185,11 +192,11 @@ export const Uploader3 = (props: Uploader3Props) => {
         {children}
         <input {...getInputProps()} />
       </Wrapper>
-      {currentFile && crop ? (
+      {currentFile && cropOptions ? (
         <UploaderCrop
           ref={cropRef}
-          size={crop.size!}
-          aspectRatio={crop.aspectRatio!}
+          size={cropOptions.size!}
+          aspectRatio={cropOptions.aspectRatio!}
           show={showCrop}
           fileType={currentFile.type}
           fileUrl={currentFile.previewUrl!}
@@ -200,3 +207,5 @@ export const Uploader3 = (props: Uploader3Props) => {
     </>
   );
 };
+
+Uploader3.defaultProps = Uploader3DefaultProps;
