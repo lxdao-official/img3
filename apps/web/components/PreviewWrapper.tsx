@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const PreviewWrapper: React.FunctionComponent<React.PropsWithChildren> = (props) => {
+export const PreviewWrapper: React.FC<React.PropsWithChildren> = (props) => {
   const { children, ...rest } = props;
   return (
     <div

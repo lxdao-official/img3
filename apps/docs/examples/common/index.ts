@@ -1,7 +1,9 @@
-import { PreviewFile } from './PreviewFile';
 import { PreviewWrapper } from './PreviewWrapper';
+import { PreviewFile } from './PreviewFile';
+import { Status } from './Status';
 
 export default {
-  '/PreviewFile.tsx': PreviewFile.trim(),
   '/PreviewWrapper.tsx': PreviewWrapper.trim(),
+  '/PreviewFile.tsx': PreviewFile.trim(),
+  '/Status.tsx': Status.trim(),
 };

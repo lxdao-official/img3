@@ -5,12 +5,14 @@ import {
   SandpackStack,
   useActiveCode,
   useSandpack,
+  useSandpackTheme,
 } from '@codesandbox/sandpack-react';
 import styled from 'styled-components';
 
 const Wrapper = styled(SandpackLayout)`
   display: block;
-  background-color: transparent;
+  height: 340px;
+  overflow: hidden;
   pre {
     padding: 0;
   }
@@ -19,15 +21,15 @@ const Wrapper = styled(SandpackLayout)`
 export function CodeViewer() {
   const { sandpack } = useSandpack();
   const { code } = useActiveCode();
+  const { theme } = useSandpackTheme();
 
   return (
-    <Wrapper>
+    <Wrapper style={{ backgroundColor: theme.colors.surface1 }}>
       <FileTabs></FileTabs>
-      <div style={{ maxHeight: 300, overflowY: 'auto' }}>
+      <div style={{ height: 300, overflowY: 'auto' }}>
         <CodeEditor
           decorators={[]}
           code={code}
-          filePath={sandpack.activeFile}
           initMode={sandpack.initMode}
           showLineNumbers
           showInlineErrors

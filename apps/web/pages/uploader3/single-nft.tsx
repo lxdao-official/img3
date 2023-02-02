@@ -1,19 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
-import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
+import React from 'react';
+import { Icon } from '@iconify/react';
 import { Uploader3 } from '@lxdao/uploader3';
-import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import { createConnector } from '@lxdao/uploader3-connector';
 
 import { PreviewFile } from '@/components/PreviewFile';
-import { Icon } from '@iconify/react';
 import { PreviewWrapper } from '@/components/PreviewWrapper';
 
-export default function Demo() {
-  const [file, setFile] = useState<SelectedFile | UploadFile | UploadResult | CroppedFile | null>();
-  const [localToken, setLocalToken] = useState<string>('');
-  const connector = useRef<null | Uploader3Connector.Connector>(null);
+import type { Uploader3Connector } from '@lxdao/uploader3-connector';
+import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
 
-  useEffect(() => {
+export default function Demo() {
+  const [file, setFile] = React.useState<SelectedFile | UploadFile | UploadResult | CroppedFile | null>();
+  const [localToken, setLocalToken] = React.useState<string>('');
+  const connector = React.useRef<null | Uploader3Connector.Connector>(null);
+
+  React.useEffect(() => {
     let token = localStorage.getItem('nft-storage-token');
     if (!token) {
       const token = window.prompt('Please enter NFT.storage token');

@@ -20,22 +20,33 @@ import { Uploader3 } from '@lxdao/uploader3';
 
 ## Props
 
-| Prop         | Type                 | Description                                            | Default                          |
-| ------------ | -------------------- | ------------------------------------------------------ | -------------------------------- |
-| accept       | `string`             | image accept file type                                 | `['.png','.jpeg','.jpg','.gif']` |
-| multiple     | `boolean`            | multiple image upload                                  | `false`                          |
-| api          | `string`             | endpoint upload api url                                | `''`                             |
-| connector    | `object`             | create by [uploader3-connector](./uploader3-connector) | -                                |
-| crop         | `[Crop]` / `boolean` | crop config, set `false` disabled crop                 | `true`                           |
-| onChange     | `function`           | callback when files selected                           | -                                |
-| onUpload     | `function`           | callback when file uploading                           | -                                |
-| onComplete   | `function`           | callback when file uploaded                            | -                                |
-| onCropEnd    | `function`           | callback when crop end                                 | -                                |
-| onCropCancel | `function`           | callback when crop cancel                              | -                                |
+| Prop         | Type                        | Description                                            | Default                          |
+| ------------ | --------------------------- | ------------------------------------------------------ | -------------------------------- |
+| accept       | `string`                    | image accept file type                                 | `['.png','.jpeg','.jpg','.gif']` |
+| multiple     | `boolean`                   | multiple image upload                                  | `false`                          |
+| api          | `string`                    | endpoint upload api url                                | `''`                             |
+| connector    | `object`                    | create by [uploader3-connector](./uploader3-connector) | -                                |
+| crop         | [`Crop`](#crop) / `boolean` | crop config, set `false` disabled crop                 | `true`                           |
+| onChange     | `function`                  | callback when files selected                           | -                                |
+| onUpload     | `function`                  | callback when file uploading                           | -                                |
+| onComplete   | `function`                  | callback when file uploaded                            | -                                |
+| onCropEnd    | `function`                  | callback when crop end                                 | -                                |
+| onCropCancel | `function`                  | callback when crop cancel                              | -                                |
 
 <Callout type="info">
   `api` and `connector` are mutually exclusive, if both are provided, `api` will be used. must be provided one of them.
 </Callout>
+
+## Types reference
+
+### Crop
+
+```ts
+type Crop = {
+  size: { width: number; height: number };
+  aspectRatio: number;
+};
+```
 
 ## Examples
 
@@ -43,12 +54,45 @@ import uploader3Examples from '@/examples/uploader3/';
 
 ### Basic
 
-Uploader3 children is a button, you can use any component as children.
+Uploader3 children component has the ability to click and drag to select files.
 
 <Playground files={uploader3Examples.basic} />
 
-### Single file upload
+### Single file
 
-Upload a single image, crop it to a 1:1 ratio, and preview it.
+Set `crop` to `true` to enable cropping. use Default crop config, Specify `api` endpoint url to upload image.
+
+```js
+const defaultCropOptions = {
+  size: { width: '500px', height: '400px' },
+  aspectRatio: 1,
+};
+```
 
 <Playground files={uploader3Examples.single} />
+
+### Single file not crop
+
+Set `crop` to `false` to disable cropping.
+
+<Playground files={uploader3Examples.singleNoCropp} />
+
+### Frontend upload with connector
+
+Set `connector` to `Uploader3Connector` instance to upload image to web3 storage provider.
+
+<Callout type="warning">Use it on a secure network to avoid token disclosure</Callout>
+
+<Playground files={uploader3Examples.singleNft} />
+
+### Multiple files
+
+Set `multiple` to `true` to enable multiple image upload. and enable cropping, when crop end, the cropped image will be one by one uploaded.
+
+<Playground files={uploader3Examples.multiple} />
+
+### Multiple files not crop
+
+Disable cropping. when select files, the files will be one by one uploaded.
+
+<Playground files={uploader3Examples.multipleNoCropp} />

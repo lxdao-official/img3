@@ -7,6 +7,10 @@ import MDXComponents from './mdxComponents';
 export default {
   logo: Logo,
   darkMode: false,
+  nextThemes: {
+    defaultTheme: 'light',
+    enableSystem: false,
+  },
   docsRepositoryBase: 'https://github.com/lxdao-official/Img3/blob/apps/docs/',
   project: {
     link: 'https://github.com/lxdao-official/Img3',

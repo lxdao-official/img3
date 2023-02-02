@@ -3,7 +3,8 @@ import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao
 import { Icon } from '@iconify/react';
 import React from 'react';
 import { Img3 } from '@lxdao/img3';
-import styled from 'styled-components';
+
+import { Status } from './Status';
 
 export const PreviewFile = (props: {
   file: SelectedFile | UploadFile | UploadResult | CroppedFile;
@@ -38,17 +39,4 @@ export const PreviewFile = (props: {
     </>
   );
 };
-
-const Status = styled.div\`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-\`;
 `;

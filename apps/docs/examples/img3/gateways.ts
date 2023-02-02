@@ -1,4 +1,5 @@
 const App = `
+import React from 'react';
 import { Img3 } from '@lxdao/img3';
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
 `;
 
 const react = {
-  '/App.js': App.trim(),
+  '/App.tsx': App.trim(),
 };
 
 export default {

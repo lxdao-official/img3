@@ -1,5 +1,6 @@
 const App = `
 import React from 'react';
+import type { SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
 import { Uploader3 } from '@lxdao/uploader3';
 import { Icon } from '@iconify/react';
 
@@ -7,14 +8,14 @@ import { PreviewFile } from './PreviewFile';
 import { PreviewWrapper } from './PreviewWrapper';
 
 export default function App() {
-  const [file, setFile] = React.useState();
+  const [file, setFile] = React.useState<SelectedFile | UploadFile | UploadResult>();
 
   return (
     <div style={{ padding: 10 }}>
       <Uploader3
         api={'/api/upload/file'}
+        crop={false}
         multiple={false}
-        crop={true} // use default crop options
         onChange={(files) => {
           console.log('onChange', files);
           setFile(files[0]);
@@ -27,16 +28,8 @@ export default function App() {
           console.log('onComplete', file);
           setFile(file);
         }}
-        onCropCancel={(file) => {
-          console.log('onCropCancel', file);
-          setFile(null);
-        }}
-        onCropEnd={(file) => {
-          console.log('onCropEnd', file);
-          setFile(file);
-        }}
       >
-        <PreviewWrapper style={{height: 200, width: 200}}>
+        <PreviewWrapper>
           {file ? (
             <PreviewFile file={file} />
           ) : (
@@ -46,7 +39,7 @@ export default function App() {
           )}
         </PreviewWrapper>
       </Uploader3>
-     </div>
+    </div>
   );
 }
 `;

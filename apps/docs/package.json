@@ -23,6 +23,7 @@
     "@swc/wasm-web": "^1.3.32",
     "lxdao-ui": "^0.1.15",
     "next": "^13.1.6",
+    "next-themes": "^0.2.1",
     "nextra": "^2.2.14",
     "nextra-theme-docs": "^2.2.14",
     "prism-react-renderer": "^1.3.5",

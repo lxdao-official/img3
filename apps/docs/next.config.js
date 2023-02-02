@@ -3,7 +3,10 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.jsx',
 });
 
-module.exports = withNextra({
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
   transpilePackages: ['@lxdao/img3', '@lxdao/uploader3'],
   compiler: {
     styledComponents: {
@@ -16,4 +19,6 @@ module.exports = withNextra({
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-});
+};
+
+module.exports = withNextra(nextConfig);

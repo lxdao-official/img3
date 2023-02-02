@@ -1,4 +1,5 @@
 const App = `
+import React from 'react';
 import { Img3 } from '@lxdao/img3';
 
 export default function App() {
@@ -6,7 +7,7 @@ export default function App() {
     <div style={{padding: 10}}>
       <Img3
         src="https://bafkreifrusdcwh3w7d5uzehf3vvm6fzsrg7xdabvbzbfe6wt4jiy5y6kfy.ipfs.nftstorage.link/"
-        style={{ height: 200, width: 200, borderRadius: 5 }}
+        style={{ height: 200, width: 200, borderRadius: 5, background: '#f2f4f6' }}
       />
     </div>
   )
@@ -14,7 +15,7 @@ export default function App() {
 `;
 
 const react = {
-  '/App.js': App.trim(),
+  '/App.tsx': App.trim(),
 };
 
 export default {

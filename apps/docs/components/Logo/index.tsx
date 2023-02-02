@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const LOGO_H1 = styled.h1`
   font-size: 1.75em;
@@ -23,7 +24,7 @@ export const Logo = () => {
     <>
       <LOGO_H1>国产良心 NFT</LOGO_H1>
       <LINE />
-      <img src={logo.src} alt={'LXDAO'} />
+      <Image src={logo.src} alt={'LXDAO'} width={121} height={36} />
     </>
   );
 };

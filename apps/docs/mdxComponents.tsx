@@ -6,11 +6,12 @@ import type { SandpackFiles } from '@codesandbox/sandpack-react';
 import { Icon } from '@iconify/react';
 import React from 'react';
 import styled from 'styled-components';
+import { createConnector } from '@lxdao/uploader3-connector';
 
 export default {
   Callout,
   Tabs,
-  Tab,
+  Tab: (props: any) => <Tab style={{ paddingTop: 10 }} {...props} />,
   Img3,
   Uploader3,
   Playground: function (props: { files: SandpackFiles }) {
@@ -23,6 +24,7 @@ export default {
           Icon,
           React,
           styled,
+          createConnector,
         }}
       />
     );

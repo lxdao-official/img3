@@ -3,7 +3,7 @@ import { createConnector, type Uploader3Connector } from '@lxdao/uploader3-conne
 
 const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const uploadFile = async (req: NextApiRequest, res: NextApiResponse) => {
   const reqBody = <Uploader3Connector.PostImageFile>req.body;
   let { data: imageData = '', type } = reqBody;
 
@@ -37,3 +37,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({ url: result.url });
   }
 };
+
+export default uploadFile;

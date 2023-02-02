@@ -7,8 +7,8 @@ export const PreviewWrapper: React.FunctionComponent<React.PropsWithChildren> = 
     <div
       {...rest}
       style={{
-        width: 160,
-        height: 120, // 4:3
+        width: 200,
+        height: 200 * 0.75, // 4:3
         backgroundColor: '#f2f4f6',
         color: '#333',
         display: 'flex',
