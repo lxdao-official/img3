@@ -8,7 +8,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { createConnector } from '@lxdao/uploader3-connector';
 
-export default {
+const MDXComponents = {
   Callout,
   Tabs,
   Tab: (props: any) => <Tab style={{ paddingTop: 10 }} {...props} />,
@@ -30,3 +30,5 @@ export default {
     );
   },
 };
+
+export default MDXComponents;

@@ -1,10 +1,21 @@
 {
   "name": "@lxdao/uploader3",
   "version": "0.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./lib/index.js",
+  "module": "./esm/index.js",
+  "files": [
+    "lib",
+    "esm"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf lib esm",
+    "build:lib": "tsc -m commonjs --outDir lib",
+    "build:esm": "tsc -m esnext --outDir esm",
+    "build": "npm run clean && npm run build:lib && npm run build:esm",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "test": "jest"
   },

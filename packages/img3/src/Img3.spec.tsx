@@ -21,7 +21,7 @@ describe('render Img3', function () {
     mockFetch(jest, 200, {
       responseURL: 'https://example.com/b.jpg',
     });
-    render(<Img3 src={'ipfs://abc'} gateway={'https://ipfs.io/ipfs/'} />);
+    render(<Img3 src={'ipfs://abc'} gateways={['https://ipfs.io/ipfs/']} />);
     await act(() => sleep(500));
     expect(screen.getByRole('img').getAttribute('src')).toBe('https://example.com/b.jpg');
   });
@@ -30,7 +30,7 @@ describe('render Img3', function () {
     mockFetch(jest, 404, {
       responseURL: 'https://example.com/b.jpg',
     });
-    const { asFragment } = render(<Img3 src={'ipfs://abc'} gateway={'https://ipfs.io/ipfs/'} />);
+    const { asFragment } = render(<Img3 src={'ipfs://abc'} gateways={['https://ipfs.io/ipfs/']} />);
     await act(() => sleep(500));
     expect(asFragment()).toMatchSnapshot();
   });

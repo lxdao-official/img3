@@ -7,7 +7,6 @@ const withNextra = require('nextra')({
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  transpilePackages: ['@lxdao/img3', '@lxdao/uploader3'],
   compiler: {
     styledComponents: {
       ssr: true,
