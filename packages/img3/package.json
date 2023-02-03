@@ -14,8 +14,11 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf lib esm",
-    "build:lib": "tsc -m commonjs --outDir lib",
-    "build:esm": "tsc -m esnext --outDir esm",
+    "dev:lib": "swc --watch src --out-dir lib --source-maps -C module.type=commonjs",
+    "dev:esm": "swc --watch src --out-dir esm --source-maps",
+    "dev": "concurrently 'npm run dev:lib' 'npm rum dev:esm'",
+    "build:lib": "tsc -p ./tsconfig.build.json -m commonjs --outDir lib",
+    "build:esm": "tsc -p ./tsconfig.build.json -m esnext --outDir esm",
     "build": "npm run clean && npm run build:lib && npm run build:esm",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "test": "jest"
@@ -31,6 +34,7 @@
     "@types/react-dom": "^17.0.18",
     "@types/styled-components": "^5.1.26",
     "@types/testing-library__jest-dom": "^5.14.5",
+    "concurrently": "^7.6.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "jest": "^29.4.1",
