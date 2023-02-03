@@ -18,9 +18,7 @@ export type UploaderCroppProps = {
   onCancel?: () => void;
 };
 
-export type CroppInstance = { replaceUrl: (url: string) => void };
-
-export const UploaderCrop = forwardRef<CroppInstance, UploaderCroppProps>((props, ref) => {
+export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
   const { size = { width: 400, height: 400 }, fileUrl, fileType, ...restProps } = props;
 
   const [modalStatus, setModalStatus] = useState<ModalStatus>('init');
@@ -73,19 +71,10 @@ export const UploaderCrop = forwardRef<CroppInstance, UploaderCroppProps>((props
   }, [props.show, modalStatus]);
 
   useEffect(() => {
-    const instance: CroppInstance = {
-      replaceUrl: (url: string) => {
-        imageRef.current!.src = url;
-        cropperRef.current?.destroy();
-        cropperRef.current = new Cropper(imageRef.current!, cropperOptions);
-      },
-    };
-    if ('function' == typeof ref) {
-      ref(instance);
-    } else if ('object' == typeof ref && ref) {
-      ref.current = instance;
-    }
-  }, [cropperOptions, ref]);
+    cropperRef.current?.destroy();
+    setCropperReady(false);
+    cropperRef.current = new Cropper(imageRef.current!, cropperOptions);
+  }, [fileUrl, fileType]);
 
   const initCropper = useCallback(
     (imgElement: HTMLImageElement) => {
@@ -238,7 +227,7 @@ export const UploaderCrop = forwardRef<CroppInstance, UploaderCroppProps>((props
       </CroppModal>
     </>
   );
-});
+};
 
 UploaderCrop.displayName = 'UploaderCrop';
 
@@ -350,6 +339,7 @@ const Action = styled.div<{ active?: boolean }>`
   line-height: 0;
   align-items: center;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+
   &:hover {
     background-color: var(--u3-action-bg-color-active);
   }

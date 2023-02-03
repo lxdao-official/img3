@@ -2,11 +2,10 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import { Uploader3Connector } from '@lxdao/uploader3-connector';
-
+import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import { file2base64 } from './file2base64';
-import { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
-import { CroppInstance, UploaderCrop, UploaderCroppProps } from './UploaderCrop';
+import type { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
+import { UploaderCrop, type UploaderCroppProps } from './UploaderCrop';
 import { useFiles } from './useEditFile';
 
 const Wrapper = styled.div`
@@ -57,7 +56,6 @@ export const Uploader3 = (props: Uploader3Props) => {
     setFiles,
     files: selectedFiles,
   } = useFiles<any[]>([]);
-  const cropRef = useRef<CroppInstance>(null);
 
   let cropOptions: any = props.crop;
 
@@ -136,8 +134,6 @@ export const Uploader3 = (props: Uploader3Props) => {
     } else {
       let nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
-      const currentFile = selectedFiles[nextIndex];
-      cropRef.current?.replaceUrl(currentFile.previewUrl);
     }
     if (file) {
       doUpload([file]);
@@ -194,7 +190,6 @@ export const Uploader3 = (props: Uploader3Props) => {
       </Wrapper>
       {currentFile && cropOptions ? (
         <UploaderCrop
-          ref={cropRef}
           size={cropOptions.size!}
           aspectRatio={cropOptions.aspectRatio!}
           show={showCrop}
