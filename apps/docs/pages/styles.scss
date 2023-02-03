@@ -1,11 +1,12 @@
 .body {
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 tbody {
   td:first-child {
     font-weight: 700;
+
     > code {
       font-weight: 400;
       margin-left: 2px;
@@ -15,10 +16,11 @@ tbody {
 
 
 svg {
-  display:inline-block !important;
+  display: inline-block !important;
 }
+
 // fix for nextra theme
-footer  {
+footer {
   .nx-mx-auto:empty {
     display: none;
   }

@@ -1,9 +1,9 @@
-import { LiveProvider, LiveError, LivePreview } from 'react-live';
+import { LiveError, LivePreview, LiveProvider } from 'react-live';
 import * as React from 'react';
-import { SandpackFiles, SandpackLayout, useSandpackTheme } from '@codesandbox/sandpack-react';
+import { useContext, useEffect, useState } from 'react';
+import { SandpackFiles, useSandpackTheme } from '@codesandbox/sandpack-react';
 import styled from 'styled-components';
 import { files2code } from '@/components/Playground/files2code';
-import { useContext, useEffect, useState } from 'react';
 import { SwcContext } from '../../Hooks/useSwc';
 import { Loading } from '@nextui-org/react';
 

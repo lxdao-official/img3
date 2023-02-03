@@ -45,6 +45,7 @@ export const getFasterIpfsLink = (options: { ipfs: string; timeout?: number; gat
 
   return new Promise<string>((resolve, reject) => {
     let tasks: Array<ReturnType<typeof convertIpfsToLink> | null> = [];
+
     function fetchCallback(opts: { index: number; gateway: string }, err?: Error, url?: string) {
       const { index, gateway } = opts;
       if (err) {

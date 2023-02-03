@@ -1,11 +1,11 @@
 ---
 title: Img3
-description: <Img3 /> is a fundamental components for Web3 dApps. It extends HTML < img /> with Web3 decentralization storage, like IPFS. With <Img3 /> you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support ar soon.
+description: <Img3 /> is a fundamental components for Web3 Apps. It extends HTML < img /> with Web3 decentralization storage, like IPFS. With <Img3 /> you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support ar soon.
 ---
 
 # Img3
 
-`<Img3 />` is a fundamental components for Web3 dApps. It extends HTML `<img />` with Web3 decentralization storage, like
+`<Img3 />` is a fundamental components for Web3 Apps. It extends HTML `<img />` with Web3 decentralization storage, like
 IPFS. With `<Img3 />` you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support
 ar soon.
 
@@ -58,22 +58,22 @@ type Icon = {
 
 ## Examples
 
-### Basic
-
-No difference from a normal `img` tag.
-
 import img3Examples from '@/examples/img3/';
 
-<Playground files={img3Examples.basic} />
+### Basic
+
+Like `<img />` tag, set the `src` to render the image.
+
+<Playground title={'Basic - @lxdao/img3'} files={img3Examples.basic} />
 
 ### IPFS protocol
 
 `ipfs://` protocol will be automatically replaced with the fastest gateway.
 
-<Playground files={img3Examples.ipfs} />
+<Playground title={'IPFS protocol - @lxdao/img3'} files={img3Examples.ipfs} />
 
 ### Overwrite gateways
 
 You can overwrite the default gateways.
 
-<Playground files={img3Examples.gateways} />
+<Playground title={'Overwrite gateways - @lxdao/img3'} files={img3Examples.gateways} />

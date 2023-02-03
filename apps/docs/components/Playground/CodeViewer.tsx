@@ -2,7 +2,6 @@ import {
   CodeEditor,
   FileTabs,
   SandpackLayout,
-  SandpackStack,
   useActiveCode,
   useSandpack,
   useSandpackTheme,

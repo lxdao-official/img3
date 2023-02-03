@@ -16,23 +16,18 @@ export default function App() {
         multiple={false}
         crop={true} // use default crop options
         onChange={(files) => {
-          console.log('onChange', files);
           setFile(files[0]);
         }}
         onUpload={(file) => {
-          console.log('onUpload', file);
           setFile(file);
         }}
         onComplete={(file) => {
-          console.log('onComplete', file);
           setFile(file);
         }}
         onCropCancel={(file) => {
-          console.log('onCropCancel', file);
           setFile(null);
         }}
         onCropEnd={(file) => {
-          console.log('onCropEnd', file);
           setFile(file);
         }}
       >

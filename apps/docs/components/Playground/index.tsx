@@ -1,12 +1,13 @@
 import React from 'react';
-import { SandpackProvider, SandpackFiles, SandpackTheme } from '@codesandbox/sandpack-react';
+import { SandpackFiles, SandpackProvider, SandpackTheme } from '@codesandbox/sandpack-react';
 import { CodeViewer } from './CodeViewer';
 import { CodePreview } from './CodePreview';
 import { Tab, Tabs } from './Tabs';
-import { getFilesDependencies } from './/getFilesDependencies';
-import { DependenciesContext } from '@/components/Playground/DependenciesContext';
+import { getFilesDependencies } from './getFilesDependencies';
+import { PlaygroundContext } from './PlaygroundContext';
 
-type PlaygroundProps = {
+export type PlaygroundProps = {
+  title: string;
   files: SandpackFiles;
   scope: Record<string, any>;
 };
@@ -50,7 +51,7 @@ export const Playground = (props: PlaygroundProps) => {
     return file.endsWith('.ts') || file.endsWith('.tsx');
   });
 
-  const allDependencies = getFilesDependencies(props.files);
+  const dependencies = getFilesDependencies(props.files);
 
   return (
     <div style={{ width: '100%' }}>
@@ -58,13 +59,9 @@ export const Playground = (props: PlaygroundProps) => {
         theme={theme}
         template={hasTypescript ? 'react-ts' : 'react'}
         files={props.files}
-        customSetup={{
-          dependencies: {
-            ...allDependencies,
-          },
-        }}
+        customSetup={{ dependencies }}
       >
-        <DependenciesContext.Provider value={allDependencies}>
+        <PlaygroundContext.Provider value={{ files: props.files, dependencies, title: props.title }}>
           <Tabs items={['Preview', 'Code']}>
             <Tab>
               <CodePreview files={props.files} scope={props.scope} />
@@ -73,7 +70,7 @@ export const Playground = (props: PlaygroundProps) => {
               <CodeViewer />
             </Tab>
           </Tabs>
-        </DependenciesContext.Provider>
+        </PlaygroundContext.Provider>
       </SandpackProvider>
     </div>
   );

@@ -1,12 +1,13 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import { file2base64 } from './file2base64';
-import type { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
-import { UploaderCrop, type UploaderCroppProps } from './UploaderCrop';
+import { UploaderCrop, UploaderCroppProps } from './UploaderCrop';
 import { useFiles } from './useEditFile';
+
+import type { Uploader3Connector } from '@lxdao/uploader3-connector';
+import type { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
 
 const Wrapper = styled.div`
   position: relative;

@@ -28,6 +28,7 @@ export default function MyApp({ Component, pageProps }) {
     async function importAndRunSwcOnMount() {
       await initSwc();
     }
+
     importAndRunSwcOnMount().then(() => {
       setInitialized(true);
     });

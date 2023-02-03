@@ -1,5 +1,5 @@
 import Cropper from 'cropperjs';
-import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { Icon as IconifyIcon, IconProps } from '@iconify/react';

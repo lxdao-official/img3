@@ -1,13 +1,12 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
 import { Uploader3 } from '@lxdao/uploader3';
+import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import { createConnector } from '@lxdao/uploader3-connector';
 
 import { PreviewFile } from '@/components/PreviewFile';
 import { PreviewWrapper } from '@/components/PreviewWrapper';
-
-import type { Uploader3Connector } from '@lxdao/uploader3-connector';
-import type { CroppedFile, SelectedFile, UploadFile, UploadResult } from '@lxdao/uploader3';
 
 export default function Demo() {
   const [file, setFile] = React.useState<SelectedFile | UploadFile | UploadResult | CroppedFile | null>();

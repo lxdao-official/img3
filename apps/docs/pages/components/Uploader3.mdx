@@ -56,7 +56,7 @@ import uploader3Examples from '@/examples/uploader3/';
 
 Uploader3 children component has the ability to click and drag to select files.
 
-<Playground files={uploader3Examples.basic} />
+<Playground title={'Basic - @lxdao/uploader3'} files={uploader3Examples.basic} />
 
 ### Single file
 
@@ -69,13 +69,13 @@ const defaultCropOptions = {
 };
 ```
 
-<Playground files={uploader3Examples.single} />
+<Playground title={'Single file - @lxdao/uploader3'} files={uploader3Examples.single} />
 
 ### Single file not crop
 
 Set `crop` to `false` to disable cropping.
 
-<Playground files={uploader3Examples.singleNoCropp} />
+<Playground title={'Single file not crop - @lxdao/uploader3'} files={uploader3Examples.singleNoCropp} />
 
 ### Frontend upload with connector
 
@@ -83,16 +83,16 @@ Set `connector` to `Uploader3Connector` instance to upload image to web3 storage
 
 <Callout type="warning">Use it on a secure network to avoid token disclosure</Callout>
 
-<Playground files={uploader3Examples.singleNft} />
+<Playground title={'Frontend upload with connector - @lxdao/uploader3'} files={uploader3Examples.singleNft} />
 
 ### Multiple files
 
 Set `multiple` to `true` to enable multiple image upload. and enable cropping, when crop end, the cropped image will be one by one uploaded.
 
-<Playground files={uploader3Examples.multiple} />
+<Playground title={'Multiple files - @lxdao/uploader3'} files={uploader3Examples.multiple} />
 
 ### Multiple files not crop
 
 Disable cropping. when select files, the files will be one by one uploaded.
 
-<Playground files={uploader3Examples.multipleNoCropp} />
+<Playground title={'Multiple files not crop - @lxdao/uploader3'} files={uploader3Examples.multipleNoCropp} />

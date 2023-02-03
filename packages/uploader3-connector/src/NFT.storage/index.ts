@@ -1,4 +1,5 @@
 import { NFTStorage } from 'nft.storage';
+
 import { Uploader3Connector } from '../types';
 
 export const createNFTStorageConnector = (options: { token: string }): Uploader3Connector.Connector => {

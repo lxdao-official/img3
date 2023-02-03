@@ -17,15 +17,12 @@ export default function App() {
         crop={false}
         multiple={false}
         onChange={(files) => {
-          console.log('onChange', files);
           setFile(files[0]);
         }}
         onUpload={(file) => {
-          console.log('onUpload', file);
           setFile(file);
         }}
         onComplete={(file) => {
-          console.log('onComplete', file);
           setFile(file);
         }}
       >

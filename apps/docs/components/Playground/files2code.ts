@@ -1,5 +1,6 @@
 import { SandpackFiles } from '@codesandbox/sandpack-react';
 import { transformSync } from '@swc/wasm-web';
+
 function replaceImport(code: string) {
   // remove all import statements
   return code.replace(/import\s*.*\s*from\s+('|"|`).*('|"|`);?/g, '');

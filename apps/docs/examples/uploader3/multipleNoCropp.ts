@@ -18,11 +18,9 @@ export default function App() {
         multiple={true}
         crop={false}
         onChange={(files) => {
-          console.log('onChange', files);
           setFiles(files);
         }}
         onUpload={(file) => {
-          console.log('onUpload', file);
           setFiles((files) => {
             return files.map((f) => {
               if (f.name === file.name) {
@@ -33,7 +31,6 @@ export default function App() {
           });
         }}
         onComplete={(file) => {
-          console.log('onComplete', file);
           setFiles((files) => {
             return files.map((f) => {
               if (f.name === file.name) {
