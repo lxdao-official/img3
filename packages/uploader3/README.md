@@ -1,5 +1,8 @@
 # Uploader3
 
+[![npm version](https://badge.fury.io/js/%40lxdao%2Fuploader3.svg)](https://badge.fury.io/js/%40lxdao%2Fuploader3)
+[![npm downloads](https://img.shields.io/npm/dm/%40lxdao%2Fuploader3.svg)](https://www.npmjs.com/package/%40lxdao%2Fuploader3)
+
 Uploader3 is a React-based Web3 image upload component that supports multiple image uploads, image cropping, and uploading images to Web3 Storage providers (like IPFS). There are two ways for uploading, by using a backend API or the Uploader3 Connector.
 
 **Features**

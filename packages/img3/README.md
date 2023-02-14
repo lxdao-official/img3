@@ -1,5 +1,9 @@
 # Img3
 
+
+[![npm version](https://badge.fury.io/js/%40lxdao%2Fimg3.svg)](https://badge.fury.io/js/%40lxdao%2Fimg3)
+[![npm downloads](https://img.shields.io/npm/dm/%40lxdao%2Fimg3.svg)](https://www.npmjs.com/package/%40lxdao%2Fimg3)
+
 `<Img3 />` is a fundamental components for Web3 Apps. It extends HTML `<img />` with Web3 decentralization storage, like
 IPFS. With `<Img3 />` you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support
 ar soon.
