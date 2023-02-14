@@ -18,6 +18,17 @@ const RootTheme = createGlobalStyle`
     --color-primary7: hsl(var(--nextra-primary-hue) 100% 50%/0.3);
     --color-primary8: hsl(var(--nextra-primary-hue) 100% 50%/0.2);
     --color-primary9: hsl(var(--nextra-primary-hue) 100% 50%/0.1);
+    
+    --color-purple: hsl(270 100% 50%/1);
+    --color-purple1: hsl(270 100% 50%/0.9);
+    --color-purple2: hsl(270 100% 50%/0.8);
+    --color-purple3: hsl(270 100% 50%/0.7);
+    --color-purple4: hsl(270 100% 50%/0.6);
+    --color-purple5: hsl(270 100% 50%/0.5);
+    --color-purple6: hsl(270 100% 50%/0.4);
+    --color-purple7: hsl(270 100% 50%/0.3);
+    --color-purple8: hsl(270 100% 50%/0.2);
+    --color-purple9: hsl(270 100% 50%/0.1);
   }
 `;
 

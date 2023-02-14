@@ -14,21 +14,7 @@ ar soon.
 - Supports the `ipfs://` protocol.
 - Automatically uses the gateway with the highest speed, And reuse it the next request.
 
-## Usage
-
-```js copy
-import { Img3 } from '@lxdao/img3';
-```
-
-## Props
-
-| Prop     | Type            | Description                              | Default                        |
-| -------- | --------------- | ---------------------------------------- | ------------------------------ |
-| src      | `string`        | image source, support `ipfs://` protocol | -                              |
-| alt      | `string`        | image alt text                           | -                              |
-| gateways | `string[]`      | Overwrite gateways                       | **defaultGateways**            |
-| timeout  | `number`        | Specifies the timeout of gateway request | `2000`                         |
-| icon     | [`Icon`](#icon) | Specifies the icon of loading or error   | `{size: 30, color: '#c0c0c0'}` |
+<Anchor id="defaultGateways" />
 
 ```jsx
 const defaultGateways = [
@@ -39,9 +25,25 @@ const defaultGateways = [
 ];
 ```
 
-### Type reference
+## Usage
 
-#### Icon
+```js copy
+import { Img3 } from '@lxdao/img3';
+```
+
+## Props
+
+| Prop     | Type            | Description                              | Default                             |
+| -------- | --------------- | ---------------------------------------- | ----------------------------------- |
+| src      | `string`        | image source, support `ipfs://` protocol | -                                   |
+| alt      | `string`        | image alt text                           | -                                   |
+| gateways | `string[]`      | Web3 decentralization storage gateways   | [defaultGateways](#defaultGateways) |
+| timeout  | `number`        | timeout of gateway request               | `2000`                              |
+| icon     | [`Icon`](#icon) | style of loading or error icons          | `{size: 30, color: '#c0c0c0'}`      |
+
+## Types reference
+
+### Icon
 
 ```ts
 type Icon = {
@@ -74,6 +76,6 @@ Like `<img />` tag, set the `src` to render the image.
 
 ### Overwrite gateways
 
-You can overwrite the default gateways.
+You can overwrite the default gateways, will be used in the request, and the fastest gateway will be cached.
 
 <Playground title={'Overwrite gateways - @lxdao/img3'} files={img3Examples.gateways} />

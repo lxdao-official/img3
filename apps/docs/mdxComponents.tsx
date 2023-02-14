@@ -6,13 +6,22 @@ import { Icon } from '@iconify/react';
 import React from 'react';
 import styled from 'styled-components';
 import { createConnector } from '@lxdao/uploader3-connector';
+import { Tooltip } from '@nextui-org/react';
 
 const MDXComponents = {
   Callout,
   Tabs,
   Tab: (props: any) => <Tab style={{ paddingTop: 10 }} {...props} />,
   Img3,
+  Tooltip,
   Uploader3,
+  Anchor: (props: { id: string }) => {
+    return (
+      <>
+        <span className={'nx-absolute -nx-mt-20'} id={props.id}></span>
+      </>
+    );
+  },
   Playground: function (props: PlaygroundProps) {
     return (
       <Play
