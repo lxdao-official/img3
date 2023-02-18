@@ -6,13 +6,15 @@ import { Button, Container, Spacer } from '@nextui-org/react';
 import Link from 'next/link';
 import { LXDAOIntroduction } from 'lxdao-ui';
 
+import { Banner } from '../components/Banner';
+import { Features } from '../components/Features';
+
+<Banner />
+<Features />
 <Container display={'flex'} direction={'column'} justify={'center'} alignItems={'center'}>
-  <h1 align="center" style={{ fontSize: 60, padding: '100px 0', fontWeight: 700 }}>
-    LXDAO Img3
-  </h1>
-  <Link href={'./components/Img3'}>
-    <Button size={'xl'}>Getting started</Button>
-  </Link>
-  <Spacer y={2} />
+  <Spacer y={3} />
+  <div style={{ textAlign: 'center', fontSize: 56, fontWeight: 800 }}>BUILD IN LXDAO</div>
+  <Spacer y={3} />
   <LXDAOIntroduction />
+  <Spacer y={3} />
 </Container>
