@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
@@ -27,13 +27,13 @@ const defaultCropOptions = {
   aspectRatio: 1,
 };
 
-const Uploader3DefaultProps = {
+const Uploader3DefaultProps: Uploader3Props = {
   multiple: false,
   accept: ['.jpg', '.jpeg', '.png', '.gif'],
   crop: true,
 };
 
-export const Uploader3 = (props: Uploader3Props) => {
+export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (props) => {
   const {
     children,
     className,
@@ -110,12 +110,7 @@ export const Uploader3 = (props: Uploader3Props) => {
             .postImage(image)
             .then((result) => {
               const { url, cid } = result;
-              curFile = {
-                ...curFile,
-                status: 'done',
-                url: url,
-                ipfs: 'ipfs://' + cid,
-              };
+              curFile = { ...curFile, status: 'done', url, ipfs: 'ipfs://' + cid };
               triggerComplete(curFile);
             })
             .catch(() => {
@@ -129,59 +124,64 @@ export const Uploader3 = (props: Uploader3Props) => {
     });
   };
 
-  const afterCroppAction = (file?: CroppedFile) => {
-    if (currentIndex === selectedFiles.length - 1) {
-      setShowCrop(false);
+  const afterCroppAction = useCallback(
+    (file?: CroppedFile) => {
+      if (currentIndex === selectedFiles.length - 1) {
+        setShowCrop(false);
+      } else {
+        let nextIndex = currentIndex + 1;
+        setCurrentIndex(nextIndex);
+      }
+
+      if (file) {
+        doUpload([file]);
+      }
+    },
+    [currentIndex, selectedFiles]
+  );
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    const files: SelectedFiles = acceptedFiles.map((file) => {
+      const { name, type } = file;
+      return { name, type, file, previewUrl: URL.createObjectURL(file), status: 'none' };
+    });
+
+    setFiles(files);
+    onChange?.(files);
+
+    if (enableCrop) {
+      setShowCrop(true);
     } else {
-      let nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
+      doUpload(files);
     }
-    if (file) {
-      doUpload([file]);
-    }
-  };
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: { 'image/*': accept! },
     multiple,
-    onDrop: async (acceptedFiles) => {
-      const files: SelectedFiles = acceptedFiles.map((file) => {
-        return {
-          name: file.name,
-          type: file.type,
-          file,
-          previewUrl: URL.createObjectURL(file),
-          status: 'none',
-        };
-      });
-
-      setFiles(files);
-      onChange?.(files);
-
-      if (enableCrop) {
-        setShowCrop(true);
-      } else {
-        doUpload(files);
-      }
-    },
+    onDrop,
   });
 
-  const handleCancel: Required<UploaderCroppProps>['onCancel'] = () => {
+  const handleCancel: Required<UploaderCroppProps>['onCancel'] = useCallback(() => {
     currentFile.status = 'cancel';
     onCropCancel?.({ ...currentFile });
     afterCroppAction();
-  };
-  const handleConfirm: Required<UploaderCroppProps>['onConfirm'] = (params) => {
-    const { imageData, thumbData, cropData } = params;
-    const croppedFile = createCroppedFile(currentFile, {
-      imageData,
-      thumbData,
-      crop: cropData,
-    });
-    setCurrentFile(croppedFile);
-    onCropEnd?.(croppedFile);
-    afterCroppAction(croppedFile);
-  };
+  }, [currentFile]);
+
+  const handleConfirm: Required<UploaderCroppProps>['onConfirm'] = useCallback(
+    (params) => {
+      const { imageData, thumbData, cropData } = params;
+      const croppedFile = createCroppedFile(currentFile, {
+        imageData,
+        thumbData,
+        crop: cropData,
+      });
+      setCurrentFile(croppedFile);
+      onCropEnd?.(croppedFile);
+      afterCroppAction(croppedFile);
+    },
+    [currentFile]
+  );
 
   return (
     <>
@@ -198,7 +198,7 @@ export const Uploader3 = (props: Uploader3Props) => {
           fileUrl={currentFile.previewUrl!}
           onCancel={handleCancel}
           onConfirm={handleConfirm}
-        ></UploaderCrop>
+        />
       ) : null}
     </>
   );

@@ -32,7 +32,7 @@ type Img3Props = {
   timeout?: number;
 };
 
-export const Img3 = (props: Img3Props) => {
+export const Img3: React.FC<Img3Props> = (props) => {
   const { style, src = '', gateways, alt, className, timeout = 2000 } = props;
 
   const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);

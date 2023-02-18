@@ -38,7 +38,6 @@ export type UploadResult =
   | (Omit<UploadFile, 'status'> & { status: 'error'; message: string });
 
 export type Uploader3Props = {
-  children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   multiple?: boolean;
@@ -58,7 +57,7 @@ export type Uploader3Props = {
    * image accept file type, default is ['.png', '.jpeg', '.jpg', '.gif']
    * @example ['.png', '.jpg]
    */
-  accept?: string[];
+  accept?: Array<'.png' | '.jpeg' | '.jpg' | '.gif'>;
   /**
    * after selected files trigger
    * @param acceptedFiles - selected files
