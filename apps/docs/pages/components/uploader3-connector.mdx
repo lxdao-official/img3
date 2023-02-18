@@ -66,14 +66,20 @@ export default function App() {
 }
 ```
 
+<Callout type="warning">
+  Please do not use the token directly in the code. Make sure you use it in a secure environment, such as an internal
+  network.
+</Callout>
+
 ### Use with Next.js api routes
 
-You can refer to the following code to install **uploader3-connector** on other servers.
+You can refer to the following code to install **uploader3-connector** on other servers. This is the way we recommend.
 
 ```ts filename="pages/api/upload.ts" copy
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createConnector, type Uploader3Connector } from '@lxdao/uploader3-connector';
 
+//Provided `NFT_TOKEN` in environment variables
 const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -97,6 +103,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const buffer = Buffer.from(imageData, 'base64');
 
   // if buffer size > 2MB throw error
+  // or other your own logic
   if (buffer.byteLength > 2 * 1024 * 1024) {
     res.status(500).json({ error: 'file size > 2MB' });
     return;

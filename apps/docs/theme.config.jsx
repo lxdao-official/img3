@@ -31,9 +31,11 @@ export default {
     const { frontMatter } = useConfig();
     return (
       <>
+        <meta httpEquiv="Content-Language" content="en" />
         <meta property="og:url" content={`${asPath}`} />
-        <meta property="og:title" content={frontMatter.title || 'Img3 - LXDAO'} />
+        <meta property="og:title" content={frontMatter.title ? frontMatter.title + ' - LXDAO' : 'Img3 - LXDAO'} />
         <meta property="og:description" content={frontMatter.description || 'Img3 - LXDAO'} />
+        <link rel="icon" href="/favicon.ico" type="image/png" />
       </>
     );
   },
