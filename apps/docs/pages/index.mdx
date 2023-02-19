@@ -3,18 +3,18 @@ title: Img3
 description: An essential infrastructure in the Web3 storage field.
 ---
 
-import { Button, Container, Spacer } from '@nextui-org/react';
-import Link from 'next/link';
+import { Container, Spacer } from '@nextui-org/react';
 import { LXDAOIntroduction } from 'lxdao-ui';
 
 import { Banner } from '../components/Banner';
 import { Features } from '../components/Features';
+import { BuildBrand } from '../components/BuildBrand';
 
 <Banner />
 <Features />
-<Container display={'flex'} direction={'column'} justify={'center'} alignItems={'center'}>
+<Container lg style={{ maxWidth: 1216 }} display={'flex'} direction={'column'} justify={'center'} alignItems={'center'}>
   <Spacer y={3} />
-  <div style={{ textAlign: 'center', fontSize: 56, fontWeight: 800 }}>BUILD IN LXDAO</div>
+  <BuildBrand />
   <Spacer y={3} />
   <LXDAOIntroduction />
   <Spacer y={3} />

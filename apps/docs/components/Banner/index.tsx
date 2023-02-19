@@ -27,11 +27,22 @@ const ButtonText = styled.span`
   font-weight: 600;
 `;
 
+const H1 = styled.h1`
+  font-size: max(min(108px, 10vw), 3rem);
+  font-weight: 600;
+  color: #ffffff;
+`;
+
+const ResponsiveContainer = styled(Container)`
+  height: max(375px, min(600px, 80vw));
+  max-width: 1216px;
+`;
+
 export const Banner: React.FC<React.PropsWithChildren<any>> = (props) => {
   return (
     <BannerContainer>
-      <Container display={'flex'} direction={'column'} justify={'center'} alignItems={'center'} style={{ height: 600 }}>
-        <h1 style={{ fontSize: 108, fontWeight: 600, color: 'white', fontFamily: 'Inter' }}>{'<Img3 />'}</h1>
+      <ResponsiveContainer lg display={'flex'} direction={'column'} justify={'center'} alignItems={'center'}>
+        <H1>{'<Img3 />'}</H1>
         <p style={{ color: 'white', fontSize: 20, lineHeight: '36px', marginTop: 40 }}>
           An essential infrastructure in the Web3 storage field.
         </p>
@@ -40,7 +51,7 @@ export const Banner: React.FC<React.PropsWithChildren<any>> = (props) => {
             <ButtonText>Get Started</ButtonText>
           </ButtonLink>
         </Link>
-      </Container>
+      </ResponsiveContainer>
     </BannerContainer>
   );
 };

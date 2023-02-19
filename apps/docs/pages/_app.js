@@ -35,6 +35,18 @@ const RootTheme = createGlobalStyle`
 export default function MyApp({ Component, pageProps }) {
   const [initialized, setInitialized] = useState(false);
 
+  // The response font size is based on the screen width
+  useEffect(() => {
+    const html = document.querySelector('html');
+    const setFontSize = () => {
+      const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      const fontSize = Math.min(width, 1216) / 100;
+      html.style.setProperty('--rpx', `${fontSize}px`);
+    };
+    setFontSize();
+    window.addEventListener('resize', setFontSize);
+  }, []);
+
   useEffect(() => {
     async function importAndRunSwcOnMount() {
       await initSwc();
