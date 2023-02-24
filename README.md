@@ -6,7 +6,7 @@ Img3 is a Web3 image solution that includes image rendering, upload, Web3 storag
 
 ### Img3
 
-<Img3 /> is a fundamental components for Web3 Apps. It extends HTML <img /> with Web3 decentralization storage, like IPFS. With <Img3 /> you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support ar soon. [@lxdao/img3](./packages/img3/README.md)
+`<Img3 />` is a fundamental components for Web3 Apps. It extends HTML <img /> with Web3 decentralization storage, like IPFS. With <Img3 /> you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support ar soon. [@lxdao/img3](./packages/img3/README.md)
 
 ### Uploader3
 
