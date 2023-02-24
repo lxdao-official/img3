@@ -36,6 +36,8 @@ Then open <http://localhost:3001> start developing.
 
 ## What is LXDAO?
 
+This is a project build in LXDAO. More links: [LXDAO](https://lxdao.io/) | [LXDAO Forum](https://forum.lxdao.io/) | [LXDAO Discord](https://discord.lxdao.io) | [LXDAO Twitter](https://twitter.com/LXDAO_Official).
+
 LXDAO is an R&D-focused DAO in Web3. Our mission is: To bring together buidlers to buidl and maintain valuable projects for Web3, in a sustainable manner.
 
-<a target="_blank" href="https://lxdao.io/"><img alt="Buidl in LXDAO" src="public/buildinlxdao.png" width="180" /></a>
+<a target="_blank" href="https://lxdao.io/"><img alt="Buidl in LXDAO" src="https://github.com/lxdao-official/myfirstnft-frontend/raw/main/public/buildinlxdao.png" width="180" /></a>
