@@ -71,7 +71,7 @@ export const Features: React.FC<React.PropsWithChildren<any>> = (props) => {
                 SDK
               </span>
             }
-            title={'SDK connector'}
+            title={'SDK Connector'}
             description={
               'Uploader3 Connector is a connector for Uploader3. Currently, it only supports NFT.storage IPFS service provider.'
             }
