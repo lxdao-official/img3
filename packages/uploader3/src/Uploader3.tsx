@@ -41,6 +41,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
     multiple,
     accept,
     api,
+    headers,
     connector,
     onComplete,
     onUpload,
@@ -88,7 +89,10 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
         if (api) {
           return fetch(api, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              ...headers,
+            },
             body: JSON.stringify(image),
           })
             .then(async (res) => {
