@@ -42,9 +42,13 @@ export type Uploader3Props = {
   style?: React.CSSProperties;
   multiple?: boolean;
   /**
-   * API endpoint to upload service.
+   * API endpoint to upload service, use post method.
    */
   api?: string;
+  /**
+   * The headers of post request
+   */
+  headers?: Record<string, string>;
   /**
    * The connector of uploader3
    */
