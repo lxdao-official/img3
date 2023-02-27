@@ -12,7 +12,10 @@ export default function App() {
   return (
     <div style={{ padding: 10 }}>
       <Uploader3
-        api={'/api/upload/file'}
+        api={'/api/upload/file?name=your-name'}
+        headers={{
+          'x-token': 'abcd',
+        }}
         multiple={false}
         crop={true} // use default crop options
         onChange={(files) => {

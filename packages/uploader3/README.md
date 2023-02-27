@@ -22,14 +22,15 @@ import { Uploader3 } from '@lxdao/uploader3';
 | ------------ | --------------------------- | -------------------------------------- | -------------------------------- |
 | accept       | `string`                    | image accept file type                 | `['.png','.jpeg','.jpg','.gif']` |
 | multiple     | `boolean`                   | multiple image upload                  | `false`                          |
-| api          | `string`                    | endpoint upload api url                | `''`                             |
-| connector    | `object`                    | create by uploader3-connector          | -                                |
+| api          | `string`                    | endpoint upload api url, post method   | `''`                             |
+| headers      | `object`                    | http headers to post api               |                                  |
+| connector    | `object`                    | create by uploader3-connector          |                                  |
 | crop         | [`Crop`](#crop) / `boolean` | crop config, set `false` disabled crop | `true`                           |
-| onChange     | `function`                  | callback when files selected           | -                                |
-| onUpload     | `function`                  | callback when file uploading           | -                                |
-| onComplete   | `function`                  | callback when file uploaded            | -                                |
-| onCropEnd    | `function`                  | callback when crop end                 | -                                |
-| onCropCancel | `function`                  | callback when crop cancel              | -                                |
+| onChange     | `function`                  | callback when files selected           |                                  |
+| onUpload     | `function`                  | callback when file uploading           |                                  |
+| onComplete   | `function`                  | callback when file uploaded            |                                  |
+| onCropEnd    | `function`                  | callback when crop end                 |                                  |
+| onCropCancel | `function`                  | callback when crop cancel              |                                  |
 
 > `api` and `connector` are mutually exclusive, if both are provided, `api` will be used. must be provided one of them.
 
