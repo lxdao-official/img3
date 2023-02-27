@@ -43,15 +43,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-  build:
-    needs: cache-and-install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: pnpm run build
+      - name: Build project
+        run: pnpm run build
 
 #  publish-npm:
 #    needs: build
