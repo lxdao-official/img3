@@ -1,5 +1,13 @@
 # docs
 
+## 0.0.2
+
+### Patch Changes
+
+- feat: add headers prop
+- Updated dependencies
+  - @lxdao/uploader3@1.1.0
+
 ## 0.0.1
 
 ### Patch Changes
