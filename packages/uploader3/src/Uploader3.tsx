@@ -43,6 +43,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
     api,
     headers,
     connector,
+    responseFormat,
     onComplete,
     onUpload,
     onCropEnd,
@@ -97,7 +98,14 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
           })
             .then(async (res) => {
               if (res.ok) {
-                const { url } = await res.json();
+                let responseData = await res.json();
+
+                if('function' === typeof responseFormat) {
+                  responseData = responseFormat(responseData);
+                }
+
+                const { url } = responseData;
+                
                 curFile = { ...curFile, status: 'done', url };
               } else {
                 const { message } = await res.json();

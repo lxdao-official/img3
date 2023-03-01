@@ -54,6 +54,11 @@ export type Uploader3Props = {
    */
   connector?: Uploader3Connector.Connector;
   /**
+   * The response format function of uploader3
+   * @param res - API response
+   */
+  responseFormat?: (res: Record<string, any>) => Record<string, any> & { url: string };
+  /**
    * crop options
    */
   crop?: { size?: { width: number; height: number }; aspectRatio?: number } | boolean;
