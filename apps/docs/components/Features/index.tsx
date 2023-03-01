@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 
 const SubTitle = styled.div`
   font-weight: 500;
-  font-size: max(14px, min(21px, calc(var(--rpx) * 2)));
+  font-size: clamp(14px, 3vw, 21px);
   line-height: 60px;
   letter-spacing: -0.02em;
   text-transform: capitalize;
@@ -15,20 +15,19 @@ const SubTitle = styled.div`
 
 const Quote = styled.p`
   font-weight: 500;
-  //font-size: min(1.6rem, max(16px, calc(var(--rpx) * 3)));
   font-size: 1.6rem;
   line-height: 1.5;
   letter-spacing: -0.02em;
   color: #101828;
-  margin-top: calc(var(--rpx) * 1.5);
-  margin-bottom: calc(var(--rpx) * 5);
+  margin-top: clamp(6px, 1.5vw, 12px);
+  margin-bottom: clamp(10px, 4vw, 24px);
   @media (max-width: 650px) {
     letter-spacing: 0.08rem;
   }
 `;
 
 const Wrapper = styled.div`
-  padding: calc(var(--rpx) * 10) 0;
+  padding: clamp(30px, 10vw, 120px) 0;
   background-color: #fafafa;
 `;
 

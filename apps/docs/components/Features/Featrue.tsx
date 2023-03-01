@@ -32,11 +32,12 @@ const IconWrapper = styled.div`
 const Title = styled.h3`
   height: 38px;
   font-weight: 700;
-  font-size: 2.25rem;
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
   line-height: 34px;
   color: #101828;
-  padding-top: calc(var(--rpx) * 4);
-  padding-bottom: calc(var(--rpx) * 5);
+  padding-top: clamp(10px, 4vw, 100px);
+  padding-bottom: clamp(8px, 2vw, 16px);
+  box-sizing: content-box;
   @media (max-width: 650px) {
     padding-top: 0;
     padding-bottom: 0;
