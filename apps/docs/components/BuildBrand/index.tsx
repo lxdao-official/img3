@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  font-size: min(56px, calc(var(--rpx) * 8));
+  font-size: clamp(16px, 6vw, 56px);
   font-weight: 800;
   text-align: center;
 `;

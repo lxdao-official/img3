@@ -20,19 +20,38 @@ import { Uploader3 } from '@lxdao/uploader3';
 
 ## Props
 
-| Prop         | Type                        | Description                                            | Default                          |
-| ------------ | --------------------------- | ------------------------------------------------------ | -------------------------------- |
-| accept       | `string`                    | image accept file type                                 | `['.png','.jpeg','.jpg','.gif']` |
-| multiple     | `boolean`                   | multiple image upload                                  | `false`                          |
-| api          | `string`                    | endpoint upload api url, post method                   |                                  |
-| headers      | `object`                    | http headers to post api                               |                                  |
-| connector    | `object`                    | create by [uploader3-connector](./uploader3-connector) |                                  |
-| crop         | [`Crop`](#crop) / `boolean` | crop config, set `false` disabled crop                 | `true`                           |
-| onChange     | `function`                  | callback when files selected                           |                                  |
-| onUpload     | `function`                  | callback when file uploading                           |                                  |
-| onComplete   | `function`                  | callback when file uploaded                            |                                  |
-| onCropEnd    | `function`                  | callback when crop end                                 |                                  |
-| onCropCancel | `function`                  | callback when crop cancel                              |                                  |
+| Prop           | Type                        | Description                                            | Default                          |
+| -------------- | --------------------------- | ------------------------------------------------------ | -------------------------------- |
+| accept         | `string`                    | image accept file type                                 | `['.png','.jpeg','.jpg','.gif']` |
+| multiple       | `boolean`                   | multiple image upload                                  | `false`                          |
+| api            | `string`                    | endpoint upload api url, post method                   |                                  |
+| headers        | `object`                    | http headers to post api                               |                                  |
+| responseFormat | `function`                  | response data format                                   |                                  |
+| connector      | `object`                    | create by [uploader3-connector](./uploader3-connector) |                                  |
+| crop           | [`Crop`](#crop) / `boolean` | crop config, set `false` disabled crop                 | `true`                           |
+| onChange       | `function`                  | callback when files selected                           |                                  |
+| onUpload       | `function`                  | callback when file uploading                           |                                  |
+| onComplete     | `function`                  | callback when file uploaded                            |                                  |
+| onCropEnd      | `function`                  | callback when crop end                                 |                                  |
+| onCropCancel   | `function`                  | callback when crop cancel                              |                                  |
+
+### api
+
+`api` upload serve must return the uploaded file url, and the url must be in the response body.
+
+```js
+res.status(200).json({ url: 'https://example.com/xxx.png' });
+```
+
+If you have `responseFormat` prop, the response body will be passed to `responseFormat` function.
+
+```js
+const responseFormat = (responseBody) => {
+  return {
+    url: responseBody.data.url,
+  };
+};
+```
 
 <Callout type="info">
   `api` and `connector` are mutually exclusive, if both are provided, `api` will be used. must be provided one of them.

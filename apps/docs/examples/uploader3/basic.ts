@@ -10,6 +10,10 @@ export default function App() {
         headers={{
           'x-token': 'abcd',
         }}
+        responseFormat={res => {
+          console.log('responseFormat', res);
+          return res
+        }}
         onChange={(files) => {
           console.log('onChange', files);
         }}
