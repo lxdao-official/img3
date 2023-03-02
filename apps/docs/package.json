@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3001",
@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.10.5",
     "@iconify/react": "^4.1.0",
     "@lxdao/img3": "workspace:^1.0.0",
-    "@lxdao/uploader3": "workspace:^1.1.0",
+    "@lxdao/uploader3": "workspace:^1.2.1",
     "@lxdao/uploader3-connector": "workspace:^1.0.0",
     "@mui/material": "^5.11.7",
     "@nextui-org/react": "1.0.0-beta.12",

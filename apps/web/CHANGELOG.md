@@ -1,5 +1,13 @@
 # web
 
+## 0.0.3
+
+### Patch Changes
+
+- chore: publish build
+- Updated dependencies
+  - @lxdao/uploader3@1.2.1
+
 ## 0.0.2
 
 ### Patch Changes

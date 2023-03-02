@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@iconify/react": "^4.1.0",
     "@lxdao/img3": "workspace:^1.0.0",
-    "@lxdao/uploader3": "workspace:^1.1.0",
+    "@lxdao/uploader3": "workspace:^1.2.1",
     "@lxdao/uploader3-connector": "workspace:^1.0.0",
     "fs-extra": "^11.1.0",
     "next": "13.0.0",
