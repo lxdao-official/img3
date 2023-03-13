@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/Uploader3.tsx should render Uploader3 1`] = `
+<div>
+  <div
+    class="sc-pyfCe fMVrPx"
+    role="presentation"
+    tabindex="0"
+  >
+    <button>
+      Upload
+    </button>
+    <input
+      accept="image/*,.jpg,.jpeg,.png,.gif"
+      style="display: none;"
+      tabindex="-1"
+      type="file"
+    />
+  </div>
+</div>
+`;

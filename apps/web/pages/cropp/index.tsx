@@ -12,8 +12,8 @@ export default function Demo() {
       <UploaderCrop
         show={show}
         aspectRatio={1}
-        fileType={'image/jpeg'}
-        fileUrl={'/7e7be55b35ae6552e14ea94b59a9c8c8.jpg'}
+        fileType={'image/png'}
+        fileUrl={'https://raw.githubusercontent.com/lxdao-official/Img3/test/uploader3/apps/docs/public/img3.png'}
         size={{ width: '300px', height: '300px' }}
         onConfirm={(data) => {
           console.log(data);

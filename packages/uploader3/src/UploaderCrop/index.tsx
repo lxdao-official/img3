@@ -98,6 +98,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
     <>
       <CropperjsCSS />
       <Mask
+        role={'mask'}
         modalStatus={modalStatus}
         ref={maskRef}
         style={{ display: modalStatus == 'init' ? 'none' : '' }}
@@ -108,6 +109,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
         }}
       />
       <CroppModal
+        role={'modal'}
         ref={wrapperRef}
         modalStatus={modalStatus}
         onAnimationStart={() => {
@@ -118,15 +120,14 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
           }
         }}
         onAnimationEnd={(event) => {
-          const target = event.currentTarget;
-          if (target.classList.contains('u3-hide')) {
+          if (modalStatus === 'hide') {
             if (cropperRef.current) {
               cropperRef.current.destroy();
             }
           }
         }}
       >
-        <CropperWrapper>
+        <CropperWrapper role={'cropper'}>
           <CroppCanvas size={size}>
             <CroppImage src={fileUrl} style={{ maxWidth: size.width, maxHeight: size.height }} ref={imageRef} />
           </CroppCanvas>
