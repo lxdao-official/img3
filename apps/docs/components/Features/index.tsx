@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Container, Grid, Spacer } from '@nextui-org/react';
+import { Container } from '@nextui-org/react';
 import { Feature, FeaturesWrapper } from '@/components/Features/Featrue';
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
@@ -35,25 +35,26 @@ export const Features: React.FC<React.PropsWithChildren<any>> = (props) => {
   return (
     <Wrapper>
       <Container lg style={{ maxWidth: 1216 }}>
-        <SubTitle>our function</SubTitle>
+        <SubTitle>our functions</SubTitle>
         <Quote>
-          It provides the easiest way for you to implement images rendering, uploading, etc. based on Web3 storage like
-          IPFS.
+          It provides the easiest way for developers to implement images rendering and uploading based on Web3 storage like IPFS.
         </Quote>
         <FeaturesWrapper>
           <Feature
             icon={<Icon fontSize={36} color={'#31E2C7'} icon="material-symbols:image-rounded" />}
             title={'Img3'}
             description={
-              '<Img3 /> is a fundamental components for Web3 Apps. It extends HTML <img /> with Web3 decentralization storage, like IPFS. With <Img3 /> you can put ipfs:// in the src and render the image from IPFS with the fastest gateway. Will support ar soon.'
+              '<Img3 /> is a fundamental component for Web3 Applications. It extends HTML <img /> with Web3 decentralization storage, like IPFS. With <Img3 /> you can put "ipfs://" in the src attribute and render the image from IPFS with the fastest gateway. We will support Arweave soon.'
             }
+            link="/components/Img3"
           />
           <Feature
             icon={<Icon fontSize={36} color={'#31E2C7'} icon="material-symbols:cloud-upload" />}
             title={'Uploader3'}
             description={
-              'Uploader3 is a React-based Web3 image upload component that supports multiple image uploads, image cropping, and uploading images to Web3 Storage providers (like IPFS). There are two ways for uploading, by using a backend API or the Uploader3 Connector.'
+              'Uploader3 is a React-based Web3 image upload component that supports multiple image uploading, image cropping, and uploading images to Web3 Storage providers (like IPFS). There are two ways for uploading, by using a backend API or the Uploader3 Connector.'
             }
+            link="/components/Uploader3"
           />
           <Feature
             icon={
@@ -74,6 +75,7 @@ export const Features: React.FC<React.PropsWithChildren<any>> = (props) => {
             description={
               'Uploader3 Connector is a connector for Uploader3. Currently, it only supports NFT.storage IPFS service provider.'
             }
+            link="/components/uploader3-connector"
           />
         </FeaturesWrapper>
       </Container>
