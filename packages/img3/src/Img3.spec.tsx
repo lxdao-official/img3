@@ -36,6 +36,15 @@ describe('render Img3', function () {
     expect(asFragment()).toMatchSnapshot();
   });
 
+  it('should render error when timeout', async function () {
+    mockFetch(jest, 404, {
+      responseURL: 'https://example.com/b.jpg',
+    });
+    const { asFragment } = render(<Img3 src={'ipfs://abc'} timeout={1000} gateways={['https://ipfs.io/ipfs/']} />);
+    await act(() => sleep(2000));
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('should render http image', async function () {
     const { asFragment, getByRole } = render(<Img3 src={'https://example.com/a.jpg'} />);
     expect(await getByRole('img').getAttribute('src')).toBe('https://example.com/a.jpg');
