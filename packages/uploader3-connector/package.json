@@ -1,27 +1,27 @@
 {
   "name": "@lxdao/uploader3-connector",
   "version": "1.0.0",
+  "license": "MIT",
   "main": "./lib/index.js",
   "module": "./esm/index.js",
   "files": [
     "lib",
     "esm"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "license": "MIT",
   "scripts": {
-    "clean": "rm -rf lib esm",
-    "dev:lib": "swc --watch src --out-dir lib --source-maps -C module.type=commonjs",
-    "dev:esm": "swc --watch src --out-dir esm --source-maps",
-    "dev": "concurrently 'npm run dev:lib' 'npm rum dev:esm'",
-    "build:lib": "tsc -p ./tsconfig.build.json -m commonjs --outDir lib",
-    "build:esm": "tsc -p ./tsconfig.build.json -m esnext --outDir esm",
     "build": "npm run clean && npm run build:lib && npm run build:esm",
+    "build:esm": "tsc -p ./tsconfig.build.json -m esnext --outDir esm",
+    "build:lib": "tsc -p ./tsconfig.build.json -m commonjs --outDir lib",
+    "clean": "rm -rf lib esm",
+    "dev": "concurrently 'npm run dev:lib' 'npm rum dev:esm'",
+    "dev:esm": "swc --watch src --out-dir esm --source-maps",
+    "dev:lib": "swc --watch src --out-dir lib --source-maps -C module.type=commonjs",
     "lint": "TIMING=1 eslint \"**/*.ts*\"",
     "test": "jest"
+  },
+  "dependencies": {
+    "nft.storage": "^7.0.0",
+    "node-fetch": "^3.3.0"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.61",
@@ -35,8 +35,8 @@
     "tsconfig": "workspace:*",
     "typescript": "^4.9.5"
   },
-  "dependencies": {
-    "nft.storage": "^7.0.0",
-    "node-fetch": "^3.3.0"
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

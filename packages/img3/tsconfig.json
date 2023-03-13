@@ -2,9 +2,7 @@
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
     "paths": {
-      "@lxdao/*": [
-        "../*/src"
-      ]
+      "@lxdao/*": ["../*/src"]
     }
   }
 }
