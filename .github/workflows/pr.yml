@@ -47,7 +47,7 @@ jobs:
         run: pnpm run test --filter='@lxdao/*' -- --coverage
 
       - name: Build project
-        run: pnpm run build --filter='!web'
+        run: pnpm run build --filter='@lxdao/*'
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
