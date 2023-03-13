@@ -5,7 +5,7 @@
 
 module.exports = {
   coverageProvider: 'v8',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   transform: {
     '^.+\\.tsx?': '@swc/jest',
     '^.+\\.jsx?': '@swc/jest',
