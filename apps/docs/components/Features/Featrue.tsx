@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-margin-top: 50px;
+  margin-top: 50px;
   background-color: transparent;
   flex: 1;
   & + & {
