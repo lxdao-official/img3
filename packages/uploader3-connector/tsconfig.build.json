@@ -1,18 +1,11 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": [
-    "."
-  ],
-  "exclude": [
-    "dist",
-    "build",
-    "node_modules",
-    "lib",
-    "**/*.spec.tsx"
-  ],
+
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./src",
     "outDir": "./lib"
-  }
+  },
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules", "lib", "src/**/*.spec.ts"]
 }
