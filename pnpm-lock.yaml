@@ -27,7 +27,7 @@ importers:
       '@emotion/styled': ^11.10.5
       '@iconify/react': ^4.1.0
       '@lxdao/img3': workspace:^1.0.0
-      '@lxdao/uploader3': workspace:^1.1.0
+      '@lxdao/uploader3': workspace:^1.2.1
       '@lxdao/uploader3-connector': workspace:^1.0.0
       '@mui/material': ^5.11.7
       '@nextui-org/react': 1.0.0-beta.12
@@ -98,7 +98,7 @@ importers:
       '@babel/core': ^7.20.12
       '@iconify/react': ^4.1.0
       '@lxdao/img3': workspace:^1.0.0
-      '@lxdao/uploader3': workspace:^1.1.0
+      '@lxdao/uploader3': workspace:^1.2.1
       '@lxdao/uploader3-connector': workspace:^1.0.0
       '@types/fs-extra': ^11.0.1
       '@types/node': ^17.0.45
