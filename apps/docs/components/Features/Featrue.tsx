@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  margin-top: 50px;
   background-color: transparent;
   flex: 1;
   & + & {
@@ -29,14 +30,15 @@ const IconWrapper = styled.div`
   }
 `;
 
-const Title = styled.h3`
+const Title = styled.a`
+  display: inline-block;
   height: 38px;
   font-weight: 700;
   font-size: clamp(1.6rem, 3vw, 2.25rem);
   line-height: 34px;
   color: #101828;
-  padding-top: clamp(10px, 4vw, 100px);
-  padding-bottom: clamp(8px, 2vw, 16px);
+  padding-top: clamp(10px, 4vw, 50px);
+  padding-bottom: clamp(8px, 2vw, 20px);
   box-sizing: content-box;
   @media (max-width: 650px) {
     padding-top: 0;
@@ -78,6 +80,7 @@ export const Feature: React.FC<
     icon: React.ReactNode;
     title: string;
     description: string;
+    link: string;
   }>
 > = (props) => {
   return (
@@ -85,7 +88,7 @@ export const Feature: React.FC<
       <IconWrapper>
         <IconItem>{props.icon}</IconItem>
       </IconWrapper>
-      <Title>{props.title}</Title>
+      <Title href={props.link}>{props.title}</Title>
       <Description>{props.description}</Description>
     </Wrapper>
   );
