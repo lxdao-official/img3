@@ -11,7 +11,7 @@
 - [Getting Started](https://img3.dev/)
 - [`<Img3 />`](https://img3.dev/components/Img3)
 - [Uploader3](https://img3.dev/components/Uploader3)
-- [Uploader3 SDK Connector](https://img3.dev/components/uploader3-connector)
+- [Uploader3 Connector](https://img3.dev/components/uploader3-connector)
 
 ## Development
 
