@@ -1,12 +1,6 @@
-<h1 style="text-align: center;">
-  <a style="color: inherit; text-decoration: none; font-weight: bold; font-size: 40px;" href="https://img3.dev/">
-    &lt;Img3 /&gt;
-  </a>
-</h1>
+# [&lt;Img3 /&gt;](https://img3.dev/) 
 
-<p style="text-align: center;">
-  A complete solution for integrating with Web3 Storage for images.
-<p>
+A complete solution for integrating with Web3 Storage for images.
 
 ## Features
 
