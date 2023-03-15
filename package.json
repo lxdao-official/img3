@@ -1,6 +1,5 @@
 {
-  "name": "my-turborepo",
-  "version": "0.1.0",
+  "name": "img3",
   "private": true,
   "workspaces": [
     "apps/*",

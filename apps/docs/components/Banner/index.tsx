@@ -44,7 +44,7 @@ export const Banner: React.FC<React.PropsWithChildren<any>> = (props) => {
       <ResponsiveContainer lg display={'flex'} direction={'column'} justify={'center'} alignItems={'center'}>
         <H1>{'<Img3 />'}</H1>
         <p style={{ color: 'white', fontSize: 20, lineHeight: '36px', marginTop: 40 }}>
-          An essential infrastructure in the Web3 storage field.
+          A complete solution for integrating with Web3 Storage for images.
         </p>
         <Link href={'./components/Img3'}>
           <ButtonLink>
