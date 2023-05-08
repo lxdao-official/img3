@@ -41,6 +41,30 @@ import { Img3 } from '@lxdao/img3';
 | timeout  | `number`        | timeout of gateway request               | `2000`                              |
 | icon     | [`Icon`](#icon) | style of loading or error icons          | `{size: 30, color: '#c0c0c0'}`      |
 
+### Img3Provider
+
+`@lxdao/img3` provides an `Img3Provider` provider component that should be used to wrap around your components.
+
+`Img3Provider`'s responsibility is to pass the default gateway value to all of the `<Img3 />` components in your application.
+Usually, your application only needs one provider. You should place it as high as possible in your React tree.
+
+| Prop           | Type     | Description                           | Default |
+| -------------- | -------- | ------------------------------------- | ------- |
+| defaultGateway | `string` | Web3 decentralization storage gateway |         |
+
+```ts
+import React from 'react';
+import { Img3Provider } from '@lxdao/img3';
+
+export default function Demo() {
+  return (
+    <Img3Provider defaultGateway="https://nftstorage.link/ipfs/">
+      <YourApp />
+    </Img3Provider>
+  );
+}
+```
+
 ## Types reference
 
 ### Icon
