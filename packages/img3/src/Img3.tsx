@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useContext, createContext, useMemo, ReactNode } from 'react';
+import React, { useEffect, useState, useContext, createContext } from 'react';
 import styled from 'styled-components';
 
 import { Icon } from '@iconify/react';
 
 import { getFasterIpfsLink } from './ipfsTools';
+import { Img3Context } from './Img3Provider'
 
 const Placeholder = styled.div`
   position: relative;
@@ -30,35 +31,12 @@ type Img3Props = {
   };
   /** The timeout for the ipfs file request. default: 2000 */
   timeout?: number;
-  /** global default gateway */
-  defaultGateway?: string;
 };
 
-type Img3ProviderProps = {
-  /** global default gateway */
-  defaultGateway: string;
-  children: ReactNode;
-}
-
-const Img3Context = createContext({defaultGateway : ''});
-
-export const Img3Provider: React.FC<Img3ProviderProps> = ({ children, defaultGateway }) => {
-  const img3ContextValue = useMemo(
-    () => ({
-      defaultGateway: defaultGateway,
-    }),
-    [defaultGateway]
-  );
-  return (
-    <Img3Context.Provider value={img3ContextValue}>
-      {children}
-    </Img3Context.Provider>
-  )
-}
 
 export const Img3: React.FC<Img3Props> = (props) => {
   const { style, src = '', gateways, alt, className, timeout = 2000 } = props;
-  const defaultGateway = useContext(Img3Context)?.defaultGateway;  
+  const defaultGateways = useContext(Img3Context)?.defaultGateways;
 
   const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);
 
@@ -68,7 +46,7 @@ export const Img3: React.FC<Img3Props> = (props) => {
   useEffect(() => {
     if (src.startsWith('ipfs://')) {
       // If specified, use the gateway
-      getFasterIpfsLink({ ipfs: src, timeout, gateways: defaultGateway ? [defaultGateway] : gateways })
+      getFasterIpfsLink({ ipfs: src, timeout, gateways: gateways || defaultGateways })
         .then((url) => {
           setLoadState('loaded');
           setImagePreviewUrl(url);
