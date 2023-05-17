@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext, createContext } from 'react';
 import styled from 'styled-components';
 
 import { Icon } from '@iconify/react';
 
 import { getFasterIpfsLink } from './ipfsTools';
+import { Img3Context } from './Img3Provider'
 
 const Placeholder = styled.div`
   position: relative;
@@ -32,8 +33,10 @@ type Img3Props = {
   timeout?: number;
 };
 
+
 export const Img3: React.FC<Img3Props> = (props) => {
   const { style, src = '', gateways, alt, className, timeout = 2000 } = props;
+  const defaultGateways = useContext(Img3Context)?.defaultGateways;
 
   const icon = Object.assign({ size: 30, color: '#c0c0c0' }, props.icon);
 
@@ -43,7 +46,7 @@ export const Img3: React.FC<Img3Props> = (props) => {
   useEffect(() => {
     if (src.startsWith('ipfs://')) {
       // If specified, use the gateway
-      getFasterIpfsLink({ ipfs: src, timeout, gateways })
+      getFasterIpfsLink({ ipfs: src, timeout, gateways: gateways || defaultGateways })
         .then((url) => {
           setLoadState('loaded');
           setImagePreviewUrl(url);
