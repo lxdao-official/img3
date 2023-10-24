@@ -27,30 +27,23 @@ const defaultCropOptions = {
   aspectRatio: 1,
 };
 
-const Uploader3DefaultProps: Uploader3Props = {
-  multiple: false,
-  accept: ['.jpg', '.jpeg', '.png', '.gif'],
-  crop: true,
-};
-
-export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (props) => {
-  const {
-    children,
-    className,
-    style,
-    multiple,
-    accept,
-    api,
-    headers,
-    connector,
-    responseFormat,
-    onComplete,
-    onUpload,
-    onCropEnd,
-    onCropCancel,
-    onChange,
-  } = props;
-
+export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
+  children,
+  className,
+  style,
+  multiple = false,
+  accept = ['.jpg', '.jpeg', '.png', '.gif'],
+  api,
+  crop = true,
+  headers,
+  connector,
+  responseFormat,
+  onComplete,
+  onUpload,
+  onCropEnd,
+  onCropCancel,
+  onChange,
+}: Uploader3Props) => {
   const {
     currentFile,
     currentIndex,
@@ -60,7 +53,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
     files: selectedFiles,
   } = useFiles<any[]>([]);
 
-  let cropOptions: any = props.crop;
+  let cropOptions: any = crop;
 
   if (cropOptions === true) {
     cropOptions = defaultCropOptions;
@@ -100,12 +93,12 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
               if (res.ok) {
                 let responseData = await res.json();
 
-                if('function' === typeof responseFormat) {
+                if ('function' === typeof responseFormat) {
                   responseData = responseFormat(responseData);
                 }
 
                 const { url } = responseData;
-                
+
                 curFile = { ...curFile, status: 'done', url };
               } else {
                 const { message } = await res.json();
@@ -120,7 +113,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
         } else if (connector) {
           return connector
             .postImage(image)
-            .then((result) => {
+            .then((result: { url: string; cid: string }) => {
               const { url, cid } = result;
               curFile = { ...curFile, status: 'done', url, ipfs: 'ipfs://' + cid };
               triggerComplete(curFile);
@@ -215,5 +208,3 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = (pro
     </>
   );
 };
-
-Uploader3.defaultProps = Uploader3DefaultProps;
