@@ -38,6 +38,7 @@ export type UploadResult =
   | (Omit<UploadFile, 'status'> & { status: 'error'; message: string });
 
 export type Uploader3Props = {
+  children?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   multiple?: boolean;
