@@ -5,7 +5,7 @@ import initSwc from '@swc/wasm-web';
 import { SwcContext } from '../Hooks/useSwc';
 import { createGlobalStyle } from 'styled-components';
 import { ThemeProvider } from 'next-themes';
-
+import Script from 'next/script';
 const RootTheme = createGlobalStyle`
   :root {
     --color-primary: hsl(var(--nextra-primary-hue) 100% 50%/1);
@@ -50,6 +50,7 @@ export default function MyApp({ Component, pageProps }) {
       <SwcContext.Provider value={{ initialized }}>
         <RootTheme />
         <Component {...pageProps} />
+        <Script src="https://cdn.jsdelivr.net/npm/donate3-sdk@1.0.44/dist/webpack/bundle.js" />
       </SwcContext.Provider>
     </ThemeProvider>
   );
