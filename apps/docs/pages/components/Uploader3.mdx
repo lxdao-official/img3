@@ -78,6 +78,16 @@ Uploader3 children component has the ability to click and drag to select files.
 
 <Playground title={'Basic - @lxdao/uploader3'} files={uploader3Examples.basic} />
 
+### Support svg file
+
+Set `accept` to `['.svg']` to support svg file.
+
+However, `svg` is a vector image and does not support cropping. Please turn off the `crop` option at the same time.
+
+
+<Playground title={'Only svg file - @lxdao/uploader3'} files={uploader3Examples.onlySvg} />
+
+
 ### Single file
 
 Set `crop` to `true` to enable cropping. use Default crop config, Specify `api` endpoint url to upload image.

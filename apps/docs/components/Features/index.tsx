@@ -37,7 +37,8 @@ export const Features: React.FC<React.PropsWithChildren<any>> = (props) => {
       <Container lg style={{ maxWidth: 1216 }}>
         <SubTitle>our functions</SubTitle>
         <Quote>
-          It provides the easiest way for developers to implement images rendering and uploading based on Web3 storage like IPFS.
+          It provides the easiest way for developers to implement images rendering and uploading based on Web3 storage
+          like IPFS.
         </Quote>
         <FeaturesWrapper>
           <Feature

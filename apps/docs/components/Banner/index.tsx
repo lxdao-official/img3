@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import * as React from 'react';
-import { Button, Container } from '@nextui-org/react';
+import { Container } from '@nextui-org/react';
 import Link from 'next/link';
 
 const BannerContainer = styled.div`

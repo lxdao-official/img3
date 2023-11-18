@@ -1,8 +1,6 @@
 module.exports = {
   reactStrictMode: true,
-  experimental: {
-    transpilePackages: ['@lxdao/img3', '@lxdao/uploader3'],
-  },
+  transpilePackages: ['@lxdao/img3', '@lxdao/uploader3'],
   compiler: {
     styledComponents: {
       ssr: true,

@@ -1,4 +1,4 @@
-# [&lt;Img3 /&gt;](https://img3.dev/) 
+# [&lt;Img3 /&gt;](https://img3.dev/)
 
 A complete solution for integrating with Web3 Storage for images.
 

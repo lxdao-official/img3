@@ -67,7 +67,7 @@ export type Uploader3Props = {
    * image accept file type, default is ['.png', '.jpeg', '.jpg', '.gif']
    * @example ['.png', '.jpg]
    */
-  accept?: Array<'.png' | '.jpeg' | '.jpg' | '.gif'>;
+  accept?: Array<'.png' | '.jpeg' | '.jpg' | '.gif' | '.svg'>;
   /**
    * after selected files trigger
    * @param acceptedFiles - selected files

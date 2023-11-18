@@ -2,6 +2,7 @@ export default function App() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
       <a href={'./img3/'}>/img3</a>
+      <a href={'./uploader3/only-svg'}>/uploader3/only-svg</a>
       <a href={'./uploader3/basic'}>/uploader3/basic</a>
       <a href={'./uploader3/single'}>/uploader3/single</a>
       <a href={'./uploader3/single-nft'}>/uploader3/single-nft</a>

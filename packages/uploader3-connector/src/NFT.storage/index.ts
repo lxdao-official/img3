@@ -1,14 +1,15 @@
 import { NFTStorage } from 'nft.storage';
 
 import { Uploader3Connector } from '../types';
+import PostImageFile = Uploader3Connector.PostImageFile;
 
 export const createNFTStorageConnector = (options: { token: string }): Uploader3Connector.Connector => {
   const { token } = options;
   const client = new NFTStorage({ token });
   return {
-    postImage: async (image: { data: string; type: 'image/png' | 'image/jpeg' | 'image/jpg' | 'image/gif' }) => {
+    postImage: async (image: PostImageFile) => {
       const { type, data: imageData } = image;
-      const base64 = imageData.replace(/^data:image\/\w+;base64,/, '');
+      const base64 = imageData.replace(/^data:image\/([^;]+);base64,/, '');
       const imageBuffer = Buffer.from(base64, 'base64');
       const blob = new Blob([imageBuffer], { type });
 
