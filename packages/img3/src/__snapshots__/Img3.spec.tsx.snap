@@ -3,7 +3,7 @@
 exports[`render Img3 should render error when not found 1`] = `
 <DocumentFragment>
   <div
-    class="sc-bcXHqe bHDyYL"
+    class="sc-bdfCDU jXUMDi"
   >
     <span />
   </div>
@@ -13,7 +13,7 @@ exports[`render Img3 should render error when not found 1`] = `
 exports[`render Img3 should render error when timeout 1`] = `
 <DocumentFragment>
   <div
-    class="sc-bcXHqe bHDyYL"
+    class="sc-bdfCDU jXUMDi"
   >
     <span />
   </div>
