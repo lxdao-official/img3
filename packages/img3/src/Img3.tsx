@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react';
 
 import { getFasterIpfsLink } from './ipfsTools';
-import { Img3Context } from './Img3Provider'
+import { Img3Context } from './Img3Provider';
 
 const Placeholder = styled.div`
   position: relative;
@@ -32,7 +32,6 @@ type Img3Props = {
   /** The timeout for the ipfs file request. default: 2000 */
   timeout?: number;
 };
-
 
 export const Img3: React.FC<Img3Props> = (props) => {
   const { style, src = '', gateways, alt, className, timeout = 2000 } = props;

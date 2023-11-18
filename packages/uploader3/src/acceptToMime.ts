@@ -8,16 +8,16 @@ const mimeTypeCategory = {
   'image/svg+xml': ['.svg'],
   'image/gif': ['.gif'],
   'image/png': ['.png'],
-}
+};
 export const acceptToMime = (extensions: string[]) => {
-  const mimeTypes: Record<string, string[]> = {}
+  const mimeTypes: Record<string, string[]> = {};
   extensions.forEach((ext) => {
     Object.entries(mimeTypeCategory).forEach(([mimeKey, exts]) => {
       if (exts.includes(ext)) {
-        mimeTypes[mimeKey] = mimeTypes[mimeKey] || []
-        mimeTypes[mimeKey].push(ext)
+        mimeTypes[mimeKey] = mimeTypes[mimeKey] || [];
+        mimeTypes[mimeKey].push(ext);
       }
-    })
-  })
-  return mimeTypes
-}
+    });
+  });
+  return mimeTypes;
+};

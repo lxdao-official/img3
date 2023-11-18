@@ -1,9 +1,7 @@
-
 # uploader3-connector
 
 [![npm version](https://badge.fury.io/js/%40lxdao%2Fuploader3-connector.svg)](https://badge.fury.io/js/%40lxdao%2Fuploader3-connector)
 [![npm downloads](https://img.shields.io/npm/dm/%40lxdao%2Fuploader3-connector.svg)](https://www.npmjs.com/package/%40lxdao%2Fuploader3-connector)
-
 
 Uploader3 Connector is a connector for Uploader3]. Currently, it only supports [NFT.storage](http://NFT.storage) IPFS service provider.
 
@@ -12,7 +10,7 @@ Supported service provider
 - [NFT.storage](https://nft.storage/)
 
 > Support Img3 and list here? Contact [@muxin](https://twitter.com/muxin_eth) or create a ticket in [LXDAO
-  DC](https://discord.lxdao.io).
+> DC](https://discord.lxdao.io).
 
 ## Usage
 
