@@ -8,6 +8,7 @@ import { useFiles } from './useEditFile';
 
 import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import type { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
+import {acceptToMime} from "./acceptToMime";
 
 const Wrapper = styled.div`
   position: relative;
@@ -162,7 +163,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: { 'image/*': accept! },
+    accept: acceptToMime(accept),
     multiple,
     onDrop,
   });
