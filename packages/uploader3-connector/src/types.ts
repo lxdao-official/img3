@@ -1,7 +1,7 @@
 export declare namespace Uploader3Connector {
   interface PostImageFile {
     data: string;
-    type: 'image/png' | 'image/jpeg' | 'image/gif' | 'image/jpg';
+    type: 'image/png' | 'image/jpeg' | 'image/gif' | 'image/jpg' | 'image/svg+xml';
   }
 
   type Connector = {

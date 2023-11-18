@@ -8,7 +8,7 @@ import { useFiles } from './useEditFile';
 
 import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import type { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
-import {acceptToMime} from "./acceptToMime";
+import { acceptToMime } from './acceptToMime';
 
 const Wrapper = styled.div`
   position: relative;
