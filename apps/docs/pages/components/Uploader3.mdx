@@ -80,9 +80,7 @@ Uploader3 children component has the ability to click and drag to select files.
 
 ### Support svg file
 
-Set `accept` to `['.svg']` to support svg file.
-
-However, `svg` is a vector image and does not support cropping. Please turn off the `crop` option at the same time.
+Set `accept` to `['.svg']` only pick svg files, and turn off cropping
 
 
 <Playground title={'Only svg file - @lxdao/uploader3'} files={uploader3Examples.onlySvg} />
@@ -98,6 +96,8 @@ const defaultCropOptions = {
   aspectRatio: 1,
 };
 ```
+
+If you choose a `.svg` file and want to keep the file format and upload it directly, you can adjust the cropping ratio to `full`.
 
 <Playground title={'Single file - @lxdao/uploader3'} files={uploader3Examples.single} />
 
