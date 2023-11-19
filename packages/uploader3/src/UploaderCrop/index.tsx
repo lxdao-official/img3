@@ -40,6 +40,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
 
   const [cropping, setCropping] = useState(false);
   const [aspectRatio, setAspectRatio] = useState<number>(restProps.aspectRatio || 1);
+  const [fullSize, setFullSize] = useState<boolean>(false);
 
   const cropperOptions: Cropper.Options = useMemo(() => {
     return {
@@ -94,6 +95,16 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
     },
     [cropperOptions]
   );
+
+  const updateAspectRatio = function (r: number, v?: number) {
+    if (fullSize) {
+      cropperRef.current?.enable();
+      setFullSize(false);
+    }
+    setAspectRatio(r);
+    cropperRef.current?.reset();
+    cropperRef.current?.setAspectRatio(v ?? r);
+  };
 
   return (
     <>
@@ -163,7 +174,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
                 if (cropper) {
                   window.requestAnimationFrame(() => {
                     // No cropping of files with aspectRatio of 0
-                    if (aspectRatio === 0) {
+                    if (aspectRatio === 0 && fullSize) {
                       setCropping(false);
                       props.onConfirm?.({ imageData: null, thumbData: null, cropData: null });
                     } else {
@@ -193,9 +204,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
             <Action
               active={16 / 9 === aspectRatio}
               onClick={() => {
-                setAspectRatio(16 / 9);
-                cropperRef.current?.reset();
-                cropperRef.current?.setAspectRatio(16 / 9);
+                updateAspectRatio(16 / 9);
               }}
             >
               <Ratio>16:9</Ratio>
@@ -203,9 +212,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
             <Action
               active={4 / 3 === aspectRatio}
               onClick={() => {
-                setAspectRatio(4 / 3);
-                cropperRef.current?.reset();
-                cropperRef.current?.setAspectRatio(4 / 3);
+                updateAspectRatio(4 / 3);
               }}
             >
               <Ratio>4:3</Ratio>
@@ -213,9 +220,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
             <Action
               active={1 === aspectRatio}
               onClick={() => {
-                setAspectRatio(1);
-                cropperRef.current?.reset();
-                cropperRef.current?.setAspectRatio(1);
+                updateAspectRatio(1);
               }}
             >
               <Ratio>1:1</Ratio>
@@ -223,22 +228,27 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
             <Action
               active={2 / 3 === aspectRatio}
               onClick={() => {
-                setAspectRatio(2 / 3);
-                cropperRef.current?.reset();
-                cropperRef.current?.setAspectRatio(2 / 3);
+                updateAspectRatio(2 / 3);
               }}
             >
               <Ratio>2:3</Ratio>
             </Action>
             <Action
-              active={0 === aspectRatio}
+              active={0 === aspectRatio && !fullSize}
               onClick={() => {
-                setAspectRatio(0);
-                cropperRef.current?.reset();
-                cropperRef.current?.setAspectRatio(NaN);
+                updateAspectRatio(0, NaN);
               }}
             >
-              {/*<Icon icon={'iconoir:frame-simple'} />*/}
+              <Icon icon={'iconoir:frame-simple'} height={16} width={16} />
+            </Action>
+            <Action
+              active={fullSize}
+              onClick={() => {
+                updateAspectRatio(0, NaN);
+                setFullSize(true);
+                cropperRef.current?.disable();
+              }}
+            >
               <Ratio>full</Ratio>
             </Action>
           </ActionGroup>

@@ -155,6 +155,6 @@ export const ActionGroup = styled.div`
 `;
 
 export const Icon = (props: IconProps) => {
-  let { style, ...restProps } = props;
-  return <IconifyIcon style={{ lineHeight: 0, fontSize: 20, height: 20, width: 20 }} {...restProps} />;
+  let { style, height = 20, width = 20, ...restProps } = props;
+  return <IconifyIcon style={{ lineHeight: 0 }} width={width} height={height} {...restProps} />;
 };
