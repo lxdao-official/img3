@@ -23,7 +23,7 @@ export type UploaderCroppProps = {
   fileType: string;
   fileName: string;
   show?: boolean;
-  onConfirm?: (options: { imageData: string | null; thumbData: string | null; cropData: Cropper.Data | null }) => void;
+  onConfirm?: (options: { imageData: string; thumbData: string; cropData: Cropper.Data | null }) => void;
   onCancel?: () => void;
 };
 
@@ -176,7 +176,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
                     // No cropping of files with aspectRatio of 0
                     if (aspectRatio === 0 && fullSize) {
                       setCropping(false);
-                      props.onConfirm?.({ imageData: null, thumbData: null, cropData: null });
+                      props.onConfirm?.({ cropData: null, imageData: '', thumbData: '' });
                     } else {
                       const imageBase64 = cropper.getCroppedCanvas().toDataURL(fileType);
                       const thumbnailBase64 = cropper.getCroppedCanvas({ maxWidth: 600, maxHeight: 600 }).toDataURL();

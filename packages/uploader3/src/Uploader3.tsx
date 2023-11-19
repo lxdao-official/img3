@@ -8,6 +8,7 @@ import { useFiles } from './useEditFile';
 
 import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 import type { CroppedFile, SelectedFile, SelectedFiles, Uploader3Props } from './types';
+import { Uploader3FileStatus } from './types';
 import { acceptToMime } from './acceptToMime';
 
 const Wrapper = styled.div`
@@ -20,7 +21,14 @@ const createCroppedFile = (
   file: SelectedFile,
   croppAttributes: Pick<CroppedFile, 'imageData' | 'thumbData' | 'crop'>
 ): CroppedFile => {
-  return { ...file, ...croppAttributes, status: 'cropped' };
+  const { imageData, thumbData, crop } = croppAttributes;
+  let status = Uploader3FileStatus.cropped;
+  // is full size
+  if (!crop) {
+    status = Uploader3FileStatus.notCropped;
+  }
+
+  return { ...file, imageData, thumbData, crop, status };
 };
 
 const defaultCropOptions = {
@@ -102,15 +110,15 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
 
                 const { url } = responseData;
 
-                curFile = { ...curFile, status: 'done', url };
+                curFile = { ...curFile, status: Uploader3FileStatus.done, url };
               } else {
                 const { message } = await res.json();
-                curFile = { ...curFile, status: 'error', message };
+                curFile = { ...curFile, status: Uploader3FileStatus.error, message };
               }
               triggerComplete(curFile);
             })
             .catch(() => {
-              curFile = { ...curFile, status: 'error' };
+              curFile = { ...curFile, status: Uploader3FileStatus.error };
               triggerComplete(curFile);
             });
         } else if (connector) {
@@ -118,11 +126,11 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
             .postImage(image)
             .then((result: { url: string; cid: string }) => {
               const { url, cid } = result;
-              curFile = { ...curFile, status: 'done', url, ipfs: 'ipfs://' + cid };
+              curFile = { ...curFile, status: Uploader3FileStatus.done, url, ipfs: 'ipfs://' + cid };
               triggerComplete(curFile);
             })
             .catch(() => {
-              curFile = { ...curFile, status: 'error' };
+              curFile = { ...curFile, status: Uploader3FileStatus.error };
               triggerComplete(curFile);
             });
         }
@@ -151,7 +159,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const files: SelectedFiles = acceptedFiles.map((file) => {
       const { name, type } = file;
-      return { name, type, file, previewUrl: URL.createObjectURL(file), status: 'none' };
+      return { name, type, file, previewUrl: URL.createObjectURL(file), status: Uploader3FileStatus.none };
     });
 
     setFiles(files);
