@@ -33,7 +33,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
   className,
   style,
   multiple = false,
-  accept = ['.jpg', '.jpeg', '.png', '.gif'],
+  accept = ['.jpg', '.jpeg', '.png', '.gif', '.svg'],
   api,
   crop = true,
   headers,
@@ -76,6 +76,8 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
       files.map(async (curFile: any) => {
         curFile = { ...curFile };
         curFile.status = 'uploading';
+        // when crop aspect ratio is  -1,
+        // the file will be uploaded directly. keep file type , eg: .svg
         if (!curFile.imageData) {
           curFile.imageData = await file2base64(curFile.file);
         }
@@ -202,6 +204,7 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
           show={showCrop}
           fileType={currentFile.type}
           fileUrl={currentFile.previewUrl!}
+          fileName={currentFile.name}
           onCancel={handleCancel}
           onConfirm={handleConfirm}
         />

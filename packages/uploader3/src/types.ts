@@ -22,11 +22,11 @@ export type SelectedFiles = SelectedFile[];
 export type CroppedFile = Omit<SelectedFile, 'status'> & {
   status: 'cropped';
   /** The cropp data */
-  crop: Cropper.Data;
+  crop: Cropper.Data | null;
   /** Cropped preview data base64 type */
-  imageData: string;
+  imageData: string | null;
   /** Thumbnail preview data base64 type */
-  thumbData: string;
+  thumbData: string | null;
 };
 
 export type UploadFile = Omit<CroppedFile, 'status'> & {

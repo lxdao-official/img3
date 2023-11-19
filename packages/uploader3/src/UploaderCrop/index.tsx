@@ -6,7 +6,7 @@ import { ModalStatus } from '../types';
 import {
   Action,
   ActionGroup,
-  CroppCanvas,
+  CroppCanvasWrapper,
   CropperWrapper,
   CroppImage,
   CroppModal,
@@ -21,13 +21,14 @@ export type UploaderCroppProps = {
   aspectRatio?: number;
   fileUrl: string;
   fileType: string;
+  fileName: string;
   show?: boolean;
-  onConfirm?: (options: { imageData: string; thumbData: string; cropData: Cropper.Data }) => void;
+  onConfirm?: (options: { imageData: string | null; thumbData: string | null; cropData: Cropper.Data | null }) => void;
   onCancel?: () => void;
 };
 
 export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
-  const { size = { width: 400, height: 400 }, fileUrl, fileType, ...restProps } = props;
+  const { size = { width: 400, height: 400 }, fileUrl, fileType, fileName, ...restProps } = props;
 
   const [modalStatus, setModalStatus] = useState<ModalStatus>('init');
   const [cropperReady, setCropperReady] = useState<boolean>(false);
@@ -112,6 +113,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
         role={'modal'}
         ref={wrapperRef}
         modalStatus={modalStatus}
+        data-file-type={fileType}
         onAnimationStart={() => {
           if (modalStatus === 'show') {
             window.requestAnimationFrame(() => {
@@ -127,10 +129,11 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
           }
         }}
       >
+        <div style={{ paddingBottom: '10px', color: 'var(--u3-text-color)' }}>{fileName}</div>
         <CropperWrapper role={'cropper'}>
-          <CroppCanvas size={size}>
+          <CroppCanvasWrapper size={size}>
             <CroppImage src={fileUrl} style={{ maxWidth: size.width, maxHeight: size.height }} ref={imageRef} />
-          </CroppCanvas>
+          </CroppCanvasWrapper>
         </CropperWrapper>
         <CroppTools>
           <ActionGroup>
@@ -159,11 +162,17 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
                 const cropper = cropperRef.current;
                 if (cropper) {
                   window.requestAnimationFrame(() => {
-                    const imageBase64 = cropper.getCroppedCanvas().toDataURL(fileType);
-                    const thumbnailBase64 = cropper.getCroppedCanvas({ maxWidth: 600, maxHeight: 600 }).toDataURL();
-                    const cropData = cropper.getData(true);
-                    setCropping(false);
-                    props.onConfirm?.({ imageData: imageBase64, thumbData: thumbnailBase64, cropData });
+                    // No cropping of files with aspectRatio of 0
+                    if (aspectRatio === 0) {
+                      setCropping(false);
+                      props.onConfirm?.({ imageData: null, thumbData: null, cropData: null });
+                    } else {
+                      const imageBase64 = cropper.getCroppedCanvas().toDataURL(fileType);
+                      const thumbnailBase64 = cropper.getCroppedCanvas({ maxWidth: 600, maxHeight: 600 }).toDataURL();
+                      const cropData = cropper.getData(true);
+                      setCropping(false);
+                      props.onConfirm?.({ imageData: imageBase64, thumbData: thumbnailBase64, cropData });
+                    }
                   });
                 }
               }}
@@ -229,7 +238,8 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
                 cropperRef.current?.setAspectRatio(NaN);
               }}
             >
-              <Icon icon={'iconoir:frame-simple'} />
+              {/*<Icon icon={'iconoir:frame-simple'} />*/}
+              <Ratio>full</Ratio>
             </Action>
           </ActionGroup>
         </CroppTools>
