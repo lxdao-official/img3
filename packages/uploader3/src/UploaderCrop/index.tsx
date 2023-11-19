@@ -21,7 +21,7 @@ export type UploaderCroppProps = {
   aspectRatio?: number;
   fileUrl: string;
   fileType: string;
-  fileName: string;
+  fileName?: string;
   show?: boolean;
   onConfirm?: (options: { imageData: string; thumbData: string; cropData: Cropper.Data | null }) => void;
   onCancel?: () => void;
@@ -140,7 +140,7 @@ export const UploaderCrop: React.FC<UploaderCroppProps> = (props) => {
           }
         }}
       >
-        <div style={{ paddingBottom: '10px', color: 'var(--u3-text-color)' }}>{fileName}</div>
+        {fileName ? <div style={{ paddingBottom: '10px', color: 'var(--u3-text-color)' }}>{fileName}</div> : null}
         <CropperWrapper role={'cropper'}>
           <CroppCanvasWrapper size={size}>
             <CroppImage src={fileUrl} style={{ maxWidth: size.width, maxHeight: size.height }} ref={imageRef} />
