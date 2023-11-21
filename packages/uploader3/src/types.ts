@@ -4,6 +4,16 @@ import type { Uploader3Connector } from '@lxdao/uploader3-connector';
 
 export type ModalStatus = 'init' | 'show' | 'afterShow' | 'hide' | 'afterHide';
 
+export enum Uploader3FileStatus {
+  none = 'none',
+  cancel = 'cancel',
+  cropped = 'cropped',
+  notCropped = 'notCropped',
+  uploading = 'uploading',
+  done = 'done',
+  error = 'error',
+}
+
 export type SelectedFile = {
   /** The File object */
   file: File;
@@ -14,15 +24,15 @@ export type SelectedFile = {
   /** The file preview url of bold:// */
   previewUrl: string;
   /** file status */
-  status: 'none' | 'cancel';
+  status: Uploader3FileStatus.cancel | Uploader3FileStatus.none;
 };
 
 export type SelectedFiles = SelectedFile[];
 
 export type CroppedFile = Omit<SelectedFile, 'status'> & {
-  status: 'cropped';
+  status: Uploader3FileStatus.cropped | Uploader3FileStatus.notCropped;
   /** The cropp data */
-  crop: Cropper.Data;
+  crop: Cropper.Data | null;
   /** Cropped preview data base64 type */
   imageData: string;
   /** Thumbnail preview data base64 type */
@@ -30,12 +40,12 @@ export type CroppedFile = Omit<SelectedFile, 'status'> & {
 };
 
 export type UploadFile = Omit<CroppedFile, 'status'> & {
-  status: 'uploading';
+  status: Uploader3FileStatus.uploading;
 };
 
 export type UploadResult =
-  | (Omit<UploadFile, 'status'> & { status: 'done'; url: string })
-  | (Omit<UploadFile, 'status'> & { status: 'error'; message: string });
+  | (Omit<UploadFile, 'status'> & { status: Uploader3FileStatus.done; url: string })
+  | (Omit<UploadFile, 'status'> & { status: Uploader3FileStatus.error; message: string });
 
 export type Uploader3Props = {
   children?: React.ReactNode;

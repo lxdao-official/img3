@@ -23,6 +23,7 @@ export const CroppModal = styled.div<{ modalStatus: ModalStatus }>`
   --u3-action-bg-color: rgb(238, 238, 238);
   --u3-action-bg-color-active: rgb(228, 228, 228);
   --u3-action-text-color: rgb(90, 90, 90);
+  --u3-text-color: rgb(90, 90, 90);
   --u3-border-radius: 5px;
 
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
@@ -42,6 +43,7 @@ export const CroppModal = styled.div<{ modalStatus: ModalStatus }>`
     --u3-transparent-bg-color2: rgb(120, 120, 120);
     --u3-action-bg-color: rgb(74, 74, 74);
     --u3-action-bg-color-active: rgb(64, 64, 64);
+    --u3-text-color: rgb(180, 180, 180);
     --u3-action-text-color: rgb(180, 180, 180);
   }
 `;
@@ -53,7 +55,7 @@ export const CropperWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const CroppCanvas = styled.div<Pick<UploaderCroppProps, 'size'>>`
+export const CroppCanvasWrapper = styled.div<Pick<UploaderCroppProps, 'size'>>`
   width: ${(props) => {
     if (typeof props.size?.width === 'number') {
       return props.size?.width + 'px';
@@ -153,6 +155,6 @@ export const ActionGroup = styled.div`
 `;
 
 export const Icon = (props: IconProps) => {
-  let { style, ...restProps } = props;
-  return <IconifyIcon style={{ lineHeight: 0, fontSize: 20, height: 20, width: 20 }} {...restProps} />;
+  let { style, height = 20, width = 20, ...restProps } = props;
+  return <IconifyIcon style={{ lineHeight: 0 }} width={width} height={height} {...restProps} />;
 };

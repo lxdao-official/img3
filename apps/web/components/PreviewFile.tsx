@@ -10,13 +10,16 @@ export const PreviewFile = (props: {
 }) => {
   const { file } = props;
 
-  let src: string;
+  let src: string = '';
   if (file.status === 'uploading') {
     src = file.thumbData || file.imageData;
   } else if (file.status === 'done') {
     src = file.url;
   } else if (file.status === 'cropped') {
     src = file.thumbData;
+  } else if (file.status === 'notCropped') {
+    // with the component cropped but full size
+    src = file.previewUrl;
   } else {
     src = file.previewUrl;
   }

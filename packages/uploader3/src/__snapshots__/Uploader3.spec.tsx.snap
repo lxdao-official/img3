@@ -11,7 +11,7 @@ exports[`src/Uploader3.tsx should render Uploader3 1`] = `
       Upload
     </button>
     <input
-      accept="image/jpeg,.jpg,.jpeg,image/png,.png,image/gif,.gif"
+      accept="image/jpeg,.jpg,.jpeg,image/png,.png,image/gif,.gif,image/svg+xml,.svg"
       style="display: none;"
       tabindex="-1"
       type="file"
