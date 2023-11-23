@@ -1,5 +1,29 @@
 # docs
 
+## 0.2.0
+
+### Minor Changes
+
+- feat: support svg full crop
+
+### Patch Changes
+
+- Updated dependencies
+  - @lxdao/uploader3@1.5.0
+  - @lxdao/uploader3-connector@1.1.1
+
+## 0.1.0
+
+### Minor Changes
+
+- Uploader3 support svg
+
+### Patch Changes
+
+- Updated dependencies
+  - @lxdao/uploader3@1.3.0
+  - @lxdao/uploader3-connector@1.1.0
+
 ## 0.0.3
 
 ### Patch Changes
