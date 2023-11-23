@@ -1,5 +1,11 @@
 # @lxdao/uploader3
 
+## 1.5.1
+
+### Patch Changes
+
+- update props type
+
 ## 1.5.0
 
 ### Minor Changes
