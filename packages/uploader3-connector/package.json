@@ -1,6 +1,6 @@
 {
   "name": "@lxdao/uploader3-connector",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "MIT",
   "main": "./lib/index.js",
   "module": "./esm/index.js",
@@ -37,6 +37,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.com/"
   }
 }
