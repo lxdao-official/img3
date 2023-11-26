@@ -49,7 +49,7 @@ jobs:
         run: pnpm run build --filter='@lxdao/*'
 
       - name: Publish use lerna
-        run: yarn lerna publish from-package --yes
+        run: npx lerna publish from-package --yes
 
       - name: Push changes
         uses: ad-m/github-push-action@master
