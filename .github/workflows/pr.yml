@@ -5,11 +5,12 @@ name: Pull Request
 
 on:
   pull_request:
-    - types: [opened, synchronize, reopened]
-    - paths:
-        - 'packages/**/*.tsx'
-        - 'packages/**/*.ts'
-        - '.github/workflows/pr.yml'
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'packages/**/*.tsx'
+      - 'packages/**/*.ts'
+      - 'packages/**/*.js'
+      - '.github/workflows/pr.yml'
 
 jobs:
   build:

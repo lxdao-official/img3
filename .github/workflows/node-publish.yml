@@ -1,11 +1,9 @@
 name: node-publish
 
-#on:
-#  release:
-#    types: [created]
-
 on:
-  - pull_request
+  # When Release is created
+  release:
+     types: [created]
 
 
 jobs:
@@ -49,7 +47,11 @@ jobs:
         run: pnpm run build --filter='@lxdao/*'
 
       - name: Publish use lerna
-        run: npx lerna publish from-package --yes
+        run: |
+          echo "//registry.npmjs.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+          npx lerna publish from-package --yes
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Push changes
         uses: ad-m/github-push-action@master
