@@ -20,6 +20,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@lighthouse-web3/sdk": "^0.3.3",
     "nft.storage": "^7.1.1",
     "node-fetch": "^3.3.2"
   },

@@ -7,7 +7,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "lib/**"],
-      "env": ["NFT_TOKEN"]
+      "env": ["NFT_TOKEN", "LIGHTHOUSE_TOKEN"]
     },
     "start": {
       "outputs": []
