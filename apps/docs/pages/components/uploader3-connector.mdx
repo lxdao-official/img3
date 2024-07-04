@@ -29,7 +29,7 @@ import { createConnector } from '@lxdao/uploader3-connector';
 Create a connector for Uploader3 upload service.
 
 ```ts
-export const createConnector: (service: 'NFT.storage', options: { token: string }) => Connector;
+export const createConnector: (service: 'NFT.storage' | 'lighthouse', options: { token: string }) => Connector;
 ```
 
 ## Types reference

@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createConnector, type Uploader3Connector } from '@lxdao/uploader3-connector';
 
-const connector = createConnector('NFT.storage', { token: process.env.NFT_TOKEN! });
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const connector = createConnector('lighthouse', { token: process.env.LIGHTHOUSE_TOKEN! });
 
 const uploadFile = async (req: NextApiRequest, res: NextApiResponse) => {
   const reqBody = <Uploader3Connector.PostImageFile>req.body;
