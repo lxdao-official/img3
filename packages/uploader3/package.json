@@ -1,6 +1,6 @@
 {
   "name": "@lxdao/uploader3",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "license": "MIT",
   "main": "./lib/index.js",
   "module": "./esm/index.js",
