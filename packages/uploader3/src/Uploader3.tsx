@@ -112,13 +112,17 @@ export const Uploader3: React.FC<React.PropsWithChildren<Uploader3Props>> = ({
 
                 curFile = { ...curFile, status: Uploader3FileStatus.done, url };
               } else {
-                const { message } = await res.json();
-                curFile = { ...curFile, status: Uploader3FileStatus.error, message };
+                const { message, error } = await res.json();
+                curFile = {
+                  ...curFile,
+                  status: Uploader3FileStatus.error,
+                  message: message || error || res.statusText,
+                };
               }
               triggerComplete(curFile);
             })
-            .catch(() => {
-              curFile = { ...curFile, status: Uploader3FileStatus.error };
+            .catch((e) => {
+              curFile = { ...curFile, status: Uploader3FileStatus.error, message: e.message || 'Upload failed' };
               triggerComplete(curFile);
             });
         } else if (connector) {
